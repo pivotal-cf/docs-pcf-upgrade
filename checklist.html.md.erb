@@ -16,7 +16,7 @@ To check PCF version support for any service tile, from Pivotal or a Pivotal par
 * Select the tile version in the **Releases** dropdown.
 * Refer to the **Depends On** section under **Release Details**. For more information, see the tile's release notes.
 
-If the currently-deployed version of a tile is not compatible with PCF v2.1, you must upgrade the tile after you upgrade PCF. You need not upgrade tiles that are compatible with both PCF v2.0 and v2.1.
+If the currently-deployed version of a tile is not compatible with PCF v2.1, you must upgrade the tile before you upgrade PCF. You need not upgrade tiles that are compatible with both PCF v2.0 and v2.1.
 
 When you have completed your upgrade please take some time to complete [this survey](https://docs.google.com/forms/d/e/1FAIpQLScf9KuTbF3B9CjldMGqQxF-GA72xMR0DGzaGmhX4uWMrD8pOA/viewform?c=0&w=1).
 
@@ -27,7 +27,7 @@ Pivotal provides the empty table below as a template for recording and tracking 
 |                                                                         |                                                                  | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
 | ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------ | ------------- | -------- | ------------ |
 | **Pivotal Cloud Foundry**                                                   | [Ops Manager](https://network.pivotal.io/products/ops-manager) |              |               |          |              |
-|                                                                         | [PAS](https://network.pivotal.io/products/elastic-runtime)     |              |               |          |              |
+|                                                                         | [Pivotal Application Service](https://network.pivotal.io/products/elastic-runtime) (PAS)     |              |               |          |              |
 | **Pivotal Cloud Foundry Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
 |                                                                         | [Redis](https://network.pivotal.io/products/p-redis)                                                            |              |               |          |              |
 |                                                                         | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq)                                                         |              |               |          |              |
@@ -68,26 +68,26 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 </tr>
 <tr>
 <td>Ops Manager removed IP address management</td>
-<td><p>Prior to v2.1, Ops Manager allocated and assigned IP addresses manually in the deployment manifest. This caused deployment failures when Ops Manager and the BOSH Director had mismatches on their current IP address assignments.</p>
-<p>Ops Manager now delegates IP address management to the BOSH Director, which gives operators more flexibility and prevents deployment failures.</p></td>
+<td><p>Prior to v2.1, Ops Manager allocated and assigned IP addresses manually in the deployment manifest. This caused deployment failures when Ops Manager and the BOSH Director had mismatches on their IP address assignments.</p>
+<p>Ops Manager now delegates IP address management to the BOSH Director, which gives operators more flexibility and prevents deployment failures. For 2.1 compatibility, developers must change any service or app code that queries Ops Manager for IP addresses so that it instead retrieves the values from BOSH.</p></td>
 </tr>
 <tr>
 <td>Removal of Automated Backup Configuration for Internal MySQL</td>
-<td><p>The PAS tile **Internal MySQL** pane no longer includes the **Automated Backups Configuration** field. Pivotal recommends that operators use [BOSH Backup and Restore](https://docs.pivotal.io/pivotalcf/customizing/backup-restore/index.html#bbr) to back up Internal MySQL components.</p>
+<td><p>The PAS tile <strong>Internal MySQL</strong> pane no longer includes the <strong>Automated Backups Configuration</strong> field. Pivotal recommends that operators use <a href="https://docs.pivotal.io/pivotalcf/customizing/backup-restore/index.html#bbr">BOSH Backup and Restore</a> to back up Internal MySQL components.</p>
 <p>See <a href="https://discuss.pivotal.io/hc/en-us/articles/360001817593">Restore from PAS Automated Database Backup is Not Supported in 1.11 and later</a> in the KB.</p></td>
 </tr>
 <tr>
 <td>Spring Cloud Services no longer stores binding credentials in environment variables.</td>
-<td><p>Spring Cloud Services (SCS) 1.5.0 and later [uses CredHub](http://docs.pivotal.io/spring-cloud-services/tile-configuration.html#secure-service-instance-credentials-with-credhub) to store binding credentials, rather than saving them in environment variables.</p>
-<p>See the <a href="http://docs.pivotal.io/spring-cloud-services/1-5/release-notes.html#1-5-0">SCS 1.5.0 Release Notes</a> for details.</p></td>
+<td><p>Spring Cloud Services (SCS) 1.5.0 and later <a href="http://docs.pivotal.io/spring-cloud-services/tile-configuration.html#secure-service-instance-credentials-with-credhub">uses CredHub</a> to store binding credentials, rather than saving them in environment variables.</p>
+<p>App developers must change any code that reads binding credentials from the environment so that it retrieves the values from CredHub instead. See the <a href="http://docs.pivotal.io/spring-cloud-services/1-5/release-notes.html#1-5-0">SCS 1.5.0 Release Notes</a> for details.</p></td>
 </tr>
 <tr>
 <td>When the Gorouter uses TLS to communicate with apps, it keeps app connections alive to prevent the performance impact from running TLS.</td>
-<td>By default, each router instance maintains a max of 49 thousand open connections. A checkbox is available to disable this feature in the Ops Manager Director tile **Networking** pane, under **Enable Keepalive Connections for Router**.</td>
+<td>By default, each router instance maintains a max of 49 thousand open connections. A checkbox is available to disable this feature in the Ops Manager Director tile <strong>Networking</strong> pane, under <strong>Enable Keepalive Connections for Router</strong>.</td>
 </tr>
 <tr>
-<td>In PCF 2.x with NSX-T networking, the PAS deployment does work. However, any later “Apply Changes” from the Ops Manager will result in the BOSH agent becoming unresponsive on all Diego Cells. </td>
-<td>The workaround for this is to recreate the VM using BOSH CCK. This will allow the agent to startup, configure networking, and then proceed to run pre-start and post-start scripts. </td>
+<td>With the VMware NSX-T tile installed, updating a PCF deployment by clicking <strong>Apply Changes</strong> causes the BOSH agent to become unresponsive on all Diego cells. </td>
+<td>To fix this problem, run the BOSH CLI command <code>bosh cck</code> ("<a href="https://bosh.io/docs/cck/">cloud check</a>") after the redeployment completes. This command recreates Diego cell VMs, rebooting their BOSH agents and restoring their responsiveness. </td>
 </tr>
 </tbody>
 </table>
@@ -102,66 +102,69 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <th><strong>Product or Component</strong></th>
 </tr>
 <tr>
-<td>Before upgrading to PCF v2.1, please ensure that all service tiles installed on the foundation are upgraded to a compatible version.</td>
-<td>Refer to the <a href="http://docs.pivotal.io/resources/product-compatibility-matrix.pdf">Compatibility Matrix</a> to verify the service tile installed are compatible. </td>
-<td>PCF and Tiles </td>
+<td>Upgrade all service tiles to versions compatible with PCF v2.1.</td>
+<td>Refer to the <a href="http://docs.pivotal.io/resources/product-compatibility-matrix.pdf">Compatibility Matrix</a> and tile documentation to check version compatibility.</td>
+<td>Service Tiles </td>
 </tr>
 <tr>
 <td><p>Back up your PCF deployment. See <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a> and <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/backup-restore/disaster-recovery.html">Disaster Recovery in Pivotal Cloud Foundry</a></p></td>
-<td><p>Pivotal recommends frequently backing up your installation settings before making any changes to your PCF deployment.</p></td>
+<td><p>Pivotal recommends backing up your installation settings before upgrading or otherwise changing your PCF deployment.</p></td>
 <td>PCF</td>
 </tr>
 <tr>
-<td>Read <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html"><em>upgrade notes</em></a> for upgrading to 2.1 and complete all relevant actions</td>
-<td><p>Please review all of the upgrade notes.</p></td>
+<td>Read <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html">Upgrading Pivotal Cloud Foundry</a> in the PCF v2.1 documentation and complete all relevant actions</td>
+<td><p>Review all of the upgrade notes.</p>
+<ul><li>Ensure that lifecycle errands are enabled for your installed tiles.</li>
+<li>Ensure that your persistent disk usage is &lt; 50%.</li>
+<li>Ensure that you know your decryption passphrase and have it stored safely.</li></ul></td>
 <td>PCF</td>
 </tr>
 <tr>
-<td>Read and review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html"><em>Release notes</em></a> for 2.1 PAS</td>
-<td>See notes for details</td>
+<td>Review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">Pivotal Application Service v2.1 Release Notes</a>.</td>
+<td>See notes for details.</td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Read and review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html"><em>Release notes</em></a> for Ops Manager 2.1</td>
-<td><p>Review all release notes for any feature changes that may affect you during or after upgrade.</p></td>
-<td>Ops Man</td>
+<td>Review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html">PCF Ops Manager Release v2.1 Release Notes</a></td>
+<td><p>Review release notes for any feature changes that may affect you during or after upgrade.</p>
+<p>BOSH CLI output formatting has changed. If your deployment uses scripts that rely on BOSH output, you must update them to interpret <a href="https://bosh.io/docs/cli-v2/">BOSH CLI v2</a> command output</p></td>
+<td>Ops Manager</td>
 </tr>
 <tr>
-<td>Read and review known issues section for PAS 2.1 <a href="https://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html"><em>here</em></a> </td>
-<td>This doc covers recommended actions, New issues and existing issues. Make sure to review both links!</td>
+<td>Review the <a href="https://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">Known Issues</a> section of the PAS v2.1 release notes</td>
+<td>This section covers recommended actions, new issues, and existing issues for PAS v2.1.</td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Read and review known issues section for Ops Man 2.1 <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html#known-issues"><em>here</em></a></td>
-<td>This doc covers recommended actions, new issues and existing issues for Ops Man 2.1</td>
+<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html#known-issues">Known Issues</a> section of the Ops Manager 2.1 release notes.</td>
+<td>This section covers recommended actions, new issues, and existing issues for Ops Man v2.1</td>
 <td>Ops Man</td>
 </tr>
 <tr>
-<td>Read and review <strong>Breaking Changes</strong> for PCF PAS and Ops Man 2.1 <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/breaking-changes.html"><em>here</em></a></td>
-<td>This topic describes the breaking changes you need to be aware of when upgrading to Pivotal Cloud Foundry (PCF) v 2.1</td>
+<td>Review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/breaking-changes.html">PCF v2.1 Breaking Changes</a>.</td>
+<td>This topic describes the breaking changes you need to be aware of when upgrading PCF v2.1.</td>
 <td>PCF</td>
 </tr>
 <tr>
-<td>Review Diego network and Ports <a href="https://docs.pivotal.io/pivotalcf/1-12/security/networking/diego-network-paths.html"><em>here</em></a></td>
-<td>This topic describes <a href="https://docs.pivotal.io/pivotalcf/1-12/concepts/diego/diego-architecture.html"><em>Diego</em></a> internal network communication paths with other Elastic Runtime components.</td>
-<td>PCF</td>
+<td>Review <a href="https://docs.pivotal.io/pivotalcf/1-12/security/networking/diego-network-paths.html">Diego Network Communications</a>.</td>
+<td>This topic describes the internal network communication paths between components of <a href="https://docs.pivotal.io/pivotalcf/1-12/concepts/diego/diego-architecture.html">Diego</a> workload management system in PAS.</td>
+<td>PAS</td>
 </tr>
 <tr>
-<td><p>Run and collect foundation health status, there are a few ways:</p>
-<ol>
-	<li>If customer setup external metrics monitoring, verify all VM CPU/RAM/DISK utilization good</li>
-	<li>Run BOSH CLI directly to verify the status:
-		<ol><li><code>bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps</code></li>
+<td><p>Run and collect foundation health status in at least one of the following ways:</p>
+<ul>
+	<li>If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are good.</li>
+	<li>Run BOSH CLI commands to check system status:
+		<ul><li><code>bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps</code></li>
 			<li><code>bosh -e ALIAS vms --vitals</code></li>
 			<li><code>bosh -e ALIAS -d DEPLOYMENT_NAME cck --report</code></li>
-		</ol></li>
+		</ul></li>
 	<li>Check Ops Manager GUI each ERT/Tiles the status page for CPU/RAM/DISK utilization</li>
 	<li>Validate Ops manager persistent disk usage is below 50%. If not, follow Prep 6 in the <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html#prepare-env">Ops Manager upgrade docs</a>.</li>
-</ol>
+</ul>
 </td>
-<td><p>To ensure that the foundation is in a healthy status before upgrading, run the following:</p>
-<ul><li><code>bosh -e ALIAS vms --vitals to highlight any vms with high CPU, high memory, high disk utilisation. Also to identify where State != running.</code></li>
-	<li><code>bosh -d DEPLOYMENT_NAME instances (--ps or --vitals or --failing) to highlight individual job failure</code></li>
+<td><p><code>bosh vms --vitals</code> reveals VMs with high CPU, high memory, high disk utilization, and with <code>state</code> != <code>running</code>.</p>
+	<p><code>bosh instances</code> with the flags <code>--ps</code>,  <code>--vitals</code>, or <code>--failing</code>highlights individual job failure.</p></li>
 </ul>
 </td>
 <td>PCF</td>
