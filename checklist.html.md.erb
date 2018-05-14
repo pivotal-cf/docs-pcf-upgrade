@@ -3,7 +3,7 @@ title: Upgrade Checklist for PCF v2.0 to v2.1
 owner: Ops Manager
 ---
 
-## <a id="compatibility"></a>Check Tile Compatibility
+## <a id="compatibility"></a>Tile Compatibility
 
 Before you upgrade to PCF v2.1, please check whether PCF v2.1 supports the service tile versions that you currently have deployed.
 
@@ -22,7 +22,7 @@ When you have completed your upgrade please take some time to complete [this sur
 
 ## <a id="env"></a>Environment Details
 
-Pivotal provides the empty table below as a template for recording and tracking the tile versions deployed in all of your environments.
+Pivotal provides the empty table below as a model to print out or adapt for recording and tracking the tile versions that you have deployed in all of your environments.
 
 |                                                                         |                                                                  | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
 | ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------ | ------------- | -------- | ------------ |
@@ -31,7 +31,7 @@ Pivotal provides the empty table below as a template for recording and tracking 
 | **Pivotal Cloud Foundry Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
 |                                                                         | [Redis](https://network.pivotal.io/products/p-redis)                                                            |              |               |          |              |
 |                                                                         | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq)                                                         |              |               |          |              |
-|                                                                         | [SSO                                                              |              |               |          |              |
+|                                                                         | [Single Sign On](https://network.pivotal.io/products/p-identity) (SSO)                                                              |              |               |          |              |
 |                                                                         | [Spring Cloud Services](https://network.pivotal.io/products/p-spring-cloud-services)                                            |              |               |          |              |
 |                                                                         | [Concourse](https://network.pivotal.io/products/p-concourse)                                                        |              |               |          |              |
 |                                                                         | ...                                                              |              |               |          |              |
@@ -92,7 +92,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 </tbody>
 </table>
 
-## <a id="pre"></a>Pre-Checks for Upgrade
+## <a id="before"></a>Before Upgrade
 
 <table>
 <tbody>
@@ -138,7 +138,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <tr>
 <td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html#known-issues">Known Issues</a> section of the Ops Manager 2.1 release notes.</td>
 <td>This section covers recommended actions, new issues, and existing issues for Ops Man v2.1</td>
-<td>Ops Man</td>
+<td>Ops Manager</td>
 </tr>
 <tr>
 <td>Review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/breaking-changes.html">PCF v2.1 Breaking Changes</a>.</td>
@@ -153,7 +153,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <tr>
 <td><p>Run and collect foundation health status in at least one of the following ways:</p>
 <ul>
-	<li>If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are good.</li>
+	<li>If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.</li>
 	<li>Run BOSH CLI commands to check system status:
 		<ul><li><code>bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps</code></li>
 			<li><code>bosh -e ALIAS vms --vitals</code></li>
@@ -170,40 +170,39 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Review the KPI Changes from PCF v2.0 to v2.1</p>
-<p>Refer to: </p>
-<p><a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html"><em>https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html</em></a> </p></td>
+<td><p>Review the <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/index.html#new">KPI Changes from PCF v2.0 to v2.1</a>.</p>
+	<p>For complete descriptions of each KPI, refer to <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html">Key Performance Indicators</a>.</p></td>
 <td>This document highlights new and changed Key Performance Indicators (KPIs) that operators may want to monitor with their PCF deployment to help ensure it is in a good operational state.</td>
-<td>PCF</td>
-</tr>
-<tr>
-<td><p>Check the remaining Diego Cell RAM and Disk capacity that allow sufficient resources for app containers</p></td>
-<td><p>The KPI that monitor these values are:</p>
-<p>rep.CapacityRemainingMemory</p>
-<p>rep.CapacityRemainingDisk</p>
-<p>Please refer to <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/kpi.html#cell"><em>this doc</em></a> for more information on these KPI.</p></td>
-<td></td>
-</tr>
-<tr>
-<td>Check that a test app can be pushed and scaled horizontally via manual or automatic test.</td>
-<td>To ensure the platform is working as expected before upgrade in relation to pushing an app</td>
-<td>PCF</td>
-</tr>
-<tr>
-<td>If there is a requirement to adjust diego cell max inflight from the default you can do so by following documentation <a href="https://docs.pivotal.io/pivotalcf/1-11/adminguide/diego-cell-upgrade.html"><em>here</em></a></td>
-<td>For PCF 1.10 and later, the default maximum in-flight diego cell instances is 4% The max_in_flight setting for the Diego cell job configured in the BOSH manifest. More details about this can be found <a href="https://docs.pivotal.io/pivotalcf/1-12/adminguide/diego-cell-upgrade.html#limitations-considerations"><em>here</em></a>.</td>
-<td></td>
-</tr>
-<tr>
-<td><p>If required you can disable unused PAS post deploy errands if not needed for example:</p></td>
-<td><p>More information about Post Deploy Errands can be found <a href="https://docs.pivotal.io/tiledev/1-12/tile-errands.html#post-deploy"><em>here.</em></a></p>
-<p>Only disable these errands if they are not needed for your environment. </p></td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Run `bosh -e &lt;alias&gt; clean-up --all` to cleanup old stemcells/releases/disks for one version upgrade.</td>
-<td>This is done to avoid director persistent disk full during the new products stemcell/releases upload.</td>
-<td></td>
+<td><p>Check that Diego cells have sufficient available RAM and disk capacity to support app containers.</p></td>
+<td><p>The KPIs that monitor these these resources are are:</p>
+<ul><li><code>rep.CapacityRemainingMemory</code></li>
+	<li><code>rep.CapacityRemainingDisk</code></li></ul>
+<p>See the <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information on these KPIs.</p></td>
+<td>PAS</td>
+</tr>
+<tr>
+<td>Check that a test app can be pushed and scaled horizontally, manually or via automated testing.</td>
+<td>This check ensures that the platform supports apps as expected before the upgrade.</td>
+<td>PCF</td>
+</tr>
+<tr>
+<td>If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. Refer to <a href="https://docs.pivotal.io/pivotalcf/1-11/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.</td>
+<td>For PCF 1.10 and later, the maximum number of cells that can update at once, <code>max_in_flight</code> is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the <a href="https://docs.pivotal.io/pivotalcf/1-12/adminguide/diego-cell-upgrade.html#limitations-considerations">Preventing Overload</a> section for details.</td>
+<td>PAS</td>
+</tr>
+<tr>
+<td><p>To save upgrade time, you can disable unused PAS post-deploy errands.</p></td>
+<td><p>See the <a href="https://docs.pivotal.io/tiledev/1-12/tile-errands.html#post-deploy">Post-Deploy Errands</a> section of the Errands topic for details.</p>
+<p>Only disable these errands if your environment does not need them.</p></td>
+<td>PAS</td>
+</tr>
+<tr>
+<td>Run <code>bosh -e ALIAS clean-up --all</code> to clean up old stemcells, releases, orphaned disks, and other resources before upgrade.</td>
+<td>This cleanup helps prevent the product and stemcell upload process from exceeding the BOSH Director's available persistent disk space.</td>
+<td>BOSH</td>
 </tr>
 </tbody>
 </table>
@@ -219,28 +218,31 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 </tr>
 <tr>
 <td>(Optional) Periodically take snapshots of storage metrics</td>
-<td>This step is advised if you have a large foundation and you have experienced storage issues in the past.</td>
+<td>Pivotal recommends this if you have a large foundation and have experienced storage issues in the past.</td>
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Periodically Monitor progress:</p></td>
+<td><p>Monitor upgrade progress.</p></td>
 <td>Monitor the progress of the upgrade, checking the status of the foundation at various locations.</td>
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Check instance count by state of Diego Components using cfdot.</p></td>
-<td>Details regarding cfdot and its uses can be found <a href="https://github.com/cloudfoundry/cfdot"><em>here</em></a> </td>
+<td><p>Use the CF Diego Operator Toolkit (cfdot) to check Diego component instance count by current state.</p></td>
+<td>See the <a href="https://github.com/cloudfoundry/cfdot">cfdot documentation</a> on github for details.</td>
 <td>PAS</td>
 </tr>
 <tr>
-<td><p>(Optional) In the event there are issues with the upgrade, perform the following tasks.</p></td>
-<td>This information will be helpful in determining the cause of upgrade issues.</td>
+<td><p>(Optional) If you encounter problems during upgrade, collect the following information:</p>
+<ul><li>All job logs</li>
+<li>Task debug logs for VM upgrade tasks</li>
+<li>Installation log from Ops Manager</li></ul></td>
+<td>This information helps determine the cause of upgrade issues.</td>
 <td>PCF</td>
 </tr>
 </tbody>
 </table>
 
-## <a id="post"></a>Post Upgrade
+## <a id="after"></a>After Upgrade
 
 <table>
 <tbody>
@@ -250,41 +252,44 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <th><strong>Product/component</strong></th>
 </tr>
 <tr>
-<td>After upgrading to 2.1 complete the steps outlined in the upgrading PCF 2.1 document <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/upgrading-pcf.html#after-upgrade"><em>here</em></a></td>
-<td>Follow the steps outlined in the “After You Upgrade” section.</td>
+<td>Complete the steps in the <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/upgrading-pcf.html#after-upgrade">After You Upgrade</a> section of the Upgrading Pivotal Cloud Foundry topic.</td>
+<td>This ensures that you have the latest version of the Cloud Foundry Command Line Interface (cf CLI).</td>
 <td>ALL</td>
 </tr>
 <tr>
-<td>Perform performance test by pushing and scaling a test application.</td>
-<td>Push and scale an app and verify it is working</td>
+<td>Push and horizontally scale a test application.</td>
+<td>This is a performance test for PAS.</td>
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Need to recreate your alias using BOSH</p>
-<p>bosh alias-env &lt;alias&gt; -e &lt;director_IP&gt;</p></td>
-<td>After upgrading your PCF environment you will need to recreate your alias in order to use BOSH login. </td>
+<td><p>Re-create your alias using BOSH:</p>
+<p><code>bosh alias-env ALIAS -e DIRECTOR_IP</code></p></td>
+<td>To log into BOSH after upgrading PCF, you need to recreate your alias.</td>
+<td>BOSH</td>
+</tr>
+<tr>
+<td>Run BOSH CLI commands to check system status:
+<ul><li><code>bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps</code></li>
+<li><code>bosh -e ALIAS vms --vitals</code></li>
+<li><code>bosh -e ALIAS -d DEPLOYMENT_NAME cck --report</code></li></ul>
+</td>
+<td>To ensure that all jobs and process are running as expected.</td>
+<td>PCF and all tiles</td>
+</tr>
+<tr>
+<td>If you added custom <strong>VM Type</strong> or <strong>Persistent Disk Type</strong> options, ensure that these values are correctly set and were not overwritten.</td>
+<td>Verify that the Ops Manager <strong>Resource Config</strong> pane still lists your custom options.</td>
 <td>PCF</td>
 </tr>
 <tr>
-<td>Run and collect health-check stats using the following commands:</td>
-<td>To ensure that all Jobs and process are running as expected.</td>
-<td>PCF and all Tiles</td>
-</tr>
-<tr>
-<td>If you have added custom VM_TYPE or PERSISTENCE DISK TYPES, ensure that these values are correctly set and didn’t get overwritten.</td>
-<td>Verify values are retained in Ops Manager UI</td>
-<td>PCF</td>
-</tr>
-<tr>
-<td><p>If PAS MySQL is being used with cluster setup, run the mysql-dialog tool to validate health of the cluster.</p>
-<p>Refer to:</p>
-<p><a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2"><em>http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2</em></a></p></td>
-<td>Validate the health of PAS MySQL after upgrading.</td>
+<td><p>If you are running PAS MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.</p>
+</td>
+<td><p>Refer to the BOSH CLI v2 instructions in the <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html">Running mysql-diag</a> topic.</p></td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Run `bosh -e &lt;alias&gt; clean-up --all` to cleanup old stemcells/releases/disks for one version upgrade.</td>
-<td>Cleans up releases, stemcells, orphaned disks, and other unused resources.</td>
+<td>Run <code>bosh -e ALIAS clean-up --all</code> to clean up old stemcells, releases, orphaned disks, and other unused resources.</td>
+<td></td>
 <td>Tiles</td>
 </tr>
 </tbody>
@@ -292,8 +297,4 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 
 ## <a id="survey"></a>Survey
 
-Please take some time to help us improve this document by completing the
-following
-survey:
-
-[*https://docs.google.com/forms/d/e/1FAIpQLScf9KuTbF3B9CjldMGqQxF-GA72xMR0DGzaGmhX4uWMrD8pOA/viewform?c=0\&w=1*](https://docs.google.com/forms/d/e/1FAIpQLScf9KuTbF3B9CjldMGqQxF-GA72xMR0DGzaGmhX4uWMrD8pOA/viewform?c=0&w=1)
+Please take some time to help us improve this document by completing the [Upgrade Checklist Survey](https://docs.google.com/forms/d/e/1FAIpQLScf9KuTbF3B9CjldMGqQxF-GA72xMR0DGzaGmhX4uWMrD8pOA/viewform?c=0&w=1).
