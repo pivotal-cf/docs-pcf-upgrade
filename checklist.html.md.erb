@@ -14,7 +14,7 @@ To check PCF version support for any service tile, from Pivotal or a Pivotal par
 
 * Navigate to the tile's download page on [Pivotal Network](https://network.pivotal.io).
 * Select the tile version in the **Releases** dropdown.
-* Refer to the **Depends On** section under **Release Details**. For more information, see the tile's release notes.
+* See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
 
 If the currently-deployed version of a tile is not compatible with PCF v2.1, you must upgrade the tile before you upgrade PCF. You need not upgrade tiles that are compatible with both PCF v2.0 and v2.1.
 
@@ -103,7 +103,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 </tr>
 <tr>
 <td>Upgrade all service tiles to versions compatible with PCF v2.1.</td>
-<td>Refer to the <a href="http://docs.pivotal.io/resources/product-compatibility-matrix.pdf">Compatibility Matrix</a> and tile documentation to check version compatibility.</td>
+<td>Review the <a href="http://docs.pivotal.io/resources/product-compatibility-matrix.pdf">Compatibility Matrix</a> and tile documentation to check version compatibility.</td>
 <td>Service Tiles </td>
 </tr>
 <tr>
@@ -112,7 +112,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td>Read <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html">Upgrading Pivotal Cloud Foundry</a> in the PCF v2.1 documentation and complete all relevant actions</td>
+<td>Review <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html">Upgrading Pivotal Cloud Foundry</a> in the PCF v2.1 documentation and complete all relevant actions</td>
 <td><p>Review all of the upgrade notes.</p>
 <ul><li>Ensure that lifecycle errands are enabled for your installed tiles.</li>
 <li>Ensure that your persistent disk usage is &lt; 50%.</li>
@@ -120,13 +120,13 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td>Review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">Pivotal Application Service v2.1 Release Notes</a>.</td>
-<td>See notes for details.</td>
+<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">Pivotal Application Service v2.1 Release Notes</a>.</td>
+<td>See the PAS release notes for details.</td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html">PCF Ops Manager Release v2.1 Release Notes</a></td>
-<td><p>Review release notes for any feature changes that may affect you during or after upgrade.</p>
+<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html">PCF Ops Manager Release v2.1 Release Notes</a></td>
+<td><p>See the Ops Manager release notes for any feature changes that may affect you during or after upgrade.</p>
 <p>BOSH CLI output formatting has changed. If your deployment uses scripts that rely on BOSH output, you must update them to interpret <a href="https://bosh.io/docs/cli-v2/">BOSH CLI v2</a> command output</p></td>
 <td>Ops Manager</td>
 </tr>
@@ -170,8 +170,8 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Review the <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/index.html#new">KPI Changes from PCF v2.0 to v2.1</a>.</p>
-	<p>For complete descriptions of each KPI, refer to <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html">Key Performance Indicators</a>.</p></td>
+<td><p>Review <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/index.html#new">KPI Changes from PCF v2.0 to v2.1</a>.</p>
+	<p>For complete descriptions of each KPI, see <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html">Key Performance Indicators</a>.</p></td>
 <td>This document highlights new and changed Key Performance Indicators (KPIs) that operators may want to monitor with their PCF deployment to help ensure it is in a good operational state.</td>
 <td>PAS</td>
 </tr>
@@ -180,7 +180,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td><p>The KPIs that monitor these these resources are are:</p>
 <ul><li><code>rep.CapacityRemainingMemory</code></li>
 	<li><code>rep.CapacityRemainingDisk</code></li></ul>
-<p>See the <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information on these KPIs.</p></td>
+<p>Review the <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information about these KPIs.</p></td>
 <td>PAS</td>
 </tr>
 <tr>
@@ -189,7 +189,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td>If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. Refer to <a href="https://docs.pivotal.io/pivotalcf/1-11/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.</td>
+<td>If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See <a href="https://docs.pivotal.io/pivotalcf/1-11/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.</td>
 <td>For PCF 1.10 and later, the maximum number of cells that can update at once, <code>max_in_flight</code> is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the <a href="https://docs.pivotal.io/pivotalcf/1-12/adminguide/diego-cell-upgrade.html#limitations-considerations">Preventing Overload</a> section for details.</td>
 <td>PAS</td>
 </tr>
@@ -284,7 +284,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <tr>
 <td><p>If you are running PAS MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.</p>
 </td>
-<td><p>Refer to the BOSH CLI v2 instructions in the <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html">Running mysql-diag</a> topic.</p></td>
+<td><p>See the BOSH CLI v2 instructions in the <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html">Running mysql-diag</a> topic.</p></td>
 <td>PAS</td>
 </tr>
 <tr>
