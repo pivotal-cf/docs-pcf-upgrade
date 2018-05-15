@@ -224,7 +224,15 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Monitor upgrade progress.</p></td>
+<td><p>Monitor upgrade progress with methods such as:</p>
+	<ul><li>Run BOSH CLI status checks: 
+		<ul><li><code>bosh -e ALIAS task TASK_NUMBER</code></li>
+			<li><code>bosh -e ALIAS vms --vitals, bosh -e ALIAS instances --ps</code></li></ul></li>
+	<li>Check app availability</li>
+	<li>Run cf CLI Commands</li>
+	<li>Check the availability of the Ops Manager GUI</li>
+	<li>Check NAS performance (if using NAS)</li>
+	<li>Check vSphere performance (if on vSphere)</li></ul></td>
 <td>Monitor the progress of the upgrade, checking the status of the foundation at various locations.</td>
 <td>PCF</td>
 </tr>
