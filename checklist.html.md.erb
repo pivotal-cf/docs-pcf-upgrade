@@ -1,11 +1,15 @@
 ---
-title: Upgrade Checklist for PCF v2.0 to v2.1
+title: Upgrade Checklist for PCF v2.0
 owner: Ops Manager
 ---
 
+<p class='note'><strong>Note:</strong> Elastic Runtime has been renamed Pivotal Application Service.</p>
+
+This topic serves as a checklist for upgrading Pivotal Cloud Foundry (PCF) from v1.12 to v2.0.
+
 ## <a id="compatibility"></a>Tile Compatibility
 
-Before you upgrade to PCF v2.1, please check whether PCF v2.1 supports the service tile versions that you currently have deployed.
+Before you upgrade to PCF v2.0, please check whether PCF v2.0 supports the service tile versions that you currently have deployed.
 
 The [Product Compatibility Matrix](
 http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
@@ -16,7 +20,7 @@ To check PCF version support for any service tile, from Pivotal or a Pivotal par
 * Select the tile version in the **Releases** dropdown.
 * See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
 
-If the currently-deployed version of a tile is not compatible with PCF v2.1, you must upgrade the tile before you upgrade PCF. You need not upgrade tiles that are compatible with both PCF v2.0 and v2.1.
+If the currently-deployed version of a tile is not compatible with PCF v2.0, you must upgrade the tile before you upgrade PCF. You do not need to upgrade tiles that are compatible with both PCF v1.12 and v2.0.
 
 When you have completed your upgrade please take some time to complete [this survey](https://docs.google.com/forms/d/e/1FAIpQLScf9KuTbF3B9CjldMGqQxF-GA72xMR0DGzaGmhX4uWMrD8pOA/viewform?c=0&w=1).
 
@@ -27,7 +31,7 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 |                                                                         |                                                                  | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
 | ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------ | ------------- | -------- | ------------ |
 | **Pivotal Cloud Foundry**                                                   | [Ops Manager](https://network.pivotal.io/products/ops-manager) |              |               |          |              |
-|                                                                         | [Pivotal Application Service](https://network.pivotal.io/products/elastic-runtime) (PAS)     |              |               |          |              |
+|                                                                         | [Pivotal Application Service](https://network.pivotal.io/products/elastic-runtime) (PAS, formerly Elastic Runtime)     |              |               |          |              |
 | **Pivotal Cloud Foundry Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
 |                                                                         | [Redis](https://network.pivotal.io/products/p-redis)                                                            |              |               |          |              |
 |                                                                         | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq)                                                         |              |               |          |              |
@@ -38,56 +42,127 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 | **Pivotal Cloud Foundry Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic)                                                        |              |               |          |              |
 |                                                                         | ...                                                           |              |               |          |              |
 
-## <a id="anchor-4"></a>PAS 2.1 Known Issues in the Pivotal Knowledge Base
+## <a id="known-issues"></a>PAS 2.0 Known Issues in the Pivotal Knowledge Base
 
-The following Pivotal Knowledge Base (KB) articles describe known issues for PCF v2.1:
+The following Pivotal Knowledge Base (KB) articles describe known issues for PCF v2.0:
 
-* [Disabling SAML Identity Provider When Switching Identity Providers for PCF 2.1](https://discuss.pivotal.io/hc/en-us/articles/360000793534)
-* [How to Bind Volume Services With a Read-Only Mount Point](https://discuss.pivotal.io/hc/en-us/articles/360000953413)
-* [Graceful Shutdown of .NET apps in Cloud Foundry Windows](https://discuss.pivotal.io/hc/en-us/articles/115005092734)
-* [Tile Smoke Tests Fail if they Assume a Shared System Domain Exists](https://discuss.pivotal.io/hc/en-us/articles/360001668154)
+
+* [Application instance fails with "Directory renamed before its status could be extracted"](https://discuss.pivotal.io/hc/en-us/articles/115013649927)                                    
+
+* [Update of PCF RabbitMQ Causes PCF Push Notifications Downtime](https://discuss.pivotal.io/hc/en-us/articles/115013902908)                        
+
+* [Service Network Deployment on Azure Fails with "Private static IP address falls within reserved IP range"](https://discuss.pivotal.io/hc/en-us/articles/115013714927)                                        
+
+* [Autoscaler shows error "Unable to scale due to Cloud Controller error"](https://discuss.pivotal.io/hc/en-us/articles/115013654087)                      
+
+* [Bosh commands are returning 'unresponsive agent'](https://discuss.pivotal.io/hc/en-us/articles/115013028947)                                        
+
+* [How to change a client secret as a user in Pivotal Cloud Foundry](https://discuss.pivotal.io/hc/en-us/articles/115013904068)                                          
+
+* [CredHub for PCF 2.0 fails with "Unable to render instance groups" as encryption password must be 20 characters](https://discuss.pivotal.io/hc/en-us/articles/115015203388)                                    
+
+* [Disabling or Opting Out of BOSH DNS in PCF](https://discuss.pivotal.io/hc/en-us/articles/115015720428)                                           
+
+* [Upgrade SSO Service Tile between PCF 1.12 and PCF 2.0](https://discuss.pivotal.io/hc/en-us/articles/115015825568)                                           
+
+* [Operations Manager Does not sync with the configured NTP server in PCF 2.0](https://discuss.pivotal.io/hc/en-us/articles/360001459653)                                           
+
+* [Java Application gets OutOfMemory Exit Code 137 due to MALLOC\_ARENA\_MAX in Java Build Pack 4.8](https://discuss.pivotal.io/hc/en-us/articles/360000701833)                                           
+
+* [Isolation Segment Fails on Fresh Install of Cloud Foundry Application Service 2.0 through 2.0.3 with Route Services Enabled](https://discuss.pivotal.io/hc/en-us/articles/360000863274)                        
+
+* [Cloud Foundry Application Services 2.0 and above Fresh Install Fails while Updating CredHub Instance](https://discuss.pivotal.io/hc/en-us/articles/360000825793)                                      
+
+* [How to Edit Operations Manager actual-installation.yml](https://discuss.pivotal.io/hc/en-us/articles/360000541414)                      
+
+* [“Client Registration with UAA Failed" Error when Binding App to Single Sign-On (SSO) Instance](https://discuss.pivotal.io/hc/en-us/articles/360000580554)                                      
+
+* [Applications crash when GrootFS is enabled for PCF 2.0](https://discuss.pivotal.io/hc/en-us/articles/360001784693)                                           
+
+* [Healthwatch Installation Fails on a Non-RFC 1918 Network](https://discuss.pivotal.io/hc/en-us/articles/360000475333)                                       
+
+* [BOSH DNS Introduced Container DNS Behavior Changes in PAS 2.0](https://discuss.pivotal.io/hc/en-us/articles/360001578654)                                    
+
+* [How to Cancel All Queued BOSH Tasks Using director\_ctl](https://discuss.pivotal.io/hc/en-us/articles/360000765353)                                 
+
+* [Bosh Commands Hang Indefinitely or Timeout](https://discuss.pivotal.io/hc/en-us/articles/115015708488)                                       
+
 * [Restore from PAS Automated Database Backup is Not Supported in 1.11 and later](https://discuss.pivotal.io/hc/en-us/articles/360001817593)
-* [How to Edit Ops Manager actual-installation.yml](https://discuss.pivotal.io/hc/en-us/articles/360000541414)
-* [`Client Registration with UAA Failed` Error when Binding App to Single Sign-On (SSO) Instance](https://discuss.pivotal.io/hc/en-us/articles/360000580554)
-* [Healthwatch Installation Fails on a Non-RFC 1918 Network](https://discuss.pivotal.io/hc/en-us/articles/360000475333)
-* [How to Cancel All Queued BOSH Tasks Using director\_ctl](https://discuss.pivotal.io/hc/en-us/articles/360000765353)
-* [BOSH Commands Hang Indefinitely or Timeout](https://discuss.pivotal.io/hc/en-us/articles/115015708488)
-* [Deployment fails when PAS 2.1 is configured to use the NSX-T CNI plugin](https://discuss.pivotal.io/hc/en-us/articles/360003094974)
-* [Errands intermittently fail with EOF error when executing `cf auth` on NetScaler](https://discuss.pivotal.io/hc/en-us/articles/360002507573)
-* [Enabling EBS Volume Encryption for PCF on AWS](https://discuss.pivotal.io/hc/en-us/articles/360002514593)
 
-## <a id="anchor-5"></a>PCF 2.1 Breaking Changes 
+* [Applications crash due to reaching container pid\_limit](https://discuss.pivotal.io/hc/en-us/articles/360001784673)                                    
 
-PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 Breaking Changes](http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/breaking-changes.html) in the PCF Release Notes.
+* [MySQL Monitor VM shows High Memory Usage](https://discuss.pivotal.io/hc/en-us/articles/360002998293)                                         
+
+* [Errands intermittently fail with EOF error when executing 'cf auth' on NetScaler](https://discuss.pivotal.io/hc/en-us/articles/360002507573)                                     
+
+* [Enabling EBS Volume Encryption for PCF on AWS](https://discuss.pivotal.io/hc/en-us/articles/360002514593)                                           
+
+
+## <a id="breaking"></a>PCF 2.0 Breaking Changes 
+
+PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 Breaking Changes](http://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/breaking-changes.html) in the PCF Release Notes.
 
 <table>
 <tbody>
 <tr>
-<th><strong>Breaking Change</strong></th>
-<th><strong>Details</strong></th>
+<td><strong>Breaking Change</strong></td>
+<td><strong>Affected Products</strong></td>
+<td><strong>Details</strong></td>
 </tr>
 <tr>
-<td>Ops Manager removed IP address management</td>
-<td><p>Prior to v2.1, Ops Manager allocated and assigned IP addresses manually in the deployment manifest. This caused deployment failures when Ops Manager and the BOSH Director had mismatches on their IP address assignments.</p>
-<p>Ops Manager now delegates IP address management to the BOSH Director, which gives operators more flexibility and prevents deployment failures. For 2.1 compatibility, developers must change any service or app code that queries Ops Manager for IP addresses so that it instead retrieves the values from BOSH.</p></td>
+<td>Upgrading from Earlier Versions of Pivotal Application Service</td>
+<td>PAS</td>
+<td><p>Before you upgrade to PAS v2.0, you must be running Elastic Runtime v1.12.</p>
+<p>If you are upgrading from a PCF deployment that once included Elastic Runtime v1.7.16 or earlier, you must perform the remedial steps outlined in <a href="https://discuss.pivotal.io/hc/en-us/articles/228639827-App-Usage-Data-and-Events-Data-Becomes-Corrupted-After-Upgrade-or-Install">App Usage Data and Events Data Become Corrupted After Upgrade or Install</a>. If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p></td>
 </tr>
 <tr>
-<td>Removal of Automated Backup Configuration for Internal MySQL</td>
-<td><p>The PAS tile <strong>Internal MySQL</strong> pane no longer includes the <strong>Automated Backups Configuration</strong> field. Pivotal recommends that operators use <a href="https://docs.pivotal.io/pivotalcf/customizing/backup-restore/index.html#bbr">BOSH Backup and Restore</a> to back up Internal MySQL components.</p>
-<p>See <a href="https://discuss.pivotal.io/hc/en-us/articles/360001817593">Restore from PAS Automated Database Backup is Not Supported in 1.11 and later</a> in the KB.</p></td>
+<td>SSO Tile Requires Upgrade</td>
+<td>PCF</td>
+<td>If you have the Single Sign-On (SSO) tile installed, you must upgrade the SSO tile to v1.5.3 and configure the Apps Manager errand before installing PCF v2.0. See <a href="https://discuss.pivotal.io/hc/en-us/articles/115015825568">Upgrade SSO Service Tile resource instance between PCF 1.12 and PCF 2.0</a> in the Pivotal Knowledge Base.</td>
 </tr>
 <tr>
-<td>Spring Cloud Services no longer stores binding credentials in environment variables.</td>
-<td><p>Spring Cloud Services (SCS) 1.5.0 and later <a href="http://docs.pivotal.io/spring-cloud-services/tile-configuration.html#secure-service-instance-credentials-with-credhub">uses CredHub</a> to store binding credentials, rather than saving them in environment variables.</p>
-<p>App developers must change any code that reads binding credentials from the environment so that it retrieves the values from CredHub instead. See the <a href="http://docs.pivotal.io/spring-cloud-services/1-5/release-notes.html#1-5-0">SCS 1.5.0 Release Notes</a> for details.</p></td>
+<td>Internal PAS Credentials</td>
+<td>PAS</td>
+<td><p>Several internal credentials that PAS uses for inter-component communication are now generated and stored in BOSH CredHub instead of Ops Manager. To access these credentials, you must use the CredHub CLI or the Ops Manager API instead of accessing the <strong>Credentials</strong> tab of the PAS tile.</p>
+<p>For a list of the credentials migrated to BOSH CredHub, see the <a href="https://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/runtime-rn.html#credhub">Migration of Internal Credentials to BOSH CredHub</a> section of the PAS v2.0 Release Notes</a>.</p>
+<p>If you opt out of the <a href="https://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/runtime-rn.html#bosh-dns">BOSH DNS feature</a>, Ops Manager stores PCF credentials, not CredHub, as it did in prior versions of PCF.</p></td>
 </tr>
 <tr>
-<td>When the Gorouter uses TLS to communicate with apps, it keeps app connections alive to prevent the performance impact from running TLS.</td>
-<td>By default, each router instance maintains a max of 49 thousand open connections. A checkbox is available to disable this feature in the Ops Manager Director tile <strong>Networking</strong> pane, under <strong>Enable Keepalive Connections for Router</strong>.</td>
+<td>Upgrading with SAML and SHA1 as the signature algorithm</td>
+<td>PAS</td>
+<td><p>PAS does not support SHA1 to sign outbound SAML requests.  If you use SHA1 with PCF v1.12, PAS automatically migrates your SAML signature algorithm to SHA256.</p>
+<p>If you are using an external SAML Identity Provider with Elastic Runtime or the SSO tile in PCF v1.12, and if the provider validates authentication requests with SHA signatures, see <a href="https://discuss.pivotal.io/hc/en-us/articles/115004791554">SHA Signature Support for SAML requests in PAS tile in PCF 2.0</a> in the Pivotal Knowledge Base.</p></td>
 </tr>
 <tr>
-<td>With the VMware NSX-T tile installed, updating a PCF deployment by clicking <strong>Apply Changes</strong> causes the BOSH agent to become unresponsive on all Diego cells. </td>
-<td>To fix this problem, run the BOSH CLI command <code>bosh cck</code> ("<a href="https://bosh.io/docs/cck/">cloud check</a>") after the redeployment completes. This command recreates Diego cell VMs, rebooting their BOSH agents and restoring their responsiveness. </td>
+<td>Configuring Router Behavior for Client Certificates while Deploying PAS or PCF Isolation Segment</td>
+<td>PAS, PCF Isolation Segment</td>
+<td>For some deployment configurations, you must configure how PCF handles <code>x-forwarded-client-cert</code> (XFCC) HTTP headers based on where TLS is first terminated in your deployment. In the PAS tile <strong>Networking</strong> pane <strong>Router behavior for Client Certificates field</strong>, you must not select <strong>Router does not request client certificates</strong> if the router needs to support TLS.</td>
+</tr>
+<tr>
+<td>BOSH CLI Renamed</td>
+<td>Ops Man</td>
+<td><p>As with Ops Manager v1.11, the Ops Manager VM runs two versions of the BOSH CLI. But in Ops Manager v2.0, the CLIs have been renamed to make v2.0 of the CLI the default.</p>
+<p>In prior versions of Ops Manager, you ran BOSH CLI v2 commands using <code>bosh2</code>. In Ops Manager v2.0, your run the same commands using <code>bosh</code>. This table compares the command changes:</p>
+	<table><tr><th>BOSH CLI Version</th><th>PCF v1.12</th><th>PCF v2.0</th></tr>
+		<tr><td><strong>BOSH CLI v1</strong></td><td><code>bosh vms</code></td><td><code>bosh-old vms</code></td></tr>
+		<tr><td><strong>BOSH CLI v2</strong></td><td><code>bosh2 -e MY-ENV vms</code></td><td><code>bosh -e MY-ENV vms</code></td></tr></table>
+<p>Many BOSH CLI v1 commands are incompatible with the BOSH Director. Pivotal recommends using BOSH CLI v2 commands for compatibility with future versions of PCF.</p></td>
+</tr>
+<tr>
+<td>Disabling BOSH DNS for Ops Manager Director</td>
+<td>Ops Man</td>
+<td><p>Do not disable BOSH DNS without consulting Pivotal Support.</p>
+<p>For more information about disabling BOSH DNS, see <a href="https://discuss.pivotal.io/hc/en-us/articles/115015720428-Disabling-or-Opting-Out-of-BOSH-DNS-in-PCF">Disabling or Opting Out of BOSH DNS in PCF</a> in the Pivotal Knowledge Base. See <a href="https://bosh.io/docs/dns.html">Native DNS Support</a> in the BOSH docs for more information.</p></td>
+</tr>
+<tr>
+<td>BOSH DNS Might Impact App Container DNS Lookups Behavior</td>
+<td>PAS</td>
+<td>App containers might be impacted after upgrade. Refer to <a href="https://discuss.pivotal.io/hc/en-us/articles/360001578654">Bosh DNS introduced Container DNS behavior changes in PAS 2.0</a> in the Pivotal Knowledge Base.</td>
+</tr>
+<tr>
+<td>Reserved Property <code>current_record</code></td>
+<td>Ops Man</td>
+<td>The <code>current_record</code> property is now reserved. You can no longer create a new property named <code>current_record</code> in a collection record.</td>
 </tr>
 </tbody>
 </table>
@@ -102,17 +177,17 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <th><strong>Product or Component</strong></th>
 </tr>
 <tr>
-<td>Upgrade all service tiles to versions compatible with PCF v2.1.</td>
+<td>Upgrade all service tiles to versions compatible with PCF v2.0.</td>
 <td>Review the <a href="http://docs.pivotal.io/resources/product-compatibility-matrix.pdf">Compatibility Matrix</a> and tile documentation to check version compatibility.</td>
 <td>Service Tiles </td>
 </tr>
 <tr>
-<td><p>Back up your PCF deployment. See <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a> and <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/backup-restore/disaster-recovery.html">Disaster Recovery in Pivotal Cloud Foundry</a></p></td>
+<td><p>Back up your PCF deployment. See <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a> and <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/backup-restore/disaster-recovery.html">Disaster Recovery in Pivotal Cloud Foundry</a></p></td>
 <td><p>Pivotal recommends backing up your installation settings before upgrading or otherwise changing your PCF deployment.</p></td>
 <td>PCF</td>
 </tr>
 <tr>
-<td>Review <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html">Upgrading Pivotal Cloud Foundry</a> in the PCF v2.1 documentation and complete all relevant actions</td>
+<td>Review <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/upgrading-pcf.html">Upgrading Pivotal Cloud Foundry</a> in the PCF v2.0 documentation and complete all relevant actions</td>
 <td><p>Review all of the upgrade notes.</p>
 <ul><li>Ensure that lifecycle errands are enabled for your installed tiles.</li>
 <li>Ensure that your persistent disk usage is &lt; 50%.</li>
@@ -120,58 +195,55 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">Pivotal Application Service v2.1 Release Notes</a>.</td>
+<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/runtime-rn.html">Pivotal Application Service v2.0 Release Notes</a>.</td>
 <td>See the PAS release notes for details.</td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html">PCF Ops Manager Release v2.1 Release Notes</a></td>
+<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/opsmanager-rn.html">PCF Ops Manager Release v2.0 Release Notes</a></td>
 <td><p>See the Ops Manager release notes for any feature changes that may affect you during or after upgrade.</p>
-<p>BOSH CLI output formatting has changed. If your deployment uses scripts that rely on BOSH output, you must update them to interpret <a href="https://bosh.io/docs/cli-v2/">BOSH CLI v2</a> command output</p></td>
+	<ul><li>Ops Manager v2.0 introduces support for role-based access control (RBAC). You can assign roles to determine which operators in your organization can make deployment changes, view credentials, and manage user roles in Ops Manager. See <a href="https://docs.pivotal.io/pivotalcf/2-0/opsguide/config-rbac.html">Configuring Role-Based Access Control (RBAC) in Ops Manager</a> for more information.</li></ul></td>
 <td>Ops Manager</td>
 </tr>
 <tr>
-<td>Review the <a href="https://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">Known Issues</a> section of the PAS v2.1 release notes</td>
-<td>This section covers recommended actions, new issues, and existing issues for PAS v2.1.</td>
+<td>Review the <a href="https://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/runtime-rn.html">Known Issues</a> section of the PAS v2.0 release notes</td>
+<td>This section covers recommended actions, new issues, and existing issues for PAS v2.0.
+	<ul><li>There is a bug in the Cloud Controller that affects the operation of tasks. Any time a user runs a task, the following may happen: The task cancels before completing. The task is reported as a failure even if it finishes successfully.</li>
+	<li>If the total length of a syslog message transported locally from a PCF system component (for example, the Cloud Controller or a Diego cell) is greater than 1,024 bytes, the packet is truncated before it reaches RSYSLOG installed on every BOSH VM instance.</li></ul></td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html#known-issues">Known Issues</a> section of the Ops Manager 2.1 release notes.</td>
-<td>This section covers recommended actions, new issues, and existing issues for Ops Man v2.1</td>
+<td>Review the <a href="http://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/opsmanager-rn.html#known-issues">Known Issues</a> section of the Ops Manager 2.0 release notes.</td>
+<td>This section covers recommended actions, new issues, and existing issues for Ops Man v2.0</td>
 <td>Ops Manager</td>
 </tr>
 <tr>
-<td>Review <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/breaking-changes.html">PCF v2.1 Breaking Changes</a>.</td>
-<td>This topic describes the breaking changes you need to be aware of when upgrading PCF v2.1.</td>
+<td>Review <a href="http://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/breaking-changes.html">PCF v2.0 Breaking Changes</a>.</td>
+<td>This topic describes the breaking changes you need to be aware of when upgrading PCF v2.0.</td>
 <td>PCF</td>
-</tr>
-<tr>
-<td>Review <a href="https://docs.pivotal.io/pivotalcf/1-12/security/networking/diego-network-paths.html">Diego Network Communications</a>.</td>
-<td>This topic describes the internal network communication paths between components of <a href="https://docs.pivotal.io/pivotalcf/1-12/concepts/diego/diego-architecture.html">Diego</a> workload management system in PAS.</td>
-<td>PAS</td>
 </tr>
 <tr>
 <td><p>Run and collect foundation health status in at least one of the following ways:</p>
 <ul>
 	<li>If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.</li>
 	<li>Run BOSH CLI commands to check system status:
-		<ul><li><code>bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps</code></li>
-			<li><code>bosh -e ALIAS vms --vitals</code></li>
-			<li><code>bosh -e ALIAS -d DEPLOYMENT_NAME cck --report</code></li>
+		<ul><li><code>bosh2 -e ALIAS -d DEPLOYMENT_NAME instances --ps</code></li>
+			<li><code>bosh2 -e ALIAS vms --vitals</code></li>
+			<li><code>bosh2 -e ALIAS -d DEPLOYMENT_NAME cck --report</code></li>
 		</ul></li>
 	<li>Check Ops Manager GUI each ERT/Tiles the status page for CPU/RAM/DISK utilization</li>
-	<li>Validate Ops manager persistent disk usage is below 50%. If not, follow Prep 6 in the <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html#prepare-env">Ops Manager upgrade docs</a>.</li>
+	<li>Review the Elastic Runtime / PAS <a href="https://docs.pivotal.io/pivotalcf/1-12/monitoring/kpi.html">Key Performance Indicators</a> to ensure that the foundation is healthy.</li>
 </ul>
 </td>
-<td><p><code>bosh vms --vitals</code> reveals VMs with high CPU, high memory, high disk utilization, and with <code>state</code> != <code>running</code>.</p>
-	<p><code>bosh instances</code> with the flags <code>--ps</code>,  <code>--vitals</code>, or <code>--failing</code>highlights individual job failure.</p></li>
+<td><p><code>bosh2 vms --vitals</code> reveals VMs with high CPU, high memory, high disk utilization, and with <code>state</code> != <code>running</code>.</p>
+	<p><code>bosh2 instances</code> with the flags <code>--ps</code>,  <code>--vitals</code>, or <code>--failing</code>highlights individual job failure.</p></li>
 </ul>
 </td>
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Review <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/index.html#new">KPI Changes from PCF v2.0 to v2.1</a>.</p>
-	<p>For complete descriptions of each KPI, see <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html">Key Performance Indicators</a>.</p></td>
+<td><p>Review <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/index.html#new">KPI Changes from PCF v1.12 to v2.0</a>.</p>
+	<p>For complete descriptions of each KPI, see <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/kpi.html">Key Performance Indicators</a>.</p></td>
 <td>This document highlights new and changed Key Performance Indicators (KPIs) that operators may want to monitor with their PCF deployment to help ensure it is in a good operational state.</td>
 <td>PAS</td>
 </tr>
@@ -180,7 +252,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td><p>The KPIs that monitor these these resources are are:</p>
 <ul><li><code>rep.CapacityRemainingMemory</code></li>
 	<li><code>rep.CapacityRemainingDisk</code></li></ul>
-<p>Review the <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information about these KPIs.</p></td>
+<p>Review the <a href="https://docs.pivotal.io/pivotalcf/1-12/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information about these KPIs.</p></td>
 <td>PAS</td>
 </tr>
 <tr>
@@ -194,15 +266,24 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PAS</td>
 </tr>
 <tr>
-<td><p>To save upgrade time, you can disable unused PAS post-deploy errands.</p></td>
+<td><p>To save upgrade time, you can disable unused PAS post-deploy errands, which may include:</p>
+<ul><li>Volume Services; set <strong>Advanced Features</strong> > <strong>NFSv3 Volume Services</strong> to disabled, and <strong>Errands</strong> > <strong>NFS Broker Errand</strong> to <strong>Off</strong></li>
+	<li>Notification Service</li>
+	<li>Notification UI</li></ul></td>
 <td><p>See the <a href="https://docs.pivotal.io/tiledev/1-12/tile-errands.html#post-deploy">Post-Deploy Errands</a> section of the Errands topic for details.</p>
 <p>Only disable these errands if your environment does not need them.</p></td>
 <td>PAS</td>
 </tr>
 <tr>
-<td>Run <code>bosh -e ALIAS clean-up --all</code> to clean up old stemcells, releases, orphaned disks, and other resources before upgrade.</td>
+<td>Run <code>bosh2 -e ALIAS clean-up --all</code> to clean up old stemcells, releases, orphaned disks, and other resources before upgrade.</td>
 <td>This cleanup helps prevent the product and stemcell upload process from exceeding the BOSH Director's available persistent disk space.</td>
 <td>BOSH</td>
+</tr>
+<tr>
+<td><p>If you are running Elastic Runtime MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.</p>
+</td>
+<td><p>See the BOSH CLI v2 instructions in the <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html">Running mysql-diag</a> topic.</p></td>
+<td>PAS</td>
 </tr>
 </tbody>
 </table>
@@ -222,7 +303,15 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Monitor upgrade progress.</p></td>
+<td><p>Monitor upgrade progress with methods such as:</p>
+	<ul><li>Run BOSH CLI status checks: 
+		<ul><li><code>bosh -e ALIAS task TASK_NUMBER</code></li>
+			<li><code>bosh -e ALIAS vms --vitals, bosh -e ALIAS instances --ps</code></li></ul></li>
+	<li>Check app availability</li>
+	<li>Run cf CLI Commands</li>
+	<li>Check the availability of the Ops Manager GUI</li>
+	<li>Check NAS performance (if using NAS)</li>
+	<li>Check vSphere performance (if on vSphere)</li></ul></td>
 <td>Monitor the progress of the upgrade, checking the status of the foundation at various locations.</td>
 <td>PCF</td>
 </tr>
@@ -254,18 +343,12 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <tr>
 <td>Complete the steps in the <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/upgrading-pcf.html#after-upgrade">After You Upgrade</a> section of the Upgrading Pivotal Cloud Foundry topic.</td>
 <td>This ensures that you have the latest version of the Cloud Foundry Command Line Interface (cf CLI).</td>
-<td>ALL</td>
+<td>All</td>
 </tr>
 <tr>
 <td>Push and horizontally scale a test application.</td>
 <td>This is a performance test for PAS.</td>
 <td>PCF</td>
-</tr>
-<tr>
-<td><p>Re-create your alias using BOSH:</p>
-<p><code>bosh alias-env ALIAS -e DIRECTOR_IP</code></p></td>
-<td>To log into BOSH after upgrading PCF, you need to recreate your alias.</td>
-<td>BOSH</td>
 </tr>
 <tr>
 <td>Run BOSH CLI commands to check system status:
@@ -282,7 +365,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>If you are running PAS MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.</p>
+<td><p>If you are running Elastic Runtime MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.</p>
 </td>
 <td><p>See the BOSH CLI v2 instructions in the <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html">Running mysql-diag</a> topic.</p></td>
 <td>PAS</td>
