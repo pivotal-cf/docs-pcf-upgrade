@@ -125,7 +125,7 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 <td>PAS</td>
 <td><p>Several internal credentials that PAS uses for inter-component communication are now generated and stored in BOSH CredHub instead of Ops Manager. To access these credentials, you must use the CredHub CLI or the Ops Manager API instead of accessing the <strong>Credentials</strong> tab of the PAS tile.</p>
 <p>For a list of the credentials migrated to BOSH CredHub, see the <a href="https://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/runtime-rn.html#credhub">Migration of Internal Credentials to BOSH CredHub</a> section of the PAS v2.0 Release Notes</a>.</p>
-<p>If you opt out of the <a href="https://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/runtime-rn.html#bosh-dns">BOSH DNS feature</a>, Ops Manager stores PCF credentials, not CredHub, as it did in prior versions of PCF.</p></td>
+<p>If you opt out of the <a href="https://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/runtime-rn.html#bosh-dns">BOSH DNS feature</a>, Ops Manager stores PCF credentials, as it did in prior versions of PCF, and the credentials are not stored securely in CredHub.</p></td>
 </tr>
 <tr>
 <td>Upgrading with SAML and SHA1 as the signature algorithm</td>
