@@ -275,17 +275,17 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 <p>Only disable these errands if your environment does not need them.</p></td>
 <td>PAS</td>
 </tr>
+<td><p>If you are running Elastic Runtime MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.</p>
+</td>
+<td><p>See the BOSH CLI v2 instructions in the <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html">Running mysql-diag</a> topic.</p></td>
+<td>PAS</td>
+</tr>
 <tr>
 <td>Run <code>bosh2 -e ALIAS clean-up --all</code> to clean up old stemcells, releases, orphaned disks, and other resources before upgrade.</td>
 <td>This cleanup helps prevent the product and stemcell upload process from exceeding the BOSH Director's available persistent disk space.</td>
 <td>BOSH</td>
 </tr>
 <tr>
-<td><p>If you are running Elastic Runtime MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.</p>
-</td>
-<td><p>See the BOSH CLI v2 instructions in the <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html">Running mysql-diag</a> topic.</p></td>
-<td>PAS</td>
-</tr>
 </tbody>
 </table>
 
