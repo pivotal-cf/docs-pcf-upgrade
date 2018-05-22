@@ -109,7 +109,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>Service Tiles </td>
 </tr>
 <tr>
-<td><p>Back up your PCF deployment. See <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a> and <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/backup-restore/disaster-recovery.html">Disaster Recovery in Pivotal Cloud Foundry</a></p></td>
+<td><p>Back up your PCF deployment. See <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a> and <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/backup-restore/disaster-recovery.html">Disaster Recovery in Pivotal Cloud Foundry</a></p></td>
 <td><p>Pivotal recommends backing up your installation settings before upgrading or otherwise changing your PCF deployment.</p></td>
 <td>PCF</td>
 </tr>
@@ -148,8 +148,8 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td>Review <a href="https://docs.pivotal.io/pivotalcf/1-12/security/networking/diego-network-paths.html">Diego Network Communications</a>.</td>
-<td>This topic describes the internal network communication paths between components of <a href="https://docs.pivotal.io/pivotalcf/1-12/concepts/diego/diego-architecture.html">Diego</a> workload management system in PAS.</td>
+<td>Review <a href="https://docs.pivotal.io/pivotalcf/2-1/security/networking/diego-network-paths.html">Diego Network Communications</a>.</td>
+<td>This topic describes the internal network communication paths between components of <a href="https://docs.pivotal.io/pivotalcf/2-1/concepts/diego/diego-architecture.html">Diego</a> workload management system in PAS.</td>
 <td>PAS</td>
 </tr>
 <tr>
@@ -182,7 +182,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td><p>The KPIs that monitor these these resources are are:</p>
 <ul><li><code>rep.CapacityRemainingMemory</code></li>
 	<li><code>rep.CapacityRemainingDisk</code></li></ul>
-<p>Review the <a href="https://docs.pivotal.io/pivotalcf/2-0/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information about these KPIs.</p></td>
+<p>Review the <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information about these KPIs.</p></td>
 <td>PAS</td>
 </tr>
 <tr>
@@ -191,13 +191,13 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <td>PCF</td>
 </tr>
 <tr>
-<td>If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See <a href="https://docs.pivotal.io/pivotalcf/1-11/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.</td>
-<td>For PCF 1.10 and later, the maximum number of cells that can update at once, <code>max_in_flight</code> is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the <a href="https://docs.pivotal.io/pivotalcf/1-12/adminguide/diego-cell-upgrade.html#limitations-considerations">Preventing Overload</a> section for details.</td>
+<td>If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See <a href="https://docs.pivotal.io/pivotalcf/2-0/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.</td>
+<td>For PCF 1.10 and later, the maximum number of cells that can update at once, <code>max_in_flight</code> is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the <a href="https://docs.pivotal.io/pivotalcf/2-0/adminguide/diego-cell-upgrade.html#limitations-considerations">Preventing Overload</a> section for details.</td>
 <td>PAS</td>
 </tr>
 <tr>
 <td><p>To save upgrade time, you can disable unused PAS post-deploy errands.</p></td>
-<td><p>See the <a href="https://docs.pivotal.io/tiledev/1-12/tile-errands.html#post-deploy">Post-Deploy Errands</a> section of the Errands topic for details.</p>
+<td><p>See the <a href="https://docs.pivotal.io/tiledev/2-0/tile-errands.html#post-deploy">Post-Deploy Errands</a> section of the Errands topic for details.</p>
 <p>Only disable these errands if your environment does not need them.</p></td>
 <td>PAS</td>
 </tr>
@@ -268,7 +268,7 @@ PCF 2.1 has the following breaking changes. For more information, see [PCF v2.1 
 <th><strong>Product/component</strong></th>
 </tr>
 <tr>
-<td>Complete the steps in the <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/upgrading-pcf.html#after-upgrade">After You Upgrade</a> section of the Upgrading Pivotal Cloud Foundry topic.</td>
+<td>Complete the steps in the <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html#after-upgrade">After You Upgrade</a> section of the Upgrading Pivotal Cloud Foundry topic.</td>
 <td>This ensures that you have the latest version of the Cloud Foundry Command Line Interface (cf CLI).</td>
 <td>ALL</td>
 </tr>
