@@ -182,7 +182,7 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 <td>Service Tiles </td>
 </tr>
 <tr>
-<td><p>Back up your PCF deployment. See <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a> and <a href="https://docs.pivotal.io/pivotalcf/2-0/customizing/backup-restore/disaster-recovery.html">Disaster Recovery in Pivotal Cloud Foundry</a></p></td>
+<td><p>Back up your PCF deployment. See <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a> and <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/backup-restore/disaster-recovery.html">Disaster Recovery in Pivotal Cloud Foundry</a></p></td>
 <td><p>Pivotal recommends backing up your installation settings before upgrading or otherwise changing your PCF deployment.</p></td>
 <td>PCF</td>
 </tr>
@@ -232,7 +232,7 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 			<li><code>bosh2 -e ALIAS -d DEPLOYMENT_NAME cck --report</code></li>
 		</ul></li>
 	<li>Check Ops Manager GUI each ERT/Tiles the status page for CPU/RAM/DISK utilization</li>
-	<li>Validate Ops Manager persistent disk usage is below 50%. If not, follow Prep 6 in the <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html#prepare-env">Ops Manager upgrade docs</a>.</li>
+	<li>Validate Ops Manager persistent disk usage is below 50%. If not, follow Prep 6 in the <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html#prepare-env">Ops Manager upgrade docs</a>.</li>
 	<li>Review the Elastic Runtime / PAS <a href="https://docs.pivotal.io/pivotalcf/1-12/monitoring/kpi.html">Key Performance Indicators</a> to ensure that the foundation is healthy.</li>
 </ul>
 </td>
@@ -262,7 +262,7 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 <td>PCF</td>
 </tr>
 <tr>
-<td>If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See <a href="https://docs.pivotal.io/pivotalcf/1-11/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.</td>
+<td>If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See <a href="https://docs.pivotal.io/pivotalcf/1-12/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.</td>
 <td>For PCF 1.10 and later, the maximum number of cells that can update at once, <code>max_in_flight</code> is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the <a href="https://docs.pivotal.io/pivotalcf/1-12/adminguide/diego-cell-upgrade.html#limitations-considerations">Preventing Overload</a> section for details.</td>
 <td>PAS</td>
 </tr>
