@@ -58,8 +58,10 @@ PCF 2.2 has the following breaking changes. For more information, see [PCF v2.2 
 <th><strong>Details</strong></th>
 </tr>
 <tr>
-<td>TK</td>
-<td>TK</td>
+<td>Temporary Downtime when Migrating Internal System Databases</td>
+<td><p>Upgrading existing internal system databases to the new default option of **Internal Databases - MySQL with TLS** causes temporary downtime of PAS system functions. It does not interrupt apps hosted by PAS.</p>
+	<p>The length of downtime depends on multiple factors, including database size, persistent disk type, CPU and disk capacity of VMs, and PAS configuration.</p>
+</td>
 </tr>
 <tr>
 <td>TK</td>
