@@ -134,6 +134,12 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 <p>If you are using an external SAML Identity Provider with Elastic Runtime or the SSO tile in PCF v1.12, and if the provider validates authentication requests with SHA signatures, see <a href="https://discuss.pivotal.io/hc/en-us/articles/115004791554">SHA Signature Support for SAML requests in PAS tile in PCF 2.0</a> in the Pivotal Knowledge Base.</p></td>
 </tr>
 <tr>
+<td>Temporary Downtime while HAProxy Waits for Gorouter TLS Handshake</td>
+<td>PAS</td>
+<td><p>If you are using HAProxy, upgrading to PCF v2.0 may cause temporary app downtime depending on your settings for router behavior and XFCC header forwarding.</p>
+<p>If your apps to not require mutual TLS, you can avoid this downtime by following the procedure outlined under <a href="http://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/breaking-changes.html#haproxy-downtime">Temporary Downtime while HAProxy Waits for Gorouter TLS Handshake</a> in the Breaking Changes topic.</p></td>
+</tr>
+<tr>
 <td>Configuring Router Behavior for Client Certificates while Deploying PAS or PCF Isolation Segment</td>
 <td>PAS, PCF Isolation Segment</td>
 <td>For some deployment configurations, you must configure how PCF handles <code>x-forwarded-client-cert</code> (XFCC) HTTP headers based on where TLS is first terminated in your deployment. In the PAS tile <strong>Networking</strong> pane <strong>Router behavior for Client Certificates field</strong>, you must not select <strong>Router does not request client certificates</strong> if the router needs to support TLS.</td>
