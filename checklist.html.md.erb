@@ -116,6 +116,12 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 <p>If you are upgrading from a PCF deployment that once included Elastic Runtime v1.7.16 or earlier, you must perform the remedial steps outlined in <a href="https://discuss.pivotal.io/hc/en-us/articles/228639827-App-Usage-Data-and-Events-Data-Becomes-Corrupted-After-Upgrade-or-Install">App Usage Data and Events Data Become Corrupted After Upgrade or Install</a>. If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p></td>
 </tr>
 <tr>
+<td>Missing Stemcell Causes Failure to Deploy</td>
+<td>PCF</td>
+<td><p>In PCF v1.12 and earlier, the BOSH Director may delete stemcells required by errands. This causes upgrades from v1.12 to v2.0 to fail with <code>Error: Stemcell doesn't exist</code>. To prevent this error, you need to download a current stemcell, and then upload it either from Ops Manager or by running <code>bosh upload-stemcell</code> from the BOSH CLI.</p>
+<p>See the Pivotal Knowledge Base article <a href="https://community.pivotal.io/s/article/Deploy-fails-with-Error-Stemcell-doesnt-exist">Deploy fails with Error: Stemcell doesn't exist</a> for details.</p></td>
+</tr>
+<tr>
 <td>SSO Tile Requires Upgrade</td>
 <td>PCF</td>
 <td>If you have the Single Sign-On (SSO) tile installed, you must upgrade the SSO tile to v1.5.3 and configure the Apps Manager errand before installing PCF v2.0. See <a href="https://discuss.pivotal.io/hc/en-us/articles/115015825568">Upgrade SSO Service Tile resource instance between PCF 1.12 and PCF 2.0</a> in the Pivotal Knowledge Base.</td>
