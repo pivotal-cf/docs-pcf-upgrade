@@ -140,7 +140,7 @@ PCF 2.0 has the following breaking changes. For more information, see [PCF v2.0 
 <p>If you are using an external SAML Identity Provider with Elastic Runtime or the SSO tile in PCF v1.12, and if the provider validates authentication requests with SHA signatures, see <a href="https://discuss.pivotal.io/hc/en-us/articles/115004791554">SHA Signature Support for SAML requests in PAS tile in PCF 2.0</a> in the Pivotal Knowledge Base.</p></td>
 </tr>
 <tr>
-<td>Temporary Downtime while HAProxy Waits for Gorouter TLS Handshake</td>
+<td>Temporary Downtime due to Connection Failure between HAProxy and Gorouter</td>
 <td>PAS</td>
 <td><p>If you are using HAProxy, upgrading to PCF v2.0 may cause temporary app downtime depending on your settings for router behavior and XFCC header forwarding.</p>
 <p>If your apps to not require mutual TLS, you can avoid this downtime by following the procedure outlined under <a href="http://docs.pivotal.io/pivotalcf/2-0/pcf-release-notes/breaking-changes.html#haproxy-downtime">Temporary Downtime while HAProxy Waits for Gorouter TLS Handshake</a> in the Breaking Changes topic.</p></td>
