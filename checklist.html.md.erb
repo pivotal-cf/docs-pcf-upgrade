@@ -40,12 +40,24 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 | **Pivotal Cloud Foundry Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic)                                                        |              |               |          |              |
 |                                                                         | ...                                                           |              |               |          |              |
 
-## <a id="known-issues"></a>PAS v2.2 Known Issues in the Pivotal Knowledge Base
+## <a id="known-issues"></a>PCF v2.2 Known Issues
 
-The following Pivotal Knowledge Base (KB) articles describe known issues for PCF v2.2:
+**Ops Manager v2.2** has the following known issue. See [Known Issues](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/opsmanager-rn.html#known-issues) in _PCF Ops Manager v2.2 Release Notes_ for details:
 
-* [Apps Continue to server routes even after deletion](https://discuss.pivotal.io/hc/en-us/articles/360002106753)
-* TK
+* Operations Manager Validation Returns TLS Error When Configuring BOSH Director S3 Blobstore
+
+**PAS v2.2** has the following known issues. See [Known Issues](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/runtime-rn.html#known-issues) in _Pivotal Application Service v2.2 Release Notes_ for details:
+
+* Some Components Use Go v1.9 to Avoid x.509 Cert Errors in v1.10
+
+* Apps Serve Routes Even After App Deletion Due To MySQL Errors
+
+* Deployment Fails Because Monit Reports Job as Failed
+
+**PAS for Windows v2.2** has the following known issue. See [Known Issues](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/windows-rn.html#known-issues) in _PAS for Windows v2.2 Release Notes_ for details:
+
+* Deploying PAS for Windows Tile Results in an Access is Denied Error
+
 
 ## <a id="breaking"></a>PCF v2.2 Breaking Changes 
 
@@ -58,13 +70,29 @@ PCF 2.2 has the following breaking changes. For more information, see [PCF v2.2 
 <th><strong>Details</strong></th>
 </tr>
 <tr>
+<td>Log Aggregation Systems May Parse Diego Timestamps Incorrectly</td>
+<td>The timestamps in the Diego component logs are now in a format compatible with <a href="https://tools.ietf.org/html/rfc3339">RFC 3339</a>. Before enabling the new timestamp format for Diego logs, ensure that your log aggregation system anticipates the timestamp format change.</td>
+</tr>
+<tr>
+<td>SSH Proxy May Restrict Client Access</td>
+<td>The SSH proxy now accepts a narrower range of ciphers, MACs, and key exchanges. This feature may have complications if you use a SSH client other than <code>cf ssh</code> to connect.</td>
+</tr>
+<tr>
 <td>Temporary Downtime when Migrating Internal System Databases</td>
 <td><p>Upgrading existing internal system databases to the new option of <strong>Internal Databases - MySQL - Percona XtraDB Cluster</strong> causes temporary downtime of PAS system functions. It does not interrupt apps hosted by PAS.</p>
 </td>
 </tr>
 <tr>
-<td>TK</td>
-<td>TK</td>
+<td>App Autoscaler Fails When Loggregator's Log Cache Is Disabled</td>
+<td>App Autoscaler relies on API endpoints in Loggregator's Log Cache component. If you disable Log Cache, App Autoscaler will fail.</td>
+</tr>
+<tr>
+<td>Redeploy All Products After Upgrading to Ops Manager v2.2</td>
+<td>When upgrading to PCF v2.2, redeploy all product tiles by clicking <strong>Apply Changes</strong> in the Ops Manager installation dashboard. A universal redeploy ensures that the updated BOSH DNS release applies consistently to all products.</td>
+</tr>
+<tr>
+<td>Ops Manager Logs Have Changed Locations</td>
+<td>Ops Manager centralized its logs so that you can now configure a syslog server in the Ops Manager **Settings**. Because of this feature change for Ops Manager v2.2, you cannot run scripts to fetch Ops Manager logs at their previous locations.</td>
 </tr>
 </tbody>
 </table>
@@ -93,7 +121,8 @@ PCF 2.2 has the following breaking changes. For more information, see [PCF v2.2 
 <td><p>Review all of the upgrade notes.</p>
 <ul><li>Ensure that lifecycle errands are enabled for your installed tiles.</li>
 <li>Ensure that your persistent disk usage is &lt; 50%.</li>
-<li>Ensure that you know your decryption passphrase and have it stored safely.</li></ul></td>
+<li>Ensure that you know your decryption passphrase and have it stored safely.</li>
+<li>If you disabled BOSH DNS, reenable it.</li></ul></td>
 <td>PCF</td>
 </tr>
 <tr>
