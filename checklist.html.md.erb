@@ -94,6 +94,10 @@ PCF 2.2 has the following breaking changes. For more information, see [PCF v2.2 
 <td>Ops Manager Logs Have Changed Locations</td>
 <td>Ops Manager centralized its logs so that you can now configure a syslog server in the Ops Manager **Settings**. Because of this feature change for Ops Manager v2.2, you cannot run scripts to fetch Ops Manager logs at their previous locations.</td>
 </tr>
+<tr>
+<td>Ops Manager API Does Not Return Secret Properties</td>
+<td>The Ops Manager API v2.2 `GET` response from the <code>/api/v0/staged/director/properties</code> endpoint no longer includes the GCS blobstore service key, Health Monitor emailer SMTP password, or Health Monitor PagerDuty service key properties. This change may break any code that relies on retrieving these properties.</td>
+</tr>
 </tbody>
 </table>
 
