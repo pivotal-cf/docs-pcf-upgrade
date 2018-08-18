@@ -100,22 +100,19 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 ## <a id="breaking"></a>PCF v1.12 Breaking Changes 
 
-For more information regarding breaking changes in PCF v1.12, please
-refer to
-[*this*](https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/breaking-changes.html)
-article. 
+PCF v1.12 has the following breaking changes. For more information, see [PCF v2.0 Breaking Changes](http://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/breaking-changes.html) in the PCF Release Notes.
 
 <table>
 <tbody>
 <tr>
-<td><strong>Breaking Changes</strong></td>
+<td><strong>Component or Service</strong></td>
 <td><strong>Affected Product</strong></td>
 <td><strong>Details</strong></td>
 </tr>
 <tr>
 <td>Isolation Segment </td>
 <td>Elastic Runtime</td>
-<td><p><strong>This issue has been addressed in PCF v1.12.18 and later. If upgrading from PCF v1.11 to v1.12 please upgrade to at least PCF v1.12.18</strong></p>
+<td><p><strong>This issue has been addressed in PCF v1.12.18 and later. If upgrading from PCF v1.11 to v1.12 please upgrade to at least PCF v1.12.18.</strong></p>
 <p>If you upgrade from PCF v1.11 to v1.12 and the PCF Isolation Segment tile is installed on your foundation, any apps deployed to a space associated with the tile may become unreachable until you manually restart them or map an arbitrary route to each of them.<br />
 <br />
 This happens because the isolation segment metadata for your existing apps is not automatically sent to the Gorouter on upgrade. Once you restart a given app or map a route to it, the Gorouter will receive the updated route information, including the isolation segment metadata.<br />
@@ -158,14 +155,12 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td>Ops Manager v1.12.0 uses the BOSH Command Line Interface (CLI) v2. In v2, the formatting of the CLI output has changed. If your deployment uses scripts that rely on BOSH output, you must refactor them to interpret the command output of the BOSH CLI v2. For more information about the BOSH CLI v2, see <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/opsmanager-rn.html#bosh2">Pivotal Operations Manager Release Notes</a>.</td>
 </tr>
 <tr>
-<td><p>Director Certificate Rotation</p>
-<p>## <a id="anchor-8"></a>a></p></td>
+<td>Director Certificate Rotation</td>
 <td>Elastic Runtime</td>
 <td>If your original Elastic Runtime deployment was PCF v1.6 or earlier, you must regenerate the non-configurable Director certificates to deploy CredHub. During a deploy, CredHub attempts to verify the connection to UAA on the BOSH Director with the Ops Manager certificate Subject Alternative Name (SAN). Ops Manager 1.6 and earlier generated non-configurable certificate SANs in a format that CredHub does not understand. For more information, see <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/opsmanager-rn.html#credhub-certs">CredHub Requires Director Certificate Rotation</a>.</td>
 </tr>
 <tr>
-<td><p>PCF Log Search</p>
-<p>## <a id="anchor-9"></a>a></p></td>
+<td><p>PCF Log Search</p></td>
 <td>Ops Man</td>
 <td><p>PCF Log Search is not compatible with PCF v1.12. If your deployment contains PCF Log Search, you must remove the product tile before upgrading to PCF v1.12. Failure to remove this product prior to the upgrade may cause issues with your deployment.</p>
 <p>For more information, see the <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html">Upgrading Pivotal Cloud Foundry</a> topic.</p></td>
@@ -186,58 +181,58 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td><p>Ensure all backups have been carried out.</p>
 </td>
 <td><p>Pivotal recommends frequently backing up your installation settings before making any changes to your PCF deployment.</p>
-<p>See <a href="https://docs.pivotal.io/pivotalcf/1-11/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a></p></td>
+<p>See <a href="https://docs.pivotal.io/pivotalcf/1-11/customizing/backup-restore/index.html">Backing Up and Restoring Pivotal Cloud Foundry</a>.</p></td>
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Read <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html">upgrade notes</a> for upgrading to v1.12 and complete all relevant actions</p></td>
+<td><p>Read <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html">Upgrading Pivotal Cloud Foundry</a> for upgrading to v1.12 and complete all relevant actions.</p></td>
 <td><p>Please review all of the upgrade notes.</p>
 	<ul><li>If your deployment contains PCF Log Search, you must remove the product tile before upgrading. Failure to remove this product prior to upgrade may cause issues with your deployment.</li>
 	<li>Ensure you have lifecycle errands enabled for your products.</li>
 	<li>If your existing PCF v1.11.x installation includes both PCF Runtime for Windows and MySQL for PCF v1.x, you must upgrade to MySQL for PCF v1.10.3 or later before you upgrade to PCF Pivotal Application Service v1.12.</li>
-	<li>Ensure your persistent disk usage is < 50%.</li>
-	<li>Ensure you have your <strong>Decryption Passphrase</strong> stored and known before upgrading.</li></ul></td>
+	<li>Ensure that your persistent disk usage is < 50%.</li>
+	<li>Ensure that you have your <strong>Decryption Passphrase</strong> stored and known before upgrading.</li></ul></td>
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Read and review <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/runtime-rn.html">Release notes</a> for Elastic Runtime v1.12</p></td>
+<td><p>Read and review <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/runtime-rn.html">Pivotal Elastic Runtime v1.12 Release Notes</a></p></td>
 <td><p>Review all release notes for any feature changes that may affect you during or after upgrade.</p>
 	<ul><li>You must upgrade first to a version of Pivotal Application Service v1.11.x to successfully upgrade to v1.12.</li>
 	<li>Releases 1.12.10 and 1.12.11 introduce a bug that causes BBR backups to fail due to a missing default domain in the mysql-backup certificate. We recommend skipping this release and upgrading to 1.11.24 or higher, which resolves this issue. More information can be found in the Knowledge Base article <a href="https://community.pivotal.io/s/article/Pivotal-Application-Service-Backup-and-Restore-Fails-due-to-Missing-Streaming-mysql-backup-tool-Domain">Pivotal Application Service Backup and Restore Fails due to Missing Streaming mysql-backup-tool Domain</a>.</li>
-	<li>Review the new features available in Pivotal Application Service 1.12</li>
+	<li>Review the new features available in Pivotal Elastic Runtime v1.12.</li>
 	<li>Internal credentials, the <code>secret</code> and <code>simple_credentials</code> that Pivotal Application Service uses for inter-component communication, are now generated and stored in CredHub instead of Ops Manager. </li>
 	<li>This release removes the etcd server VMs from the PCF deployment. Operators must ensure they are deploying service tiles that are known to be compatible with PCF Elastic Runtime 1.12.</li></ul></td>
 </td>
 <td>Elastic Runtime</td>
 </tr>
 <tr>
-<td><p>Read and review <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/opsmanager-rn.html">Release notes</a> for Ops Manager v1.12</p></td>
+<td><p>Read and review <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/opsmanager-rn.html">PCF Ops Manager v1.12 Release Notes</a></p></td>
 <td><p>Review all release notes for any feature changes that may affect you during or after upgrade.</p>
 	<ul><li>BOSH CLI output formatting has changed. If your deployment uses scripts that rely on BOSH output, you must refactor them to interpret BOSH CLI v2 command output.</li></ul></td>
 </td>
-<td>Ops Man</td>
+<td>Ops Manager</td>
 </tr>
 <tr>
-<td><p>Read and review <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/runtime-rn.html#knownissues">known issues</a> section for Elastic Runtime v1.12 </p></td>
-<td><p>This doc covers recommended actions, new issues and existing issues for Elastic Runtime 1.12</p>
+<td><p>Read and review the <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/runtime-rn.html#knownissues">Known Issues</a> for Elastic Runtime v1.12.</p></td>
+<td><p>This doc covers recommended actions, new issues and existing issues for Elastic Runtime v1.12.</p>
 <p>Some of these issues include:</p>
-	<ul><li>The BOSH Backup and Restore (BBR) script does not restart the CredHub process. Please refer to the Knowledge Base article <a href="https://community.pivotal.io/s/article/Config-Server-Error-when-Redeploying-Elastic-Runtime-with-BBR">Config Server Error when Redeploying Elastic Runtime with BBR</a></li>
+	<ul><li>The BOSH Backup and Restore (BBR) script does not restart the CredHub process. Please refer to the Knowledge Base article <a href="https://community.pivotal.io/s/article/Config-Server-Error-when-Redeploying-Elastic-Runtime-with-BBR">Config Server Error when Redeploying Elastic Runtime with BBR</a>.</li>
 	<li>The Autoscaler job cannot be scaled to greater than one instance.</li></ul></td>
 </td>
 <td>Elastic Runtime</td>
 </tr>
 <tr>
-<td><p>Read and review <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/opsmanager-rn.html#known-issues">known issues</a> section for Ops Manager v1.12</p></td>
-<td><p>This document covers recommended actions, new issues and existing issues for Ops Manager v1.12</p>
+<td><p>Read and review the <a href="https://docs.pivotal.io/pivotalcf/1-12/pcf-release-notes/opsmanager-rn.html#known-issues">Known Issues</a>  for Ops Manager v1.12.</p></td>
+<td><p>This document covers recommended actions, new issues and existing issues for Ops Manager v1.12.</p>
 <p>Some of these issues include:</p>
 	<ul><li>If your deployment contains PCF Log Search, you must remove the product tile before upgrading. Failure to remove this product prior to upgrade may cause issues with your deployment.</li>
 	<li>If you use any service tile that offers both on-demand and not on-demand modes of operation, clicking <strong>Apply Changes</strong> in Ops Manager fails if you did not define a dedicated service network for the tile.</li>
 	<li>CF Ops assumed that the Ops Manager installation settings artifact contained all necessary releases, which is no longer the case in PCF v1.12. CFOps should not be used to back up and restore PCF v1.12.</li></ul></td>
 </td>
-<td>Ops Man</td>
+<td>Ops Manager</td>
 </tr>
 <tr>
-<td><p>Read and review <strong>Breaking Changes</strong> for Ops Manager and Elastic Runtime v1.12 <a href="#breaking">here</a></p></td>
+<td><p>Read and review the <a href="#breaking">Breaking Changes</a> for Ops Manager and Elastic Runtime v1.12.</p></td>
 <td><p>This topic describes the breaking changes you need to be aware of when upgrading to Pivotal Cloud Foundry v1.12.</p>
 <p>Some of these breaking changes include: </p>
 	<ul><li>Gorouter and HAProxy now always listen for TLS requests. Therefore, you must configure an SSL certificate for Gorouter and HAProxy in Pivotal Application Service.</li>
@@ -246,14 +241,14 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td>PCF</td>
 </tr>
 <tr>
-<td>Review Diego network and Ports <a href="https://docs.pivotal.io/pivotalcf/1-12/security/networking/diego-network-paths.html">here</a></td>
+<td>Review the ports listed in <a href="https://docs.pivotal.io/pivotalcf/1-12/security/networking/diego-network-paths.html">Diego Network Communications</a>.</td>
 <td>This topic describes <a href="https://docs.pivotal.io/pivotalcf/1-12/concepts/diego/diego-architecture.html">Diego</a> internal network communication paths with other Elastic Runtime components.</td>
 <td>PCF</td>
 </tr>
 <tr>
 <td><p>Run and collect foundation health status, using one of the following methods:</p>
 	<ul><li>If external metrics monitoring has been enabled, verify all VM CPU/RAM/DISK utilization is good.</li>
-	<li>Run BOSH CLI directly to verify the status
+	<li>Run BOSH CLI directly to verify the status:
 		<ul><li><code>bosh vms --details</code></li>
 			<li><code>bosh vms --vitals</code></li>
 			<li><code>bosh2 -e ENV_NAME -d DEPLOYMENT_NAME cck</code></li>
@@ -269,7 +264,7 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td>PCF</td>
 </tr>
 <tr>
-<td><p>Review the <a href="https://docs.pivotal.io/pivotalcf/1-12/monitoring/index.html#new">KPI Changes</a> from PCF v1.11 to v1.12</p></td>
+<td><p>Review the <a href="https://docs.pivotal.io/pivotalcf/1-12/monitoring/index.html#new">KPI Changes</a> from PCF v1.11 to v1.12.</p></td>
 <td>This document highlights new and changed Key Performance Indicators (KPIs) that operators may want to monitor with their PCF deployment to help ensure it is in a good operational state.</td>
 <td>PCF</td>
 </tr>
@@ -279,11 +274,11 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td><p>Prior to PCF v1.6, Postgres was the default database for Cloud Controller and UAA. PCF v1.6 introduced MySQL as the default database and PCF v1.12 removes the legacy Postgres database VMs.</p>
 <p>If your deployment was originally installed before PCF v1.6 and still uses Postgres, you must contact your dedicated Support Engineer or Platform Architect for assistance migrating your Cloud Controller and UAA databases to MySQL. They will have access to the PostgreSQL-to-MySQL Migrator tool and instructions on Pivotal Network.</p>
 <p>If you do not migrate to MySQL before upgrading to PCF v1.12, the upgrade will fail during the deployment of the Pivotal Elastic Runtime tile.</p>
-<p>See <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html#postgres">Prep 1: Migrate the CC and UAA Databases from Postgres to MySQL</a></p></td>
+<p>See <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html#postgres">Prep 1: Migrate the CC and UAA Databases from Postgres to MySQL</a>.</p></td>
 <td>Elastic Runtime</td>
 </tr>
 <tr>
-<td><p>Check the remaining Diego Cell RAM and Disk capacity to verify there is sufficient resources for app containers</p></td>
+<td><p>Check the remaining Diego Cell RAM and Disk capacity to verify there is sufficient resources for app containers.</p></td>
 <td><p>The KPIs that monitor these values are:</p>
 <p><code>rep.CapacityRemainingMemory</code></p>
 <p><code>rep.CapacityRemainingDisk</code></p>
@@ -297,7 +292,7 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 </tr>
 <tr>
 <td>Check that a test app can be pushed and scaled horizontally via manual or automatic test.</td>
-<td>To ensure the platform is working as expected before upgrade in relation to pushing an app</td>
+<td>To ensure the platform is working as expected before upgrade in relation to pushing an app.</td>
 <td>PCF</td>
 </tr>
 <tr>
@@ -317,14 +312,14 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td>Elastic Runtime</td>
 </tr>
 <tr>
-<td><p>Update the overlay subnet if you need to avoid address collision with a third-party service on the same subnet</p></td>
+<td><p>Update the overlay subnet if you need to avoid address collision with a third-party service on the same subnet.</p></td>
 <td><p>Starting v1.12 Elastic Runtime, the internal container network overlay subnet changed from <code>10.254.0.0/22</code> to <code>10.255.0.0/16</code>.</p>
-<p>You can update the overlay subnet if needed by going to Elastic Runtime &gt; Networking &gt; Overlay Subnet</p></td>
+<p>You can update the overlay subnet if needed by going to Elastic Runtime &gt; Networking &gt; Overlay Subnet.</p></td>
 <td>PCF</td>
 </tr>
 <tr>
 <td><p>If MySQL is being used with cluster setup, run the mysql-diag tool to validate health of the cluster.</p>
-<p><a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2">http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2</a></p></td>
+<p>See <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2">Run mysql-diag Using BOSH CLI v2</a>.</p></td>
 <td>Validate the health of MySQL before upgrading.</td>
 <td>PCF</td>
 </tr>
@@ -334,8 +329,8 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td></td>
 </tr>
 <tr>
-<td><p>Check IPSec between 2 VMs <a href="http://docs.pivotal.io/addon-ipsec/troubleshooting.html">http://docs.pivotal.io/addon-ipsec/troubleshooting.html</a></p></td>
-<td>To validate IPSec is working as expected before upgrade</td>
+<td><p>Check IPSec between two VMs. See <a href="http://docs.pivotal.io/addon-ipsec/troubleshooting.html">Troubleshooting the IPsec Add-on for PCF</a>.</p></td>
+<td>To validate IPSec is working as expected before upgrade.</td>
 <td>IPSec</td>
 </tr>
 <tr>
@@ -344,13 +339,13 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td></td>
 </tr>
 <tr>
-<td>New Ports in PCF v1.12, set of ports (4003 and 4103) for Diego BBS</td>
-<td><p>There are a new set of ports (4003 and 4103) for Diego BBS </p></td>
+<td>New Ports in PCF v1.12: A set of ports (4003 and 4103) for Diego BBS.</td>
+<td><p>There are a new set of ports (4003 and 4103) for Diego BBS.</p></td>
 <td></td>
 </tr>
 <tr>
-<td>Run <code>bosh cleanup --all</code> to clean up old stemcells/releases/disks for one version upgrade .</td>
-<td>This is done to avoid director persistent disk full during the new products stemcell/releases upload.</td>
+<td>Run <code>bosh cleanup --all</code> to clean up old stemcells/releases/disks for one version upgrade.</td>
+<td>This step avoids filling the BOSH Director persistent disk during the new product stemcell/releases upload.</td>
 <td>Tiles</td>
 </tr>
 </tbody>
@@ -366,7 +361,7 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td><strong>Product/Component</strong></td>
 </tr>
 <tr>
-<td>(Optional) Periodically take snapshots of storage metrics</td>
+<td>(Optional) Periodically take snapshots of storage metrics.</td>
 <td>This step is advised if you have a large foundation and you have experienced storage issues in the past.</td>
 <td>PCF</td>
 </tr>
@@ -388,7 +383,7 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 	<ol><li><code>bosh ssh</code> into a Diego job</li>
 	<li>Run the command <code>cfdot actual-lrp-groups | jq '.instance, .evacuating | values' | jq -s -r 'group_by(.state)[] | .[0].state + ": " + (length | tostring)'</code></li></ol></td>
 </td>
-<td><p>Details regarding cfdot and its uses can be found <a href="https://github.com/cloudfoundry/cfdot">here</a></p></td>
+<td><p>See the <a href="https://github.com/cloudfoundry/cfdot">cfdot repo</a> for details regarding cfdot and its uses.</p></td>
 <td>Elastic Runtime</td>
 </tr>
 <tr>
@@ -413,13 +408,13 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 <td><strong>Product/Component</strong></td>
 </tr>
 <tr>
-<td>After upgrading to 1.12 complete the steps outlined in upgrading PCF v1.12 document <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html#after-upgrade">here</a></td>
+<td>After upgrading to v1.12 complete the steps outlined in upgrading PCF v1.12 document <a href="https://docs.pivotal.io/pivotalcf/1-12/customizing/upgrading-pcf.html#after-upgrade">here</a>.</td>
 <td>Follow the steps outlined in the “After You Upgrade” section.</td>
 <td>All</td>
 </tr>
 <tr>
 <td>Perform performance test by pushing and scaling a test application.</td>
-<td>Push and scale an app and verify it is working</td>
+<td>Push and scale an app, and verify that it works.</td>
 <td>PCF</td>
 </tr>
 <tr>
@@ -435,13 +430,12 @@ If PCF Isolation Segment is installed on your foundation,<strong> do not upgrade
 </tr>
 <tr>
 <td>If you have added custom VM_TYPE or PERSISTENCE DISK TYPES, ensure that these values are correctly set and didn’t get overwritten.</td>
-<td>Verify values are retained in Ops Manager UI</td>
+<td>Verify that values are retained in Ops Manager UI.</td>
 <td>PCF</td>
 </tr>
 <tr>
 <td><p>If MySQL is being used with cluster setup, run the mysql-diag tool to validate health of the cluster.</p>
-<p>Refer to:</p>
-<p><a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2">http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2</a></p></td>
+<p>See <a href="http://docs.pivotal.io/p-mysql/1-10/mysql-diag.html#bosh-v2">Run mysql-diag Using BOSH CLI v2</a>.</p></td>
 <td>Validate the health of MySQL after upgrading.</td>
 <td>Elastic Runtime</td>
 </tr>
