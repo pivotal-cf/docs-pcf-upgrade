@@ -3,13 +3,13 @@ title: What Happens During PAS Upgrades
 owner: Ops Manager
 ---
 
-This topic explains what happens when upgrading Pivotal Application Services (PAS). 
+This topic explains what happens to PAS components and apps during a PAS upgrade. 
 
 ## <a id="bosh-drains"></a> BOSH Drains Diego Cell VMs
 
 During a PAS upgrade, BOSH drains all Diego cell VMs that host app instances. BOSH manages this process by upgrading a batch of cells one at a time.
 
-When BOSH triggers an upgrade, each upgrading Diego cell enters evacuation mode. In evacuation mode, BOSH stops Diego cells and then schedules replacements for its app instances. 
+When BOSH triggers an upgrade, each upgrading Diego cell enters evacuation mode. In evacuation mode, BOSH stops Diego cells and then schedules replacements for its app instances.
 
 For more information, see [Diego Cell Upgrade Process](https://docs.pivotal.io/pivotalcf/2-3/adminguide/diego-cell-upgrade.html#process).
 
@@ -23,7 +23,7 @@ For more information, see [cf push Availability During Pivotal Application Servi
 
 During a PAS upgrade, components upgrade in a specific order. In a single-component environment, upgrading can cause the deployment to experience downtime and other limitations.
 
-For more information, see [Upgrade Order and Limitations](https://docs.pivotal.io/pivotalcf/2-3/opsguide/single-component.html#components-order-limit). 
+For more information, see [Upgrade Order and Limitations](https://docs.pivotal.io/pivotalcf/2-3/opsguide/single-component.html#components-order-limit).
 
 ## <a id="upgrade-example"></a> Upgrading Installation Example
 
