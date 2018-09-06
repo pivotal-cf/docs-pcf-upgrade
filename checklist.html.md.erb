@@ -7,16 +7,19 @@ This topic serves as a checklist for upgrading Pivotal Cloud Foundry (PCF) from 
 
 
 ## <a id="compatibility"></a> Tile Compatibility
+ 
+Before you upgrade to PCF v2.3, please check whether the service tiles that you currently have deployed on PCF v2.2 are compatible with PCF v2.3.
 
-Before you upgrade to PCF v2.3, please check whether PCF v2.3 supports the service tile versions that you currently have deployed.
-
-To check PCF version support for any service tile, from Pivotal or a Pivotal partner:
+To check PCF versions supported by a service tile, either from Pivotal or a Pivotal partner:
 
 * Navigate to the tile's download page on [Pivotal Network](https://network.pivotal.io).
 * Select the tile version in the **Releases** dropdown.
 * See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
 
-If the currently-deployed version of a tile is not compatible with PCF v2.3, you must upgrade the tile before you upgrade PCF. You do not need to upgrade tiles that are compatible with both PCF v2.2 and v2.3.
+If the currently-deployed version of a tile is not compatible with PCF v2.3, you must upgrade the tile to a compatible version before you upgrade PCF. You do not need to upgrade tiles that are compatible with both PCF v2.2 and v2.3.
+
+<p class="note breaking"><strong>Warning: </strong>Some tiles released with PCF v2.3 require a new Xenial stemcell. Before deploying tiles that use Xenial, you must update any BOSH add-ons used in your deployment to include Xenial stemcells. For more information, see <a href="upgrading-pcf.html#upgrade-add-ons">Check OS Compatibility of PCF and BOSH-Managed Add-Ons</a>.</p>
+</p>
 
 The [Product Compatibility Matrix](
 http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
@@ -46,7 +49,7 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 ## <a id="known-issues"></a> PAS v2.3 Known Issues in the Pivotal Knowledge Base
 
 
-The following Pivotal Knowledge Base (KB) articles describe known issues for PCF v2.2:
+The following Pivotal Knowledge Base (KB) articles describe known issues for <b>PCF v2.2</b>:
 
 * [Operations Manager Validation Returns TLS Error When Configuring BOSH Director S3 Blobstore](https://community.pivotal.io/s/article/Operations-Manager-Validation-returns-TLS-error-when-configuring-Bosh-Director-S3-blobstore)
 
@@ -65,7 +68,7 @@ The following Pivotal Knowledge Base (KB) articles describe known issues for PCF
 
 ## <a id="breaking"></a> PCF v2.2 Breaking Changes 
 
-PCF 2.2 has the following breaking changes. For more information, see [PCF v2.2 Breaking Changes](http://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/breaking-changes.html) in the PCF Release Notes.
+<b>PCF 2.2</b> has the following breaking changes. For more information, see [PCF v2.2 Breaking Changes](http://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/breaking-changes.html) in the PCF Release Notes.
 
 <table>
 <tbody>
