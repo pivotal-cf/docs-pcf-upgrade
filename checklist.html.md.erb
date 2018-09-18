@@ -49,30 +49,15 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 ## <a id="known-issues"></a> PAS v2.3 Known Issues in the Pivotal Knowledge Base
 
-<p class="note">NOTE: THESE ARE KIs from v2.2</p>
+The following Pivotal Knowledge Base (KB) articles describe known issues for <b>PCF v2.3</b>:
 
-The following Pivotal Knowledge Base (KB) articles describe known issues for <b>PCF v2.2</b>:
+* [PAS backup-prepare job renamed to backup-restore may cause automation failures](https://community.pivotal.io/s/article/PAS-backup-prepare-job-renamed-to-backup-restore-may-cause-automation-failures)
+* [Buildpacks are missing or not installed in PAS 2.3](https://community.pivotal.io/s/article/buildpacks-are-missing-or-not-installed-in-pas-2-3)
+* [Diego Cell garden healthcheck fails and becomes unhealthy](https://community.pivotal.io/s/article/Diego-Cell-garden-healthcheck-fails-and-becomes-unhealthy)
 
-* [Operations Manager Validation Returns TLS Error When Configuring BOSH Director S3 Blobstore](https://community.pivotal.io/s/article/Operations-Manager-Validation-returns-TLS-error-when-configuring-Bosh-Director-S3-blobstore)
+## <a id="breaking"></a> PCF v2.3 Breaking Changes 
 
-* [Some Components Use Go v1.9 to Avoid x.509 Cert Errors in v1.10](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/runtime-rn.html#ki-golang-issue)
-
-* [Apps Serve Routes Even After App Deletion Due To MySQL Errors](https://community.pivotal.io/s/article/Apps-Continue-to-Serve-Routes-even-after-App-Deletion-due-to-Mysql2Error-This-connection-is-in-use-by--Thread-errors)
-
-* [Deployment Fails Because Monit Reports Job as Failed](https://community.pivotal.io/s/article/Deployment-fails-because-monit-repots-job-as-failed)
-
-* [Deploying PAS for Windows Tile Results in an Access is Denied Error](https://community.pivotal.io/s/article/Deploying-PAS-for-Windows-Tile-results-in-access-denied-error)
-
-* [Timeouts Connecting to GCS Blobstores when Configured to use Service Account Key authentication](https://community.pivotal.io/s/article/Timeouts-connecting-to-GCS-blobstores-when-configured-to-use-service-account-key-authentication)
-
-* [Spring Cloud Services Deployment fails with can't resolve link error in PAS 2.2](https://community.pivotal.io/s/article/Spring-Cloud-Services-Deployment-fails-with)
-
-
-## <a id="breaking"></a> PCF v2.2 Breaking Changes 
-
-<p class="note">NOTE: THESE ARE Breaking Changes from v2.2</p>
-
-<b>PCF v2.2</b> has the following breaking changes. For more information, see [PCF v2.2 Breaking Changes](http://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/breaking-changes.html) in the PCF Release Notes.
+<b>PCF v2.3</b> has the following breaking changes. For more information, see [PCF v2.3 Breaking Changes](http://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/breaking-changes.html) in the PCF Release Notes.
 
 <table>
 <tbody>
@@ -81,33 +66,40 @@ The following Pivotal Knowledge Base (KB) articles describe known issues for <b>
 <th><strong>Details</strong></th>
 </tr>
 <tr>
-<td>Log Aggregation Systems May Parse Diego Timestamps Incorrectly</td>
-<td>The timestamps in the Diego component logs are now in a format compatible with <a href="https://tools.ietf.org/html/rfc3339">RFC 3339</a>. Before enabling the new timestamp format for Diego logs, ensure that your log aggregation system anticipates the timestamp format change.</td>
+<td>Updates for Xenial Stemcell Support</td>
+<td>Starting in PCF v2.3, Ops Manager uses a Xenial stemcell. Also, some tiles released with PCF v2.3 require a new Xenial stemcell. Before deploying tiles that use Xenial, you must update any BOSH add-ons used in your deployment to include Xenial stemcells and add a Xenial stemcell to your stemcell library in Ops Manager. </td>
 </tr>
 <tr>
-<td>SSH Proxy May Restrict Client Access</td>
-<td>The SSH proxy now accepts a narrower range of ciphers, MACs, and key exchanges. This feature may have complications if you use a SSH client other than <code>cf ssh</code> to connect.</td>
-</tr>
-<tr>
-<td>Temporary Downtime when Migrating Internal System Databases</td>
-<td><p>Upgrading existing internal system databases to the new option of <strong>Internal Databases - MySQL - Percona XtraDB Cluster</strong> causes temporary downtime of PAS system functions. It does not interrupt apps hosted by PAS.</p>
-</td>
-</tr>
-<tr>
-<td>App Autoscaler Fails When Loggregator's Log Cache Is Disabled</td>
-<td>App Autoscaler relies on API endpoints in Loggregator's Log Cache component. If you disable Log Cache, App Autoscaler will fail.</td>
-</tr>
-<tr>
-<td>Redeploy All Products After Upgrading to Ops Manager v2.2</td>
-<td>When upgrading to PCF v2.2, redeploy all product tiles by clicking <strong>Review Pending Changes</strong> and <strong>Apply Changes</strong> in the Ops Manager installation dashboard. A universal redeploy ensures that the updated BOSH DNS release applies consistently to all products.</td>
-</tr>
-<tr>
-<td>Ops Manager Logs Have Changed Locations</td>
-<td>Ops Manager centralized its logs so that you can now configure a syslog server in the Ops Manager <strong>Settings</strong>. Because of this feature change for Ops Manager v2.2, you cannot run scripts to fetch Ops Manager logs at their previous locations.</td>
+<td>BOSH DNS Must be Enabled</td>
+<td>In PCF v2.3, you cannot opt out of BOSH DNS. Upgrades to PCF v2.3 will fail if BOSH DNS is disabled in PCF v2.2.</td>
 </tr>
 <tr>
 <td>Ops Manager API Does Not Return Secret Properties</td>
-<td>The Ops Manager API v2.2 <code>GET</code> response from the <code>/api/v0/staged/director/properties</code> endpoint no longer includes the GCS blobstore service key, Health Monitor emailer SMTP password, or Health Monitor PagerDuty service key properties. This change may break any code that relies on retrieving these properties.</td>
+<td>
+For security, Ops Manager API responses from the <code>/api/v0/staged/director/properties</code> endpoint no longer includes several secret properties. This change may break any code that relies on retrieving these properties. 
+</td>
+</tr>
+<tr>
+<td>Read-Only Volume Mounts</td>
+<td>PAS v2.3 incldues a new version of NFS that resolves an incompatibility between the NFS volume release and Diego. However, upgrading PAS does not migrate any existing NFS service bindings to use the new NFS version. As a result, apps with NFS services bound as read-only may crash.</td>
+</tr>
+<tr>
+<td>Mutual TLS App Identity Verification Disables CF SSH and TCP Routing</td>
+<td>When you enable the <b>Router and applications use mutual TLS to verify each other’s identity</b> option in PAS v2.3, app containers accept incoming communication only from the Gorouter. This disables <code>cf ssh</code> and TCP routing.
+
+</td>
+</tr>
+<tr>
+<td>backup-prepare Instance Group Has Been Renamed to backup_restore</td>
+<td>The name of the <code>backup-prepare</code> instance group has been changed to <code>backup_restore</code>. This may break some external tools that were setting the properties for this instance group through the Ops Manager API. </td>
+</tr>
+<tr>
+<td>GrootFS Must be Enabled</td>
+<td>In PCF v2.3, you cannot opt out of GrootFS. Upgrades to PCF v2.3 will fail if GrootFS is disabled in PCF v2.2.</td>
+</tr>
+<tr>
+<td>Encryption between Gorouter and Cloud Controller may cause App Downtime during Upgrade</td>
+<td>In PAS v2.3, traffic between the Gorouter and Cloud Controller is encrypted. To prevent app downtime while upgrading from v2.2 to v2.3, you must be running PAS v2.2.4 or later. These versions of PAS v2.2 contain the configuration <code>router.backends.enable_tls: true</code> in the Gorouter manifest.</td>
 </tr>
 </tbody>
 </table>
