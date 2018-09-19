@@ -99,7 +99,7 @@ For security, Ops Manager API responses from the <code>/api/v0/staged/director/p
 </tr>
 <tr>
 <td>Introduction of GrootFS may cause Apps Deployed with Docker to Exceed Disk Quota</td>
-<td>If you did not enable GrootFS prior to PAS v2.3, you may encounter issues with apps deployed with a Docker image. GrootFS fixes a bug in which disk quotas were not accurately calculated. However, this bug fix may cause Docker images that previously adhered to a quota to now exceed the same quota size. See [Disk quota calculation](https://github.com/cloudfoundry/garden-runc-release/blob/master/docs/migrating-from-garden-shed-to-grootfs.md#disk-quota-calculation) in the <code>garden-runc-release</code> repository.</td>
+<td>If you did not enable GrootFS prior to PAS v2.3, you may encounter issues with apps deployed with a Docker image. GrootFS fixes a bug in which disk quotas were not accurately calculated. However, this bug fix may cause Docker images that previously adhered to a quota to now exceed the same quota size. See <a href="https://github.com/cloudfoundry/garden-runc-release/blob/master/docs/migrating-from-garden-shed-to-grootfs.md#disk-quota-calculation">Disk quota calculation</a> in the <code>garden-runc-release</code> repository.</td>
 </tr>
 <tr>
 <td>Encryption between Gorouter and Cloud Controller may cause App Downtime during Upgrade</td>
