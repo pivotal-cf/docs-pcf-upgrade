@@ -98,6 +98,10 @@ For security, Ops Manager API responses from the <code>/api/v0/staged/director/p
 <td>In PCF v2.3, you cannot opt out of GrootFS. Upgrades to PCF v2.3 will fail if GrootFS is disabled in PCF v2.2.</td>
 </tr>
 <tr>
+<td>Introduction of GrootFS may cause Apps Deployed with Docker to Exceed Disk Quota</td>
+<td>If you did not enable GrootFS prior to PAS v2.3, you may encounter issues with apps deployed with a Docker image. GrootFS fixes a bug in which disk quotas were not accurately calculated. However, this bug fix may cause Docker images that previously adhered to a quota to now exceed the same quota size. See [Disk quota calculation](https://github.com/cloudfoundry/garden-runc-release/blob/master/docs/migrating-from-garden-shed-to-grootfs.md#disk-quota-calculation) in the <code>garden-runc-release</code> repository.</td>
+</tr>
+<tr>
 <td>Encryption between Gorouter and Cloud Controller may cause App Downtime during Upgrade</td>
 <td>In PAS v2.3, traffic between the Gorouter and Cloud Controller is encrypted. To prevent app downtime while upgrading from v2.2 to v2.3, you must be running PAS v2.2.4 or later. These versions of PAS v2.2 contain the configuration <code>router.backends.enable_tls: true</code> in the Gorouter manifest.</td>
 </tr>
