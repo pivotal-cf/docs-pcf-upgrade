@@ -111,6 +111,10 @@ For security, Ops Manager API responses from the <code>/api/v0/staged/director/p
 <td>Encryption between Gorouter and Cloud Controller may cause App Downtime during Upgrade</td>
 <td>In PAS v2.3, traffic between the Gorouter and Cloud Controller is encrypted. To prevent app downtime while upgrading from v2.2 to v2.3, you must be running PAS v2.2.4 or later. These versions of PAS v2.2 contain the configuration <code>router.backends.enable_tls: true</code> in the Gorouter manifest.</td>
 </tr>
+<tr>
+<td>Update Runtime Config of ClamAV for PASW v2.3</td>
+<td>If you are using the ClamAV Add-on for PCF, you must update your runtime config before upgrading to Pivotal Application Service for Windows (PASW) v2.3. If you upgrade to PASW v2.3 without first updating the runtime config, then your Windows VMs will not be protected by ClamAV. For more information about how to update your runtime config, see <a href="https://docs.pivotal.io/addon-antivirus/1-4/updating-for-pasw.html">Updating ClamAV Add-on for PCF to Run with PAS for Windows v2.3</a> in the ClamAV documentation.</td>
+</tr>
 </tbody>
 </table>
 
