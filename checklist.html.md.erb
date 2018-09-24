@@ -53,7 +53,7 @@ The following Pivotal Knowledge Base (KB) articles describe known issues for <b>
 
 * [PAS backup-prepare job renamed to backup-restore may cause automation failures](https://community.pivotal.io/s/article/PAS-backup-prepare-job-renamed-to-backup-restore-may-cause-automation-failures)
 * [Buildpacks are missing or not installed in PAS 2.3](https://community.pivotal.io/s/article/buildpacks-are-missing-or-not-installed-in-pas-2-3)
-* [Diego Cell garden healthcheck fails and becomes unhealthy](https://community.pivotal.io/s/article/Diego-Cell-garden-healthcheck-fails-and-becomes-unhealthy)
+* [Diego Cell garden healthcheck fails and becomes unhealthy](https://community.pivotal.io/s/article/diego-cell-garden-healthcheck-fails-and-becomes-unhealthy)
 
 ## <a id="breaking"></a> PCF v2.3 Breaking Changes 
 
@@ -96,7 +96,7 @@ For security, Ops Manager API responses from the <code>/api/v0/staged/director/p
 </td>
 </tr>
 <tr>
-<td>backup-prepare Instance Group Has Been Renamed to backup_restore</td>
+<td><code>backup-prepare</code> Instance Group Has Been Renamed to <code>backup_restore</code></td>
 <td>The name of the <code>backup-prepare</code> instance group has been changed to <code>backup_restore</code>. This may break some external tools that were setting the properties for this instance group through the Ops Manager API. </td>
 </tr>
 <tr>
