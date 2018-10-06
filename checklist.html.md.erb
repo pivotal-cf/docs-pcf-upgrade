@@ -15,6 +15,8 @@ Pivotal recommends backing up your PCF deployment before upgrading, to restore i
 
 ## <a id="review-pas-release-notes"></a> Review Changes in PCF v2.3 
 
+Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes. 
+
 * **Release Notes**
 	* <a href="http://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/opsmanager-rn.html">Ops Manager Release v2.3 Release Notes</a>
 	* <a href="http://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html">PAS v2.3 Release Notes</a>
@@ -33,6 +35,8 @@ Pivotal recommends backing up your PCF deployment before upgrading, to restore i
 	* <a href="https://docs.pivotal.io/pivotalcf/2-3/security/networking/diego-network-paths.html">Diego Network Communications</a>
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-ons
+
+The following section describes changes you must make to your product tiles and add-ons before upgrading PCF. 
 
 ### <a id="compatibility"></a> Review Tile Compatibility
  
@@ -78,11 +82,10 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 Upgrade all service tiles to versions compatible with PCF v2.3.
 Review the <a href="http://docs.pivotal.io/resources/product-compatibility-matrix.pdf">Compatibility Matrix</a> and tile documentation to check version compatibility.
-Service Tiles
 
 ### <a id='bosh-director'></a> Configure BOSH Director 
 
-Before each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.3:
+With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.3:
 
 1. If not already disabled, disable the VM Resurrector:
    1. From your **Installation Dashboard**, select the **BOSH Director** tile.
@@ -99,7 +102,7 @@ Before each release of a new PCF version, BOSH Director may require specific upd
 
 ### <a id='patch'></a> Configure PAS 
 
-Before each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.3:
+With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.3:
 
 #### Install PAS v2.2.4 or Later
 
@@ -209,6 +212,8 @@ For information about regenerating and rotateing CA certificates, see [Managing 
 
 ## <a id="capacity"></a> Check the Capacity of your Deployment
 
+The following sections describe steps for ensuring your deployment has adequate capacity to perform the upgrade.
+
 ### <a id="confirm-om-disk"></a> Confirm Adequate Disk Space
 
 <%= partial '../customizing/check_disk_before_upgrade.html.md.erb' %>
@@ -253,6 +258,8 @@ This cleanup helps prevent the product and stemcell upload process from exceedin
 
 ## <a id="health"></a> Check the Health of your Deployment
 
+The following sections describe steps for ensuring your deployment is healthy before you perform the upgrade.
+
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status 
 
 Run and collect foundation health status in at least one of the following ways:
@@ -290,6 +297,8 @@ See the BOSH CLI v2 instructions in the <a href="https://docs.pivotal.io/pivotal
     </pre>   
 
 ## <a id="export"></a> Export Your Installation
+
+To export your installation, do the following:
 
 1. In your Ops Manager v2.2 **Installation Dashboard**, click the account dropdown and select **Settings**.
 
