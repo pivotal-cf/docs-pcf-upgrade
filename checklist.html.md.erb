@@ -270,7 +270,7 @@ Run and collect foundation health status in at least one of the following ways:
 	* <code>bosh -e ALIAS vms --vitals</code>. This reveals VMs with high CPU, high memory, high disk utilization, and with <code>state</code> != <code>running</code>.</p>
 	* <code>bosh -e ALIAS -d DEPLOYMENT_NAME cck --report</code>
 * Check Ops Manager GUI each PAS/Tiles the status page for CPU/RAM/DISK utilization
-* Validate Ops Manager persistent disk usage is below 50%. If not, follow Prep 6 in the <a href="https://docs.pivotal.io/pivotalcf/2-3/customizing/upgrading-pcf.html#prepare-env">Ops Manager upgrade docs</a>.
+* Validate Ops Manager persistent disk usage is below 50%. If not, follow the procedure in <a href="#confirm-om-disk">Confirm Adequate Disk Space</a>.
 
 (Optional) Check the logs for errors before proceeding with the upgrade. For more information, see [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view).
 
