@@ -9,21 +9,23 @@ This topic contains important preparation steps that you must follow before begi
 
 After completing the steps in this topic, you can continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
 
-## <a id="back-up-your-pcf-deployment"></a> Back Up your PCF Deployment 
+
+## <a id="back-up-your-pcf-deployment"></a> Back Up Your PCF Deployment
 
 Pivotal recommends backing up your PCF deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in the [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html) topic.
 
-## <a id="review-pas-release-notes"></a> Review Changes in PCF v2.1 
 
-Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes. 
+## <a id="review-pas-release-notes"></a> Review Changes in PCF v2.1
+
+Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
 * **Release Notes**
-	* <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html">Ops Manager Release v2.1 Release Notes</a>
-	* <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">PAS v2.1 Release Notes</a>
+	* [Ops Manager Release v2.1 Release Notes](../pcf-release-notes/opsmanager-rn.html)
+	* [PAS v2.1 Release Notes](../pcf-release-notes/runtime-rn.html)
 * **Known Issues**
-	* <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/opsmanager-rn.html#known-issues">Ops Manager v2.1 Known Issues</a> 
-	* <a href="https://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/runtime-rn.html">PAS v2.1 Known Issues</a> 
-	* The following Pivotal Knowledge Base (KB) articles describe known issues for <b>PCF v2.1</b>:
+	* [Ops Manager v2.1 Known Issues](../pcf-release-notes/opsmanager-rn.html#known-issues)
+	* [PAS v2.1 Known Issues](../pcf-release-notes/runtime-rn.html)
+	* The following Pivotal Knowledge Base (KB) articles describe known issues for **PCF v2.1**:
 		* [Disabling SAML Identity Provider When Switching Identity Providers for PCF 2.1](https://discuss.pivotal.io/hc/en-us/articles/360000793534)
 		* [How to Bind Volume Services With a Read-Only Mount Point](https://discuss.pivotal.io/hc/en-us/articles/360000953413)
 		* [Graceful Shutdown of .NET apps in Cloud Foundry Windows](https://discuss.pivotal.io/hc/en-us/articles/115005092734)
@@ -39,18 +41,19 @@ Review each of the following links to understand the changes in the new release,
 		* [Unable to import Xenial stemcell when upgrading to tile that requires Xenial
 		](https://community.pivotal.io/s/article/unable-to-import-xenial-stemcell-when-upgrading-to-tile-that-requires-xenial)
 * **Breaking Changes**
-	* <a href="http://docs.pivotal.io/pivotalcf/2-1/pcf-release-notes/breaking-changes.html">PCF v2.1 Breaking Changes</a>
+	* [PCF v2.1 Breaking Changes](../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
-	* <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/index.html#new">KPI Changes from PCF v2.0 to v2.1</a></p>
-* **Diego Network Communications**: 
-	* <a href="https://docs.pivotal.io/pivotalcf/2-1/security/networking/diego-network-paths.html">Diego Network Communications</a>
+	* [KPI Changes from PCF v2.0 to v2.1](../monitoring/index.html#new)
+* **Diego Network Communications**:
+	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
-## <a id="tiles-addons"></a> Update Tiles and Add-ons
 
-The following section describes changes you must make to your product tiles and add-ons before upgrading PCF. 
+## <a id="tiles-addons"></a> Update Tiles and Add-Ons
+
+The following section describes changes you must make to your product tiles and add-ons before upgrading PCF.
 
 ### <a id="compatibility"></a> Review Tile Compatibility
- 
+
 Before you upgrade to PCF v2.1, please check whether the service tiles that you currently have deployed on PCF v2.0 are compatible with PCF v2.1.
 
 To check PCF versions supported by a service tile, either from Pivotal or a Pivotal partner:
@@ -59,13 +62,12 @@ To check PCF versions supported by a service tile, either from Pivotal or a Pivo
 * Select the tile version in the **Releases** dropdown.
 * See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
 
-If the currently-deployed version of a tile is not compatible with PCF v2.1, you must upgrade the tile to a compatible version before you upgrade PCF. You do not need to upgrade tiles that are compatible with both PCF v2.0 and v2.1. 
+If the currently-deployed version of a tile is not compatible with PCF v2.1, you must upgrade the tile to a compatible version before you upgrade PCF. You do not need to upgrade tiles that are compatible with both PCF v2.0 and v2.1.
 
 Some partner service tiles may be incompatible with PCF v2.1. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of PCF. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, the partners services release documentation in [Pivotal Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
 
 The [Product Compatibility Matrix](
 http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
-
 
 #### <a id="env"></a> Environment Details
 
@@ -88,9 +90,9 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 ### <a id="upgrade-service-tiles"></a> Upgrade Services Tiles
 
 Upgrade all service tiles to versions compatible with PCF v2.1.
-Review the <a href="http://docs.pivotal.io/resources/product-compatibility-matrix.pdf">Compatibility Matrix</a> and tile documentation to check version compatibility.
+Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and tile documentation to check version compatibility.
 
-### <a id='bosh-director'></a> Configure BOSH Director 
+### <a id='bosh-director'></a> Configure BOSH Director
 
 With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.1:
 
@@ -106,44 +108,42 @@ With each release of a new PCF version, BOSH Director may require specific updat
 
 1. Check the required machine specifications for Ops Manager v2.1. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, then increase the size of your Ops Manager boot disk to 100&nbsp;GB.
 
+### <a id='patch'></a> Configure PAS
 
-### <a id='patch'></a> Configure PAS 
-
-In PCF 2.1, the Gorouter can communicate with app instances via TLS, which improves security but also increases resource usage. Prior versions of PCF did not support this feature. See [HTTP Routing](https://docs.pivotal.io/pivotalcf/2-1/concepts/http-routing.html#tls-to-back-end) for more information.
+In PCF 2.1, the Gorouter can communicate with app instances via TLS, which improves security but also increases resource usage. Prior versions of PCF did not support this feature. See [HTTP Routing](../concepts/http-routing.html#tls-to-back-end) for more information.
 
 **To support TLS routing** you should ensure that you have enough available memory capacity for app instances, and enable the **Router uses TLS to verify application identity** checkbox in the PAS and Isolation Segment tile **Application Containers** pane.
 
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
 
-To save upgrade time, you can disable unused PAS post-deploy errands. See the <a href="https://docs.pivotal.io/tiledev/2-1/tile-errands.html#post-deploy">Post-Deploy Errands</a> section of the Errands topic for details.
-Only disable these errands if your environment does not need them.
+To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-1/tile-errands.html#post-deploy) section of the Errands topic for details. Only disable these errands if your environment does not need them.
 
 In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Deleting Products](../customizing/add-delete.html#add-import) topic.
 
 ### <a id="upgrade-add-ons"></a> Check OS Compatibility of PCF and BOSH-Managed Add-Ons
 
- Before upgrading to PCF v2.1, operators who have deployed any PCF add-ons (such as **IPsec for PCF**, **ClamAV for PCF**, or **File Integrity Monitoring for PCF**) and who have deployed or are planning to deploy [PAS for Windows 2012R2](https://docs.pivotal.io/pivotalcf/2-1/windows2012r2/index.html) must modify the add-on manifest to specify a compatible OS stemcell. 
+Before upgrading to PCF v2.1, operators who have deployed any PCF add-ons (such as **IPsec for PCF**, **ClamAV for PCF**, or **File Integrity Monitoring for PCF**) and who have deployed or are planning to deploy [PAS for Windows 2012R2](../windows2012r2/index.html) must modify the add-on manifest to specify a compatible OS stemcell.
 
- For example, **File Integrity Monitor for PCF** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty`. 
+For example, **File Integrity Monitor for PCF** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty`.
 
- To update an add-on manifest, perform the following steps:
+To update an add-on manifest, do the following:
 
- 1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the Ops Manager VM.
+1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the Ops Manager VM.
 
- 1. Modify the manifest to include following `include` directive to your manifest:
-
+1. Modify the manifest to include following `include` directive to your manifest:
     ```yml
       include:
         stemcell:
           - os: ubuntu-trusty
     ```
- 1. Re-upload the manifest file to your PCF deployment. For example instructions, see [Create the FIM Manifest](https://docs.pivotal.io/addon-fim/index.html#create-mfest). 
 
- If you are using any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see the [BOSH documentation](https://bosh.io/docs/runtime-config.html#addons). 
+1. Re-upload the manifest file to your PCF deployment. For example instructions, see [Create the FIM Manifest](https://docs.pivotal.io/addon-fim/index.html#create-mfest).
+
+If you are using any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see the [BOSH documentation](https://bosh.io/docs/runtime-config.html#addons).
 
 ### <a id="azure-blobstore-addon"></a> Check External Blobstore Backup and Restore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the [Azure Backup Add-On](https://docs.pivotal.io/pivotalcf/2-1/customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.1. If you do not remove this job, upgrading PAS fails with the error:
+If you have enabled external blobstore backups for an Azure Blobstore using the [Azure Backup Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.1. If you do not remove this job, upgrading PAS fails with the error:
 
 <pre>
 Preparing deployment: Preparing deployment (00:00:01)
@@ -151,6 +151,7 @@ Preparing deployment: Preparing deployment (00:00:01)
 </pre>
 
 After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the PAS tile > **File Storage** pane. See [External Azure Storage](../customizing/azure-er-config-terraform.html#external_azure) for instructions.
+
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
 
@@ -169,7 +170,8 @@ In this request, the `expires_within` parameter is optional. Valid values for th
 
 For information about regenerating and rotateing CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
 
-## <a id="capacity"></a> Check the Capacity of your Deployment
+
+## <a id="capacity"></a> Check the Capacity of Your Deployment
 
 The following sections describe steps for ensuring your deployment has adequate capacity to perform the upgrade.
 
@@ -183,16 +185,16 @@ Check that Diego cells have sufficient available RAM and disk capacity to suppor
 
 The KPIs that monitor these these resources are are:
 
-* <code>rep.CapacityRemainingMemory</code>
-* <code>rep.CapacityRemainingDisk</code>
+* `rep.CapacityRemainingMemory`
+* `rep.CapacityRemainingDisk`
 
-### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits 
+### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See <a href="https://docs.pivotal.io/pivotalcf/2-1/adminguide/diego-cell-upgrade.html">Managing Diego Cell Limits During Upgrade</a>.
+If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Managing Diego Cell Limits During Upgrade](../adminguide/diego-cell-upgrade.html).
 
-For PCF v1.10 and later, the maximum number of cells that can update at once, <code>max_in_flight</code> is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the <a href="https://docs.pivotal.io/pivotalcf/2-1/adminguide/diego-cell-upgrade.html#limitations-considerations">Preventing Overload</a> section for details.
+For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Preventing Overload](../adminguide/diego-cell-upgrade.html#limitations-considerations) section for details.
 
-Review the <a href="https://docs.pivotal.io/pivotalcf/2-1/monitoring/kpi.html#cell">Diego Cell Metrics</a> section of the KPI topic for more information about these KPIs.
+Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
 
 ### <a id="storage"></a> Review File Storage IOPS and Other Upgrade Limiting Factors
 
@@ -210,16 +212,16 @@ In addition to file storage IOPS, consider additional existing deployment factor
 
 To review example upgrade-related performance measurements of an existing production Cloud Foundry deployment, see the [Pivotal Web Services Performance During Upgrade](../opsguide/pws_upgrade_load.html) topic.
 
-### <a id="bosh-clean-up"></a> Run BOSH clean-up 
+### <a id="bosh-clean-up"></a> Run BOSH Clean-Up
 
-Run <code>bosh -e ALIAS clean-up --all</code> to clean up old stemcells, releases, orphaned disks, and other resources before upgrade.
-This cleanup helps prevent the product and stemcell upload process from exceeding the BOSH Director's available persistent disk space.
+Run `bosh -e ALIAS clean-up --all` to clean up old stemcells, releases, orphaned disks, and other resources before upgrade. This cleanup helps prevent the product and stemcell upload process from exceeding the BOSH Director's available persistent disk space.
 
-## <a id="health"></a> Check the Health of your Deployment
+
+## <a id="health"></a> Check the Health of Your Deployment
 
 The following sections describe steps for ensuring your deployment is healthy before you perform the upgrade.
 
-### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status 
+### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
 Pivotal recommends live-monitoring your upgrade with PCF Healthwatch, which monitors and alerts on the current health, performance, and capacity of PCF. To help operators understand the operational state of their PCF deployment, PCF Healthwatch:
 
@@ -230,26 +232,25 @@ If you are not using PCF Healthwatch, you can do some or all of the following to
 
 * If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.
 * Run BOSH CLI commands to check system status:
-	* <code>bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps</code>. <p><code>bosh instances</code> with the flags <code>--ps</code>,  <code>--vitals</code>, or <code>--failing</code>highlights individual job failure.</p> 
-	* <code>bosh -e ALIAS vms --vitals</code>. This reveals VMs with high CPU, high memory, high disk utilization, and with <code>state</code> != <code>running</code>.</p>
-	* <code>bosh -e ALIAS -d DEPLOYMENT_NAME cck --report</code>
+	* `bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps`. <p>`bosh instances` with the flags `--ps`,  `--vitals`, or `--failing` highlights individual job failure.</p>
+	* `bosh -e ALIAS vms --vitals`. This reveals VMs with high CPU, high memory, high disk utilization, and with `state` != `running`.
+	* `bosh -e ALIAS -d DEPLOYMENT_NAME cck --report`
 * Check Ops Manager GUI each PAS/Tiles the status page for CPU/RAM/DISK utilization
-* Validate Ops Manager persistent disk usage is below 50%. If not, follow Prep 6 in the <a href="https://docs.pivotal.io/pivotalcf/2-1/customizing/upgrading-pcf.html#prepare-env">Ops Manager upgrade docs</a>.
+* Validate Ops Manager persistent disk usage is below 50%. If not, follow Prep 6 in the [Ops Manager upgrade docs](../customizing/upgrading-pcf.html#prepare-env).
 
 (Optional) Check the logs for errors before proceeding with the upgrade. For more information, see [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view).
 
 ### <a id="push-test-app"></a> Push and Scale a Test App
 
-Check that a test app can be pushed and scaled horizontally, manually or via automated testing.
-This check ensures that the platform supports apps as expected before the upgrade.
+Check that a test app can be pushed and scaled horizontally, manually or through automated testing. This check ensures that the platform supports apps as expected before the upgrade.
 
 ### <a id="validate-mysql-cluster-health"></a> Validate MySQL Cluster Health
 
-If you are running Elastic Runtime MySQL as a cluster, run the <code>mysql-diag</code> tool to validate health of the cluster.
+If you are running Elastic Runtime MySQL as a cluster, run the `mysql-diag` tool to validate health of the cluster.
 
-See the BOSH CLI v2 instructions in the <a href="https://docs.pivotal.io/pivotalcf/2-1/pas/mysql-diag.html">Running mysql-diag</a> topic.
+See the BOSH CLI v2 instructions in the [Running mysql-diag](../pas/mysql-diag.html) topic.
 
-### <a id="check-health"></a> Review Recent Changes 
+### <a id="check-health"></a> Review Recent Changes
 
 1. Confirm there are no outstanding changes in Ops Manager or any other tile. All tiles should be **green**. Click **Apply Changes** if necessary.
 
@@ -258,7 +259,8 @@ See the BOSH CLI v2 instructions in the <a href="https://docs.pivotal.io/pivotal
     Cleanup complete
     {"type": "step\_finished", "id": "clean\_up\_bosh.cleaning\_up"}
     Exited with 0.
-    </pre>   
+    </pre>
+
 
 ## <a id="export"></a> Export Your Installation
 
@@ -285,9 +287,11 @@ When you export an installation, the export contains the base VM images, necessa
 
 <p class="note warning"><strong>WARNING:</strong> If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p>
 
+
 ## <a id="next-steps"></a> Next Steps
 
 Now that you have completed the Upgrade Preparation Checklist for PCF v2.1, continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
+
 
 ## <a id="survey"></a> Complete Survey
 
