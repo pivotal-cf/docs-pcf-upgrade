@@ -20,24 +20,24 @@ Pivotal recommends backing up your PCF deployment before upgrading, to restore i
 Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
 * **Release Notes**
-	* [Ops Manager Release v2.3 Release Notes](http://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/opsmanager-rn.html)
-	* [PAS v2.3 Release Notes](http://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html)
+	* [Ops Manager Release v2.3 Release Notes](../../pcf-release-notes/opsmanager-rn.html)
+	* [PAS v2.3 Release Notes](../../pcf-release-notes/runtime-rn.html)
 * **Known Issues**
-	* [Ops Manager v2.3 Known Issues](http://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/opsmanager-rn.html#known-issues)
-	* [PAS v2.3 Known Issues](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html)
+	* [Ops Manager v2.3 Known Issues](../../pcf-release-notes/opsmanager-rn.html#known-issues)
+	* [PAS v2.3 Known Issues](../../pcf-release-notes/runtime-rn.html)
 	* The following Pivotal Knowledge Base (KB) articles describe known issues for **PCF v2.3**:
 		* [PAS backup-prepare job renamed to backup-restore may cause automation failures](https://community.pivotal.io/s/article/PAS-backup-prepare-job-renamed-to-backup-restore-may-cause-automation-failures)
 		* [Buildpacks are missing or not installed in PAS 2.3](https://community.pivotal.io/s/article/buildpacks-are-missing-or-not-installed-in-pas-2-3)
 		* [Diego Cell garden healthcheck fails and becomes unhealthy](https://community.pivotal.io/s/article/diego-cell-garden-healthcheck-fails-and-becomes-unhealthy)
 * **Breaking Changes**
-	* [PCF v2.3 Breaking Changes](http://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/breaking-changes.html)
+	* [PCF v2.3 Breaking Changes](../../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
-	* [KPI Changes from PCF v2.2 to v2.3](https://docs.pivotal.io/pivotalcf/2-3/monitoring/index.html#new)
+	* [KPI Changes from PCF v2.2 to v2.3](../monitoring/index.html#new)
 * **Diego Network Communications**:
-	* [Diego Network Communications](https://docs.pivotal.io/pivotalcf/2-3/security/networking/diego-network-paths.html)
+	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
 
-## <a id="tiles-addons"></a> Update Tiles and Add-ons
+## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
 The following section describes changes you must make to your product tiles and add-ons before upgrading PCF.
 
@@ -59,8 +59,7 @@ If the currently-deployed version of a tile is not compatible with PCF v2.3, you
 
 Some partner service tiles may be incompatible with PCF v2.3. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of PCF. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, the partners services release documentation in [Pivotal Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
 
-The [Product Compatibility Matrix](
-http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
+The [Product Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
 
 #### <a id="env"></a> Environment Details
 
@@ -82,8 +81,7 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 ### <a id="upgrade-service-tiles"></a> Upgrade Services Tiles
 
-Upgrade all service tiles to versions compatible with PCF v2.3.
-Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and tile documentation to check version compatibility.
+Upgrade all service tiles to versions compatible with PCF v2.3. Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and tile documentation to check version compatibility.
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
@@ -113,7 +111,7 @@ In PAS v2.3, traffic between the Gorouter and Cloud Controller is encrypted. To 
 
 <p class="note"><strong>Note:</strong> If GrootFS is already enabled for your deployment, you can skip this step.</p>
 
-You must enable GrootFS in your PAS v2.2 tile before upgrading to PAS v2.3. PAS v2.3 uses GrootFS as the only Garden image plugin and removes the checkbox to enable or disable GrootFS in the **Configure Application Containers** pane. For more information, see [Remove Deprecated Garden Image Plugin Option](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#groot) in the PAS v2.3 release notes.
+You must enable GrootFS in your PAS v2.2 tile before upgrading to PAS v2.3. PAS v2.3 uses GrootFS as the only Garden image plugin and removes the checkbox to enable or disable GrootFS in the **Configure Application Containers** pane. For more information, see [Remove Deprecated Garden Image Plugin Option](../../pcf-release-notes/runtime-rn.html#groot) in the PAS v2.3 release notes.
 
 To enable GrootFS, do the following:
 
@@ -133,9 +131,7 @@ To enable GrootFS, do the following:
 
 1. Click **Review Pending Changes**, then **Apply Changes**.
 
-Once you have enabled GrootFS, ensure the apps running on your deployment
-function properly before proceeding with your upgrade. Any issues you experience
-are most likely to appear directly following the deployment of PAS.
+Once you have enabled GrootFS, ensure the apps running on your deployment function properly before proceeding with your upgrade. Any issues you experience are most likely to appear directly following the deployment of PAS.
 
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
 
@@ -149,7 +145,7 @@ In some cases, if you have previously disabled lifecycle errands for any install
 Some tiles released with PCF v2.3 require stemcells based on the Xenial OS rather than the older Trusty line. Before deploying tiles that use Xenial, you must:
 
 - Update any BOSH add-ons used in your deployment so that they include both Trusty and Xenial stemcells. To do this, follow the [Update Manifests for BOSH-Managed Add-Ons](#add-on-manifest) directions below.
-- For tiles that require Xenial, manually download and import a new Xenial stemcell into the **Ops Manager Stemcell Library**. See the [Tile Patch Releases Use Xenial Stemcells](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/breaking-changes.html#xenial) note for details.
+- For tiles that require Xenial, manually download and import a new Xenial stemcell into the **Ops Manager Stemcell Library**. See the [Tile Patch Releases Use Xenial Stemcells](../../pcf-release-notes/breaking-changes.html#xenial) note for details.
 
 ### <a id="add-on-manifest"></a> Update Manifests for BOSH-Managed Add-Ons
 
@@ -185,7 +181,7 @@ For more information about how to update your runtime config, see [Updating Clam
 
 ### <a id="azure-blobstore-addon"></a> Check External Blobstore Backup and Restore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the [Azure Backup Add-On](https://docs.pivotal.io/pivotalcf/2-2/customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.3. If you do not remove this job, upgrading PAS fails with the error:
+If you have enabled external blobstore backups for an Azure Blobstore using the [Azure Backup Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.3. If you do not remove this job, upgrading PAS fails with the error:
 
 <pre>
 Preparing deployment: Preparing deployment (00:00:01)
@@ -213,7 +209,7 @@ In this request, the `expires_within` parameter is optional. Valid values for th
 For information about regenerating and rotateing CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
 
 
-## <a id="capacity"></a> Check the Capacity of your Deployment
+## <a id="capacity"></a> Check the Capacity of Your Deployment
 
 The following sections describe steps for ensuring your deployment has adequate capacity to perform the upgrade.
 
@@ -227,16 +223,16 @@ Check that Diego cells have sufficient available RAM and disk capacity to suppor
 
 The KPIs that monitor these these resources are are:
 
-* <code>rep.CapacityRemainingMemory</code>
-* <code>rep.CapacityRemainingDisk</code>
+* `rep.CapacityRemainingMemory`
+* `rep.CapacityRemainingDisk`
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Managing Diego Cell Limits During Upgrade](https://docs.pivotal.io/pivotalcf/2-3/adminguide/diego-cell-upgrade.html).
+If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Managing Diego Cell Limits During Upgrade](../adminguide/diego-cell-upgrade.html).
 
-For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Preventing Overload](https://docs.pivotal.io/pivotalcf/2-3/adminguide/diego-cell-upgrade.html#limitations-considerations) section for details.
+For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Preventing Overload](../adminguide/diego-cell-upgrade.html#limitations-considerations) section for details.
 
-Review the [Diego Cell Metrics](https://docs.pivotal.io/pivotalcf/2-3/monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
+Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
 
 ### <a id="storage"></a> Review File Storage IOPS and Other Upgrade Limiting Factors
 
