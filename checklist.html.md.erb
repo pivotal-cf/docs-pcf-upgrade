@@ -261,12 +261,9 @@ The following sections describe steps for ensuring your deployment is healthy be
 
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
-Pivotal recommends live-monitoring your upgrade with PCF Healthwatch, which monitors and alerts on the current health, performance, and capacity of PCF. To help operators understand the operational state of their PCF deployment, PCF Healthwatch:
+For collecting foundation health status, Pivotal recommends PCF Healthwatch, which monitors and alerts on the current health, performance, and capacity of PCF. For more information, see the [PCF Healthwatch documentation](https://docs.pivotal.io/pcf-healthwatch/index.html).
 
-* Stores, visualizes, and alerts on metrics from core PCF components, including BOSH-reported VM metrics. The service covers the recommended [Key Performance Indicators](../../monitoring/kpi.html) and [Key Scaling Indicators](../../monitoring/key-cap-scaling.html) for a given version of PCF.
-* Executes health checks as continuous validation tests and creates super metrics. The service stores, displays, and forwards this data into the [Loggregator Firehose](../../loggregator/architecture.html#firehose) for external consumption by existing customer solutions. For more information, see [PCF Healthwatch Metrics](../../pcf-healthwatch/1-4/metrics.html) and [Access Super Metrics Through the Firehose](../../pcf-healthwatch/1-4/using.html#firehose).
-
-If you are not using PCF Healthwatch, you can do some or all of the following to run and collect foundation health status:
+If you are not using PCF Healthwatch, you can do some or all of the following to collect foundation health status:
 
 * If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.
 * Run BOSH CLI commands to check system status:
