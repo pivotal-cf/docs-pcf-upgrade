@@ -142,7 +142,7 @@ If you are using any other BOSH-managed add-ons in your deployment, you should v
 
 ### <a id="azure-blobstore-addon"></a> Check External Blobstore Backup and Restore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the [Azure Backup Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.1. If you do not remove this job, upgrading PAS fails with the error:
+If you have enabled external blobstore backups for an Azure Blobstore using the [Blobstore Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.1. If you do not remove this job, upgrading PAS fails with the error:
 
 <pre>
 Preparing deployment: Preparing deployment (00:00:01)
