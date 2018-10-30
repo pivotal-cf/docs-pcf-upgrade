@@ -140,7 +140,7 @@ To update an add-on manifest, do the following:
 
 If you are using any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see the [BOSH documentation](https://bosh.io/docs/runtime-config.html#addons).
 
-### <a id="azure-blobstore-addon"></a> Check External Blobstore Backup and Restore Add-On
+### <a id="azure-blobstore-addon"></a> Check Backup and Restore External Blobstore Add-On
 
 If you have enabled external blobstore backups for an Azure Blobstore using the [Blobstore Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.1. If you do not remove this job, upgrading PAS fails with the error:
 
