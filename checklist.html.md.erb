@@ -133,6 +133,10 @@ To enable GrootFS, do the following:
 
 Once you have enabled GrootFS, ensure the apps running on your deployment function properly before proceeding with your upgrade. Any issues you experience are most likely to appear directly following the deployment of PAS.
 
+#### <a id="groot-gc"></a> Configuring Diego Cell Garbage collection
+
+If you've set your **Application Container** -> **Docker Images Disk-Cleanup Scheduling on Cell VMs** to default, routine or never there is no action that needs to be taken and you will be migrated automatically to sensible values. If you have modified the threshold value we will unset the option and operators will be forced to pick a new one. For more information see [Options for Disk Cleanup](https://docs.pivotal.io/pivotalcf/2-4/opsguide/config-cell-cleanup.html).
+
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
 
 To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-3/tile-errands.html#post-deploy) section of the Errands topic for details.
