@@ -228,9 +228,9 @@ The KPIs that monitor these these resources are are:
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Managing Diego Cell Limits During Upgrade](../adminguide/diego-cell-upgrade.html).
+If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Limit PCF Component Instances During Restart](./configuring.html#limit-restart).
 
-For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Preventing Overload](../adminguide/diego-cell-upgrade.html#limitations-considerations) section for details.
+For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Prevent Overload](./configuring.html#limitations-considerations) section for details.
 
 Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
 
