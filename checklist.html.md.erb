@@ -186,9 +186,10 @@ The KPIs that monitor these these resources are are:
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Managing Diego Cell Limits During Upgrade](../adminguide/diego-cell-upgrade.html).
+If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Managing Diego Cell Limits During Upgrade](./configuring.html#diego-cells).
 
-For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Preventing Overload](../adminguide/diego-cell-upgrade.html#limitations-considerations) section for details.
+
+For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Preventing Overload](./configuring.html#diego-cells) section for details.
 
 Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
 
@@ -196,7 +197,7 @@ Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI 
 
 During the PCF upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of PCF, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Upgrade Considerations for Selecting Pivotal Cloud Foundry Storage](../opsguide/storage_considerations.html).
+To ensure a successful upgrade of PCF, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Upgrade Considerations for Selecting Pivotal Cloud Foundry Storage](../upgrading/configuring.html#file-storage).
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
