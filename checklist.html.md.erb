@@ -102,9 +102,9 @@ With each release of a new PCF version, BOSH Director may require specific updat
 
 With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.4:
 
-#### <a id="route-integity"></a> Configure Gorouter with TLS
+#### <a id="route-integrity"></a> Configure Gorouter with TLS
 
-Before upgrading to PAS v2.4, secure the Gorouter with TLS or mutual TLS.
+Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS.
 
 The following sections describe how to enable routing with TLS or mutual TLS, then scale the Diego Cell CPU and RAM. You must scale your CPU and RAM to support TLS routing.
 
@@ -122,17 +122,58 @@ To enable TLS or mutual TLS routing, do the following:
 
 1. Click **Save**.
 
-##### <a id="ram-size"></a> Step 2: Determine Diego Cell RAM Requirement
+##### <a id="ram-size"></a> Step 2: Determine Number of App Instances
+
+Before you can scale your Diego Cell VM to handle TLS routing, you must determine the number of 
+app instances running on your deployment.
+
+See the following methods for how you can count your app instances. Choose the method that corresponds to your use case. 
+
+* **Deployments with partitioned cells. For example, Isolation Segment or Windows cells**  
+  	1. Access your platform metrics with your configured monitoring tool or with cf CLI
+  	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
+  	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
+  	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
+  	1. Find the `ContainerCount` metric of the `rep` job on the Diego Cell VM. See the following example:
+   		<pre class="terminal">origin:"rep" eventType:ValueMetric
+		timestamp:1541543910092859448 deployment:"cf" job:"diego_cell"
+		index:"8007afda-3bff-4856-857f-a47a43cbf994" ip:"10.0.4.18"
+		tags:&gt;key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
+		tags:&gt;key:"source_id" value:"rep" > valueMetric:<name:"ContainerCount" value:0
+		unit:"Metric" ><Paste>origin:"rep" eventType:ValueMetric
+		timestamp:1541543910092859448 deployment:"cf" job:"diego_cell"
+		index:"8007afda-3bff-4856-857f-a47a43cbf994" ip:"10.0.4.18"
+		tags:&gt;key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
+		tags:&gt;key:"source_id" value:"rep" > valueMetric:&gt;name:
+		"ContainerCount" <span style="color: red">value:200</span> unit:"Metric" ></pre>
+	1. Record the number `value` of the `ContainerCount` for each instance
+	of the `rep` job. There is a `rep` job on each Diego Cell VM, with a unique
+	`instance_id` value.
+  	1. Add together the values you recorded. Record this value for the procedure in the next section.  
+* **Deployments without partitioned cells**
+  	1. Access your platform metrics with your configured monitoring tool or with cf CLI
+  	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
+  	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
+  	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
+  	1. Find the `LRPsDesired` metric of the `bbs` job on the Diego Database VM. See the following example:
+		<pre class="terminal">origin:"bbs" eventType:ValueMetric
+		timestamp:1541543212057232344 deployment:"cf" job:"diego_database"
+		index:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" ip:"10.0.4.10"
+		tags:&gt;key:"instance_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
+		tags:&gt;key:"source_id" value:"bbs" > valueMetric:&gt;name:"LRPsDesired" <span style="color: red">value:200</span>
+		unit:"Metric" ></pre>
+	1. Record the number `value` of the `LRPsDesired` for each instance
+	of the `bbs` job. There is a `bbs` job on each Diego Database VM, with a unique
+	`instance_id` value.
+  	1. Add together the values you recorded. Record this value for the procedure in the next section.
+
+##### <a id="scale-diego-cell"></a> Step 3: Scale Diego Cell
 
 To support TLS or mutual TLS routing, you must scale the Diego Cell CPU and RAM. TLS routing requires an additional 32&nbsp;MB of RAM on your Diego Cell per app instance.
 
 To calculate the amount of additional RAM you need for your Diego Cell, do the following:
 
-1. From your Diego metrics, get the number value of `LRPsDesired`.
-
-2. Multiply the number of `LRPsDesired` by 32 and record that number.
-
-##### <a id="scale-diego-cell"></a> Step 3: Scale Diego Cell
+1. Multiply the number of app instances you recorded in the previous section by 32.
 
 To scale the Diego Cell, do the following:
 
