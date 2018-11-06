@@ -35,13 +35,20 @@ Review each of the following links to understand the changes in the new release,
 	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
 
+## <a id='migrate-database'></a> Migrate Databases to Internal Percona MySQL
+
+PAS v2.4 uses a Percona Server that uses TLS to encrypt communication between server cluster nodes. If your PAS v2.3 uses the MariaDB infrastructure, you must migrate your databases to Percona before you can upgrade to PAS v2.4.
+
+To migrate your databases to Percona, see [Migrating to Internal Percona MySQL](../../opsguide/migrate-percona-mysql.html).
+
+
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
 The following section describes changes you must make to your product tiles and add-ons before upgrading PCF.
 
 ### <a id="compatibility"></a> Review Tile Compatibility
 
-Before you upgrade to PCF v2.4, please check whether the service tiles that you currently have deployed on PCF v2.3 are compatible with PCF v2.4.
+Before you upgrade to PCF v2.4, check whether the service tiles that you currently have deployed on PCF v2.3 are compatible with PCF v2.4.
 
 To check PCF versions supported by a service tile, either from Pivotal or a Pivotal partner:
 
@@ -99,9 +106,7 @@ With each release of a new PCF version, PAS may require specific updates before 
 
 Before upgrading to PAS v2.4, secure the Gorouter with TLS or mutual TLS.
 
-The following sections describe how to enable routing with TLS or mutual TLS, then scale
-the Diego Cell CPU and RAM. You must scale your CPU and RAM to support TLS routing.
-
+The following sections describe how to enable routing with TLS or mutual TLS, then scale the Diego Cell CPU and RAM. You must scale your CPU and RAM to support TLS routing.
 
 ##### <a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing
 
@@ -119,16 +124,13 @@ To enable TLS or mutual TLS routing, do the following:
 
 ##### <a id="ram-size"></a> Step 2: Determine Diego Cell RAM Requirement
 
-To support TLS or mutual TLS routing, you must scale the Diego Cell CPU and RAM.
-TLS routing requires an additional 32 MB of RAM on your Diego Cell per app
-instance.
+To support TLS or mutual TLS routing, you must scale the Diego Cell CPU and RAM. TLS routing requires an additional 32&nbsp;MB of RAM on your Diego Cell per app instance.
 
 To calculate the amount of additional RAM you need for your Diego Cell, do the following:
 
 1. From your Diego metrics, get the number value of `LRPsDesired`.
 
 2. Multiply the number of `LRPsDesired` by 32 and record that number.
-
 
 ##### <a id="scale-diego-cell"></a> Step 3: Scale Diego Cell
 
@@ -138,10 +140,7 @@ To scale the Diego Cell, do the following:
 
 1. Go to the **Resource Config** pane.
 
-1. In the **Diego Cell** row, see your current **VM Type**. To calculate the minimum
-amount of RAM you need, add your current RAM
- to the number you recorded in [Determine Diego Cell RAM Requirement
- ](#ram-size).
+1. In the **Diego Cell** row, see your current **VM Type**. To calculate the minimum amount of RAM you need, add your current RAM to the number you recorded in [Determine Diego Cell RAM Requirement](#ram-size).
 
 1. Select your new **VM Type**.
 
@@ -175,13 +174,14 @@ To update an add-on manifest, do the following:
         stemcell:
           - os: ubuntu-xenial
     ```
+
 1. Upload the modified manifest file to your PCF deployment. For example instructions, see [Create the FIM Manifest](https://docs.pivotal.io/addon-fim/index.html#create-mfest).
 
 If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see the [BOSH documentation](https://bosh.io/docs/runtime-config.html#addons).
 
 ### <a id="azure-blobstore-addon"></a> Check Backup and Restore External Blobstore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the [Blobstore Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you need to update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.4. If you do not remove this job, upgrading PAS fails with the error:
+If you have enabled external blobstore backups for an Azure Blobstore using the [Blobstore Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.4. If you do not remove this job, upgrading PAS fails with the error:
 
 <pre>
 Preparing deployment: Preparing deployment (00:00:01)
