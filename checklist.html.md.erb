@@ -100,7 +100,7 @@ With each release of a new PCF version, PAS may require specific updates before 
 Before upgrading to PAS v2.4, secure the Gorouter with TLS or mutual TLS.
 
 The following sections describe how to enable routing with TLS or mutual TLS, then scale
-the Diego Cell CPU and memory. You must scale your CPU and RAM to support TLS routing.
+the Diego Cell CPU and RAM. You must scale your CPU and RAM to support TLS routing.
 
 
 ##### <a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing
@@ -117,10 +117,10 @@ To enable TLS or mutual TLS routing, do the following:
 
 1. Click **Save**.
 
-##### <a id="determine-size"></a> Step 2: Determine Diego Cell RAM Requirement
+##### <a id="ram-size"></a> Step 2: Determine Diego Cell RAM Requirement
 
 To support TLS or mutual TLS routing, you must scale the Diego Cell CPU and RAM.
-TLS routing requires an additional 32 MB of RAM capacity on your Diego cells per app
+TLS routing requires an additional 32 MB of RAM on your Diego Cell per app
 instance.
 
 To calculate the amount of additional RAM you need for your Diego Cell, do the following:
@@ -140,11 +140,14 @@ To scale the Diego Cell, do the following:
 
 1. In the **Diego Cell** row, see your current **VM Type**. To calculate the minimum
 amount of RAM you need, add your current RAM
- to number you recorded in step 2.
+ to the number you recorded in [Determine Diego Cell RAM Requirement
+ ](#ram-size).
+
+1. Select your new **VM Type**.
 
 1. Click **Save**.
 
-1. Go to **Review Pending Changed** and click **Apply Changes**.
+1. Go to **Review Pending Changes** and click **Apply Changes**.
 
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
 
