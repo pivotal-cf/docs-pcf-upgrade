@@ -5,14 +5,14 @@ owner:
 
 This topic describes several configuration options for Pivotal Application Service (PAS) that can help ensure successful upgrades. In addition to following the [Upgrade Preparation Checklist](./checklist.html), review the sections in this document to better understand how to prepare for PAS Upgrades. 
 
-## <a id="limit-restart"></a> Limit PCF Component Instances During Restart
+## <a id="limit-restart"></a> Limit PCF Component Instances Restarts
 
-The `max_in_flight` variable limits how many instances of a component can restart simultaneously during updates or upgrades. It can make deployment upgrades run faster and prevent system overload. For PCF deployments with hundreds of jobs, upgrading sequentially can take hours. With `max_in_flight`, you can upgrade jobs in batches, which substantially decreases upgrade time.
+The `max_in_flight` variable limits how many instances of a component can restart simultaneously during updates or upgrades. Increasing the value of `max_in_flight` can make updates run faster, but setting it too high risks overloading VMs and causing failure. See [Best Practices](#best-practices) for guidance on setting `max_in_flight` values.
 
-Values for `max_in_flight` can be any integer between 1 and 100, or a percentage of the total number of instances (for example, a `max_in_flight` value of 20% in a deployment with 10 instances would only allow 2 instances to start at once).
+Values for `max_in_flight` can be any integer between 1 and 100, or a percentage of the total number of instances. For example, a `max_in_flight` value of `20%` in a deployment with 10 Diego cell instances would make no more than two cell instances restart at once.
 
-### <a id="setting"></a>Set max\_in\_flight the Variable
-The `max_in_flight` is a system-wide value with optional component-specific overrides. You can override the default value for individual jobs using an API endpoint.
+### <a id="setting"></a>Set max\_in\_flight
+The `max_in_flight` variable is a system-wide value with optional component-specific overrides. You can override the default value for individual jobs using an API endpoint.
 
 #### <a id="endpoint"></a>Use the max\_in\_flight API Endpoint
 
