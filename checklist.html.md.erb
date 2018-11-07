@@ -106,7 +106,8 @@ With each release of a new PCF version, PAS may require specific updates before 
 
 Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS.
 
-The following sections describe how to enable routing with TLS or mutual TLS, then scale the Diego Cell CPU and RAM. You must scale your CPU and RAM to support TLS routing.
+The following sections describe how to enable routing with TLS or mutual TLS, then scale
+the Diego Cell VM CPU and RAM.
 
 ##### <a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing
 
@@ -124,10 +125,11 @@ To enable TLS or mutual TLS routing, do the following:
 
 ##### <a id="ram-size"></a> Step 2: Determine Number of App Instances
 
-Before you can scale your Diego Cell VM to handle TLS routing, you must determine the number of 
+Before you scale your Diego Cell VM to handle TLS routing, you must determine the number of 
 app instances running on your deployment.
 
-See the following methods for how you can count your app instances. Choose the method that corresponds to your use case. 
+See the following methods for how you can count your app instances. Choose the method that
+corresponds to your use case. 
 
 * **Deployments with partitioned cells. For example, Isolation Segment or Windows cells**  
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
@@ -147,9 +149,9 @@ See the following methods for how you can count your app instances. Choose the m
 		tags:&gt;key:"source_id" value:"rep" > valueMetric:&gt;name:
 		"ContainerCount" <span style="color: red">value:200</span> unit:"Metric" ></pre>
 	1. Record the number `value` of the `ContainerCount` for each instance
-	of the `rep` job. There is a `rep` job on each Diego Cell VM, with a unique
+	of the `rep` job. There is a `rep` job on each Diego Cell VM with a unique
 	`instance_id` value.
-  	1. Add together the values you recorded. Record this value for the procedure in the next section.  
+  	1. Add together the values you recorded. Record your solution for the procedure in the next section.  
 * **Deployments without partitioned cells**
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
   	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
@@ -163,31 +165,32 @@ See the following methods for how you can count your app instances. Choose the m
 		tags:&gt;key:"source_id" value:"bbs" > valueMetric:&gt;name:"LRPsDesired" <span style="color: red">value:200</span>
 		unit:"Metric" ></pre>
 	1. Record the number `value` of the `LRPsDesired` for each instance
-	of the `bbs` job. There is a `bbs` job on each Diego Database VM, with a unique
+	of the `bbs` job. There is a `bbs` job on each Diego Database VM with a unique
 	`instance_id` value.
   	1. Add together the values you recorded. Record this value for the procedure in the next section.
 
 ##### <a id="scale-diego-cell"></a> Step 3: Scale Diego Cell
 
-To support TLS or mutual TLS routing, you must scale the Diego Cell CPU and RAM. TLS routing requires an additional 32&nbsp;MB of RAM on your Diego Cell per app instance.
+To support TLS or mutual TLS routing, you have enough CPU and RAM for your Diego Cell VM. TLS
+routing requires an additional 32MB of RAM on your Diego Cell per app instance.
 
-To calculate the amount of additional RAM you need for your Diego Cell, do the following:
+To calculate the amount of RAM you need for your Diego Cell, do the following:
 
-1. Multiply the number of app instances you recorded in the previous section by 32.
+1. Go to the **Resource Config** pane of your PAS tile.
+
+1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
+
+1. Multiply the number of app instances you recorded in the previous section by 32. Add your solution
+to the amount of RAM you currently have.
 
 To scale the Diego Cell, do the following:
 
-1. From the **Ops Manager Installation Dashboard**, go to the PAS tile.
-
-1. Go to the **Resource Config** pane.
-
-1. In the **Diego Cell** row, see your current **VM Type**. To calculate the minimum amount of RAM you need, add your current RAM to the number you recorded in [Determine Diego Cell RAM Requirement](#ram-size).
-
-1. Select your new **VM Type**.
+1. In the **Resource Config** pane of your PAS tile, set the new **VM Type** based on the amount of RAM you need.
 
 1. Click **Save**.
 
 1. Go to **Review Pending Changes** and click **Apply Changes**.
+
 
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
 
