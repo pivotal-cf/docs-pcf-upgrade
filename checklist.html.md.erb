@@ -104,10 +104,13 @@ With each release of a new PCF version, PAS may require specific updates before 
 
 #### <a id="route-integrity"></a> Configure Gorouter with TLS
 
-Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS.
+Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
 The following sections describe how to enable routing with TLS or mutual TLS, then scale
 the Diego Cell VM CPU and RAM.
+
+<p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
+
 
 ##### <a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing
 
@@ -133,7 +136,7 @@ app instances running on your deployment.
 See the following methods for how you can count your app instances. Choose the method that
 corresponds to your use case. 
 
-* **Deployments without partitioned cells**
+* **Deployments without Isolation Segments**
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
   	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
   	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
@@ -147,7 +150,7 @@ corresponds to your use case.
 		<span style="color: red">value:200</span> unit:"Metric" ></pre>
 	1. Record the number `value` of the `LRPsDesired` for each instance of the `bbs` job. You need the value for the procedure in the next section. 
 
-* **Deployments with partitioned cells. For example, Isolation Segment or Windows cells**  
+* **Deployments with Isolation Segments**  
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
   	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
   	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
@@ -185,7 +188,7 @@ to the amount of RAM you currently have.
 
 ##### <a id="scale-diego-cell"></a> Step 4: Scale Diego Cell
 
-To scale the Diego Cell, do the following for each of your runtime tile such as PAS, PAS for Windows, or Isolation Segment:
+To scale the Diego Cell, do the following for each of your PAS or Isolation Segment tiles:
 
 1. In the **Resource Config** pane of your PAS tile, set the new **VM Type** based on the amount of RAM you calculated in [Calculate Required Diego Cell RAM](#calculate-ram-bump).
 
