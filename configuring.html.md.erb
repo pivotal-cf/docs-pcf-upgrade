@@ -5,7 +5,7 @@ owner:
 
 This topic describes several configuration options for Pivotal Application Service (PAS) that can help ensure successful upgrades. In addition to following the [Upgrade Preparation Checklist](./checklist.html), review the sections in this document to better understand how to prepare for PAS Upgrades. 
 
-## <a id="limit-restart"></a> Limit PCF Component Instances Restarts
+## <a id="limit-restart"></a> Limit PCF Component Instance Restarts
 
 The `max_in_flight` variable limits how many instances of a component can restart simultaneously during updates or upgrades. Increasing the value of `max_in_flight` can make updates run faster, but setting it too high risks overloading VMs and causing failure. See [Best Practices](#best-practices) for guidance on setting `max_in_flight` values.
 
