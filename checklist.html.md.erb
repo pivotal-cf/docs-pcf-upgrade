@@ -106,8 +106,10 @@ With each release of a new PCF version, PAS may require specific updates before 
 
 Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
-The following sections describe how to enable routing with TLS or mutual TLS, then scale
-the Diego Cell VM CPU and RAM.
+The following sections describe how to enable routing with TLS or mutual TLS and scale
+the Diego Cell VM CPU and RAM. If
+you do not have enough RAM on your Diego Cell VM after enabling TLS routing, you are
+unable to stage tasks and app instances. App instances may also stop running. 
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
 
@@ -131,8 +133,6 @@ To enable TLS or mutual TLS routing, do the following:
 Before you scale your Diego Cell VM to handle TLS routing, you must determine the number of 
 app instances running on your deployment.
 
-<p class="note"><strong>Note:</strong> At your discretion, you can skip to the final step, <a href="#scale-diego-cell">Scale Diego Cell</a>, without calculating the RAM you need. If you do not have enough RAM on your Diego Cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running. If you experience these issues, scale your Diego Cell VM again.</p>
-
 See the following methods for how you can count your app instances. Choose the method that
 corresponds to your use case. 
 
@@ -148,53 +148,51 @@ corresponds to your use case.
 		tags:&gt;key:"instance_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
 		tags:&gt;key:"source_id" value:"bbs" > valueMetric:&gt;name:"LRPsDesired" 
 		<span style="color: red">value:200</span> unit:"Metric" ></pre>
-	1. Record the number `value` of the `LRPsDesired` for each instance of the `bbs` job. You need the value for the procedure in the next section. 
+	1. Record the `value` of the `LRPsDesired` for each instance of the `bbs`
+	job. You need the `value` for the procedure in the next section. 
 
 * **Deployments with Isolation Segments**  
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
   	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
   	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
   	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
-  	1. Find the `ContainerCount` metric of the `rep` job on the Diego Cell VM. See the following example:
+  	1. Find all `ContainerCount` metrics of the `rep` job of each Diego Cell VM. See the following example:
    		<pre class="terminal">origin:"rep" eventType:ValueMetric
 		timestamp:1541543910092859448 deployment:"cf" job:"diego_cell"
-		index:"8007afda-3bff-4856-857f-a47a43cbf994" ip:"10.0.4.18"
-		tags:&gt;key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
-		tags:&gt;key:"source_id" value:"rep" > valueMetric:<name:"ContainerCount" value:0
-		unit:"Metric" ><Paste>origin:"rep" eventType:ValueMetric
-		timestamp:1541543910092859448 deployment:"cf" job:"diego_cell"
-		index:"8007afda-3bff-4856-857f-a47a43cbf994" ip:"10.0.4.18"
+		index:"8007afda-3bff-4856-857f-a47a43cbf994" <span style="color:red">ip:"10.0.4.18"</span>
 		tags:&gt;key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
 		tags:&gt;key:"source_id" value:"rep" > valueMetric:&gt;name:
 		"ContainerCount" <span style="color: red">value:200</span> unit:"Metric" ></pre>
-	1. Record the number `value` of the `ContainerCount` for each instance
-	of the `rep` job. There is a `rep` job on each Diego Cell VM with a unique
-	`instance_id` value.
+	1. For each `ContainerCount` metric, record the `value` of the `ContainerCount`
+	and the `ip` of the `job`.
 
-
-##### <a id="calculate-ram-bump"></a> Step 3: Calculate Required Diego Cell RAM
+##### <a id="scale-diego-cell"></a> Step 3: Scale Diego Cell VM
 
 To support TLS or mutual TLS routing, you must have enough CPU and RAM for your Diego Cell VM. TLS
 routing requires an additional 32&nbsp;MB of RAM on your Diego Cell per app instance.
 
-To calculate the amount of RAM you need for your Diego Cell, do the following:
+To calculate and configure the amount of RAM you need for your Diego Cell, choose one of the following methods
+for your use case:
 
-1. Go to the **Resource Config** pane of your PAS tile.
-
-1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
-
-1. Multiply the number of app instances you recorded in the previous section by 32. Add your solution
-to the amount of RAM you currently have.
-
-##### <a id="scale-diego-cell"></a> Step 4: Scale Diego Cell
-
-To scale the Diego Cell, do the following for each of your PAS or Isolation Segment tiles:
-
-1. In the **Resource Config** pane of your PAS tile, set the new **VM Type** based on the amount of RAM you calculated in [Calculate Required Diego Cell RAM](#calculate-ram-bump).
-
-1. Click **Save**.
-
-1. Go to **Review Pending Changes** and click **Apply Changes**.
+* **Deployments without Isolation Segments**
+<p>For your PAS tile, do the following:</p>
+   1. Go to the **Resource Config** pane.
+   1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
+   1. Multiply the `value` you recorded in the previous section by 32. Add your solution
+   to the amount of RAM you currently have.
+   1. Select your new **VM Type** based on the amount of RAM you need.
+   1. Click **Save**.
+* **Deployments with Isolation Segments**
+<p>For each PAS and Isolation Segment tile in your foundation, do the following:</p>
+   1. Go to the **Status** tab and see the IP of your Diego Cell. To determine the `value`
+   that corresponds to this tile, match the IP to the `ip`
+   metric you recorded in the previous section. 
+   1. Go to the **Resource Config** pane of the the tile.
+   1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
+   1. Multiply the `value` for this tile by 32. Add your solution
+   to the amount of RAM you currently have.
+   1. Select your new **VM Type** based on the amount of RAM you need.
+   1. Click **Save**.
 
 
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
