@@ -131,6 +131,12 @@ To enable GrootFS, do the following:
 
 Once you have enabled GrootFS, ensure the apps running on your deployment function properly before proceeding with your upgrade. Any issues you experience are most likely to appear directly following the deployment of PAS.
 
+#### <a id="migrate-to-percona"></a> Migrate Internal Databases to Percona MySQL
+
+PAS v2.2 introduced Percona Server as an option for your internal MySQL database. Pivotal recommends that you migrate to Percona Server if you use internal MySQL for your PAS deployment and have not yet migrated. 
+
+For more information, see [Migrating to Internal Percona MySQL](../opsguide/migrate-percona-mysql.html). 
+
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
 
 To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-3/tile-errands.html#post-deploy) section of the Errands topic for details.
