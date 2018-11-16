@@ -107,8 +107,8 @@ With each release of a new PCF version, PAS may require specific updates before 
 Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
 The following sections describe how to enable routing with TLS or mutual TLS and scale
-the Diego Cell VM CPU and RAM. If
-you do not have enough RAM on your Diego Cell VM after enabling TLS routing, you are
+the Diego cell VM CPU and RAM. If
+you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are
 unable to stage tasks and app instances. App instances may also stop running. 
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
@@ -130,7 +130,7 @@ To enable TLS or mutual TLS routing, do the following:
 
 ##### <a id="ram-size"></a> Step 2: Determine Number of App Instances
 
-Before you scale your Diego Cell VM to handle TLS routing, you must determine the number of 
+Before you scale your Diego cell VM to handle TLS routing, you must determine the number of 
 app instances running on your deployment.
 
 See the following methods for how you can count your app instances. Choose the method that
@@ -156,7 +156,7 @@ corresponds to your use case.
   	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
   	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
   	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
-  	1. Find all `ContainerCount` metrics of the `rep` job of each Diego Cell VM. See the following example:
+  	1. Find all `ContainerCount` metrics of the `rep` job of each Diego cell VM. See the following example:
    		<pre class="terminal">origin:"rep" eventType:ValueMetric
 		timestamp:1541543910092859448 deployment:"cf" job:"diego_cell"
 		index:"8007afda-3bff-4856-857f-a47a43cbf994" <span style="color:red">ip:"10.0.4.18"</span>
@@ -168,10 +168,10 @@ corresponds to your use case.
 
 ##### <a id="scale-diego-cell"></a> Step 3: Scale Diego Cell VM
 
-To support TLS or mutual TLS routing, you must have enough CPU and RAM for your Diego Cell VM. TLS
-routing requires an additional 32&nbsp;MB of RAM on your Diego Cell per app instance.
+To support TLS or mutual TLS routing, you must have enough CPU and RAM for your Diego cell VM. TLS
+routing requires an additional 32&nbsp;MB of RAM on your Diego cell per app instance.
 
-To calculate and configure the amount of RAM you need for your Diego Cell, choose one of the following methods
+To calculate and configure the amount of RAM you need for your Diego cell, choose one of the following methods
 for your use case:
 
 * **Deployments without Isolation Segments**
@@ -184,7 +184,7 @@ for your use case:
    1. Click **Save**.
 * **Deployments with Isolation Segments**
 <p>For each PAS and Isolation Segment tile in your foundation, do the following:</p>
-   1. Go to the **Status** tab and see the IP of your Diego Cell. To determine the `value`
+   1. Go to the **Status** tab and see the IP of your Diego cell. To determine the `value`
    that corresponds to this tile, match the IP to the `ip`
    metric you recorded in the previous section. 
    1. Go to the **Resource Config** pane of the the tile.
