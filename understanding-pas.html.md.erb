@@ -288,10 +288,13 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>21</td>
   <td>CredHub</td>
   <td>&#10003;</td>
-  <td></td>
-  <td></td>
-  <td></td>
+  <td>&#10003;</td>
+  <td>&#10003;</td>
+  <td>&#10003;</td>
   <td>
+   If the app is using the secure credentials workflow, there is only issues with app
+   downtime. You can experience issues with platform downtime during cf CLI commands such as
+   <code>bind-service</code> and <code>unbind-service</code> if the service is configured with CredHub.
   </td>
 </tr>
 </table>
