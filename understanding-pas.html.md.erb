@@ -292,9 +292,9 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td>
-   If the app is using the secure credentials workflow, there is only issues with app
-   downtime. You can experience issues with platform downtime during cf CLI commands such as
-   <code>bind-service</code> and <code>unbind-service</code> if the service is configured with CredHub.
+      App downtime for apps that use secure credentials.
+      Platform downtime for cf CLI commands such as
+   <code>bind-service</code> and <code>unbind-service</code> applied to services configured with CredHub.
   </td>
 </tr>
 </table>
