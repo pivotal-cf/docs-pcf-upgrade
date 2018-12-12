@@ -25,8 +25,8 @@ Review each of the following links to understand the changes in the new release,
 * **Known Issues**
 	* [Ops Manager v2.4 Known Issues](../../pcf-release-notes/opsmanager-rn.html#known-issues)
 	* [PAS v2.4 Known Issues](../../pcf-release-notes/runtime-rn.html)
-	* The following Pivotal Knowledge Base (KB) articles describe known issues for **PCF v2.4**:
-    * [PCF Advisory - Internal Certificates Expires 2 Years After the Installation](https://community.pivotal.io/s/article/PCF-Advisory--Internal-Certificates-Expires-2-Years-After-the-Installation)
+	* The following Pivotal Knowledge Base (KB) article describes known issues for **PCF v2.4**:
+		* [PCF Advisory - Internal Certificates Expires 2 Years After the Installation](https://community.pivotal.io/s/article/PCF-Advisory--Internal-Certificates-Expires-2-Years-After-the-Installation)
 * **Breaking Changes**
 	* [PCF v2.4 Breaking Changes](../../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
@@ -83,6 +83,19 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 ### <a id="upgrade-service-tiles"></a> Upgrade Services Tiles
 
 Upgrade all service tiles to versions compatible with PCF v2.4. Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and tile documentation to check version compatibility.
+
+### <a id="upgrade-mysql"></a> Upgrade MySQL for PCF from v1 to v2
+
+MySQL for PCF v1 is not compatible with PCF v2.4. 
+
+If you are running MySQL for PCF v1.10 or earlier,
+you must do the following before you upgrade to PCF v2.4:
+
+1. Install MySQL for PCF v2. 
+   For more information, see [Installing and Configuring MySQL for PCF](https://docs.pivotal.io/p-mysql/install-config.html). 
+2. Migrate your service instances from v1 to v2.
+   For more information, see [Migrating Data from v1 to v2](https://docs.pivotal.io/p-mysql/migrate-to-v2.html). 
+3. Delete the MySQL for PCF v1 tile. 
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
