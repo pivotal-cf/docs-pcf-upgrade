@@ -175,10 +175,10 @@ corresponds to your use case.
   	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
   	1. Find the `LRPsDesired` metric of the `bbs` job on the Diego Database VM. See the following example:
 		<pre class="terminal">origin:"bbs" eventType:ValueMetric
-		timestamp:1541543212057232344 deployment:"cf" job:"diego_database"
+		timestamp:1541543212057232344 deployment:"cf" job:"diego\_database"
 		index:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" ip:"10.0.4.10"
-		tags:&gt;key:"instance_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
-		tags:&gt;key:"source_id" value:"bbs" > valueMetric:&gt;name:"LRPsDesired" 
+		tags:&lt; key:"instance\_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
+		tags:&lt; key:"source\_id" value:"bbs" > valueMetric:&lt; name:"LRPsDesired" 
 		<span style="color: red">value:200</span> unit:"Metric" ></pre>
 	1. Record the `value` of the `LRPsDesired` for each instance of the `bbs`
 	job. You need the `value` for the procedure in the next section. 
@@ -190,10 +190,10 @@ corresponds to your use case.
   	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
   	1. Find all `ContainerCount` metrics of the `rep` job of each Diego cell VM. See the following example:
    		<pre class="terminal">origin:"rep" eventType:ValueMetric
-		timestamp:1541543910092859448 deployment:"cf" job:"diego_cell"
+		timestamp:1541543910092859448 deployment:"cf" job:"diego\_cell"
 		index:"8007afda-3bff-4856-857f-a47a43cbf994" <span style="color:red">ip:"10.0.4.18"</span>
-		tags:&gt;key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
-		tags:&gt;key:"source_id" value:"rep" > valueMetric:&gt;name:
+		tags:&lt; key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
+		tags:&lt; key:"source\_id" value:"rep" > valueMetric:&lt; name:
 		"ContainerCount" <span style="color: red">value:200</span> unit:"Metric" ></pre>
 	1. For each `ContainerCount` metric, record the `value` of the `ContainerCount`
 	and the `ip` of the `job`.
