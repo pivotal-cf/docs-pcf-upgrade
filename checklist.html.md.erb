@@ -129,6 +129,10 @@ The following sections describe how to enable routing with TLS or mutual TLS and
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
 
+#### <a id='bosh-cli'></a> Install BOSH CLI v5.3.1 or Later
+
+Install [BOSH CLI v5.3.1](https://github.com/cloudfoundry/bosh-cli/releases/tag/v5.3.1) to avoid IP conflict errors that cause BOSH health check tasks to fail to acquire locks. For more information, see [this KB article](https://community.pivotal.io/s/article/bosh-health-check-tasks-fails-to-acquire-lock).
+
 
 ##### <a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing
 
