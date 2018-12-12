@@ -102,14 +102,17 @@ With each release of a new PCF version, BOSH Director may require specific updat
 
 With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.4:
 
+#### <a id='patch'></a> Install PAS v2.3.2 or Later
+
+App Autoscaler consumes a new log-cache API. In order to avoid App Autoscaler downtime, update to PAS v2.3.2 or later before upgrading to PAS v2.4.
+
+If you upgrade to PAS v2.3.2 or later before upgrading to PAS v2.4, there will be no downtime. If you upgrade from PAS v2.3.1 to PAS v2.4, App Autoscaler will be intermittently unusable until the upgrade is complete.
+
 #### <a id="route-integrity"></a> Configure Gorouter with TLS
 
 Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
-The following sections describe how to enable routing with TLS or mutual TLS and scale
-the Diego cell VM CPU and RAM. If
-you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are
-unable to stage tasks and app instances. App instances may also stop running. 
+The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running. 
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
 
@@ -257,7 +260,7 @@ In this request, the `expires_within` parameter is optional. Valid values for th
  -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-For information about regenerating and rotateing CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
+For information about regenerating and rotating CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
 
 
 ## <a id="capacity"></a> Check the Capacity of Your Deployment
@@ -281,7 +284,7 @@ The KPIs that monitor these these resources are are:
 
 If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Limit PCF Component Instances During Restart](./configuring.html#limit-restart).
 
-For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Prevent Overload](./configuring.html#limitations-considerations) section for details.
+For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego cell definition. See the [Prevent Overload](./configuring.html#limitations-considerations) section for details.
 
 Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
 
