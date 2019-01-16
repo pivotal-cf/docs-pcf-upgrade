@@ -95,17 +95,7 @@ Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compa
 
 With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.1:
 
-1. If not already disabled, disable the VM Resurrector:
-   1. From your **Installation Dashboard**, select the **BOSH Director** tile.
-    1. Click **Director Config**.
-    1. Clear the **Enable VM resurrector plugin** checkbox.
-    1. Click **Save**.
-    1. Return to the **Installation Dashboard**.
-    1. Click **Apply Changes**.
-
-1. If you disabled BOSH DNS, reenable it. In the **Director Config** pane of the **BOSH Director** tile, clear the **Disable BOSH DNS server for troubleshooting purposes** checkbox.
-
-1. Check the required machine specifications for Ops Manager v2.1. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, then increase the size of your Ops Manager boot disk to 100&nbsp;GB.
+1. Check the required machine specifications for Ops Manager v2.4. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, then increase the size of your Ops Manager boot disk to 100&nbsp;GB.
 
 ### <a id='patch'></a> Configure PAS
 
