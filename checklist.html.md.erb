@@ -44,6 +44,7 @@ Review each of the following links to understand the changes in the new release,
 		* [Diego Cell Garden healthcheck fails and becomes unhealthy](https://community.pivotal.io/s/article/diego-cell-garden-healthcheck-fails-and-becomes-unhealthy)
 		* [Java Applications crashing after upgrading to PCF 1.12 or higher](https://community.pivotal.io/s/article/Java-Applications-crashing-after-upgrading-to-PCF-1-12-or-higher)
 		* [PAS backup-prepare job renamed to backup-restore may cause automation failures](https://community.pivotal.io/s/article/PAS-backup-prepare-job-renamed-to-backup-restore-may-cause-automation-failures)
+		* [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror)
 * **Breaking Changes**
 	* [PCF v2.2 Breaking Changes](../../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
@@ -230,6 +231,10 @@ If you are not using PCF Healthwatch, you can do some or all of the following to
 ### <a id="push-test-app"></a> Push and Scale a Test App
 
 Check that a test app can be pushed and scaled horizontally, manually or through automated testing. This check ensures that the platform supports apps as expected before the upgrade.
+
+### <a id="validate-installed-buildpacks"></a> Validate Installed Buildpacks
+
+Buildpacks may now have an [associated stack](https://docs.cloudfoundry.org/buildpacks/stack-association.html) denoting which stacks they are compatible with. During this transition, PAS will begin installing multiple versions of buildpacks for different stacks (e.g. `cflinuxfs2`, `cflinuxfs3`, etc.). To ensure that the buildpacks are [installed without errors](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror), if you have multiple buildpacks installed with the same name all buildpacks with that name must be associated with a stack. Additionally, any buildpacks that do not have an associated stack should be unlocked prior to upgrading. Refer to the [following documentation](https://docs.cloudfoundry.org/buildpacks/stack-association.html#stack-cli) for more information on associating a stack with an existing buildpack.
 
 ### <a id="validate-mysql-cluster-health"></a> Validate MySQL Cluster Health
 
