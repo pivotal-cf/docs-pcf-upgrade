@@ -32,6 +32,7 @@ Review each of the following links to understand the changes in the new release,
 		* [SCS deploy-service-broker errands fail in 2.0.4 when secure credential are enabled](https://community.pivotal.io/s/article/scs-deploy-service-broker-errands-fails-in-2-0-4-when-secure-credential-are-enabled)
 		* [Deployments fail with IP Reservation conflicts when Healthwatch or On Demand Service tiles are installed](https://community.pivotal.io/s/article/deployments-fail-with-ip-reservation-conflicts-when-healthwatch-or-on-demand-service-tiles-are-installed)
 		* [How to audit the admin trails for Ops Manager in PCF 2.4](https://community.pivotal.io/s/article/how-to-audit-the-admin-trails-for-ops-manager)
+		* [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror)
 * **Breaking Changes**
 	* [PCF v2.4 Breaking Changes](../../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
@@ -346,6 +347,10 @@ If you are not using PCF Healthwatch, you can do some or all of the following to
 ### <a id="push-test-app"></a> Push and Scale a Test App
 
 Check that a test app can be pushed and scaled horizontally, manually or through automated testing. This check ensures that the platform supports apps as expected before the upgrade.
+
+### <a id="validate-installed-buildpacks"></a> Validate Installed Buildpacks
+
+Buildpacks may now have an [associated stack](https://docs.cloudfoundry.org/buildpacks/stack-association.html) denoting which stacks they are compatible with. During this transition, PAS will begin installing multiple versions of buildpacks for different stacks (e.g. `cflinuxfs2`, `cflinuxfs3`, etc.). To ensure that the buildpacks are [installed without errors](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror), if you have multiple buildpacks installed with the same name all buildpacks with that name must be associated with a stack. Additionally, any default buildpacks that do not have an associated stack should be unlocked and any custom/non-default buildpacks will need to be manually associated with a stack prior to upgrading. Refer to the [following documentation](https://docs.cloudfoundry.org/buildpacks/stack-association.html#stack-cli) for more information on associating a stack with an existing buildpack.
 
 ### <a id="validate-mysql-cluster-health"></a> Validate MySQL Cluster Health
 
