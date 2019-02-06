@@ -38,6 +38,20 @@ Review each of the following links to understand the changes in the new release,
 * **Diego Network Communications**:
 	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
+## <a id="validate-installed-buildpacks"></a> Validate Installed Buildpacks
+
+PAS v2.3 introduces a stack association feature for buildpacks. You can now have multiple versions of the same buildpack for different stacks. For more information, see [cflinuxfs3 Stack and Compatible Buildpacks](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#cflinuxfs3) in the PAS Release Notes. 
+
+To avoid errors during upgrade, do the following:
+
+* If you have multiple buildpacks with the same name, associate each of those buildpacks with a stack. For more information, see [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror).  
+
+* Unlock any default buildpacks that do not have an associated stack. 
+
+* Associate any custom or non-default buildpacks with a stack. 
+
+For more information about associating a stack with an existing buildpack, see [Managing Stack Association with the cf CLI](https://docs.pivotal.io/pivotalcf/2-3/buildpacks/stack-association.html#stack-cli). 
+
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -277,9 +291,6 @@ If you are not using PCF Healthwatch, you can do some or all of the following to
 
 Check that a test app can be pushed and scaled horizontally, manually or through automated testing. This check ensures that the platform supports apps as expected before the upgrade.
 
-### <a id="validate-installed-buildpacks"></a> Validate Installed Buildpacks
-
-Buildpacks may now have an [associated stack](https://docs.cloudfoundry.org/buildpacks/stack-association.html) denoting which stacks they are compatible with. During this transition, PAS will begin installing multiple versions of buildpacks for different stacks (e.g. `cflinuxfs2`, `cflinuxfs3`, etc.). To ensure that the buildpacks are [installed without errors](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror), if you have multiple buildpacks installed with the same name all buildpacks with that name must be associated with a stack. Additionally, any default buildpacks that do not have an associated stack should be unlocked and any custom/non-default buildpacks will need to be manually associated with a stack prior to upgrading. Refer to the [following documentation](https://docs.cloudfoundry.org/buildpacks/stack-association.html#stack-cli) for more information on associating a stack with an existing buildpack.
 
 ### <a id="validate-mysql-cluster-health"></a> Validate MySQL Cluster Health
 
