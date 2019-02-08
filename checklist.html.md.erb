@@ -130,6 +130,10 @@ Only disable these errands if your environment does not need them.
 
 In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Deleting Products](../customizing/add-delete.html#add-import) topic.
 
+#### <a id="cipher"></a> Confirm Cipher Suites
+
+Ensure that the **TLS Cipher Suites for Router** field contains a cipher suite supported by both Gorouter and CAPI. For details, see [Removing Default Ciphers Causes Downtime when Upgrading from 2.2 to 2.3 and from 2.3 to 2.4](https://docs.pivotal.io/pivotalcf/2-4/pcf-release-notes/runtime-rn#cipher-downtime). 
+
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
 
 In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** below has been changed from the default of `10240`, then operators need to pick a new threshold. If the scheduling is set to **Never clean up...** or **Routinely clean up...***, or the threshold value is set to the default, then the no action is necessary, and any threshold will migrate to a sensible value. For more information see [Options for Disk Cleanup](https://docs.pivotal.io/pivotalcf/2-4/opsguide/config-cell-cleanup.html).
