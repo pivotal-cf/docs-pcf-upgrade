@@ -113,6 +113,10 @@ With each release of a new PCF version, PAS may require specific updates before 
 
 In PAS v2.3, traffic between the Gorouter and Cloud Controller is encrypted. To prevent app downtime while upgrading from v2.2 to v2.3, you must be running PAS v2.2.4 or later. These versions of PAS v2.2 contain the configuration `router.backends.enable_tls: true` in the Gorouter manifest.
 
+#### <a id="cipher"></a> Confirm Cipher Suites
+
+Ensure that the **TLS Cipher Suites for Router** field contains a cipher suite supported by both Gorouter and CAPI. For details, see [Removing Default Ciphers Causes Downtime when Upgrading from 2.2 to 2.3 and from 2.3 to 2.4](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn#cipher-downtime). 
+
 #### <a id="groot"></a> Enable GrootFS
 
 <p class="note"><strong>Note:</strong> If GrootFS is already enabled for your deployment, you can skip this step.</p>
