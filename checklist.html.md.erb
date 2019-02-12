@@ -121,7 +121,11 @@ With each release of a new PCF version, PAS may require specific updates before 
 
 #### <a id="deselect-override"></a> Deselect Option to Override Deployment Name to CF
 
-Ensure that the **Use “cf” as deployment name in emitted metrics instead of unique name** option in the Advanced Features pane of the PAS tile must be deselected. This is a requirement to upgrade successfully. For more information, see [Removed Option to Override Deployment Name to CF](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html#deployment-name).
+Ensure that the **Use “cf” as deployment name in emitted metrics instead of unique name** option in the **Advanced Features** pane of the PAS tile is deselected. This is a requirement to upgrade successfully. 
+
+Additionally, if you have PCF Healthwatch installed and you changed the value of **Use “cf” as deployment name in emitted metrics instead of unique name** in PAS, you must run the **Push Monitoring Components** errand for Healthwatch to detect the change. 
+
+For more information, see [Removed Option to Override Deployment Name to CF](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html#deployment-name).
 
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
