@@ -119,6 +119,11 @@ With each release of a new PCF version, BOSH Director may require specific updat
 
 With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.4:
 
+#### <a id="deselect-override"></a> Deselect Option to Override Deployment Name to CF
+
+Ensure that the **Use “cf” as deployment name in emitted metrics instead of unique name** option in the Advanced Features pane of the PAS tile must be deselected. This is a requirement to upgrade successfully. For more information, see [Removed Option to Override Deployment Name to CF](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html#deployment-name).
+
+
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
 To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-4/tile-errands.html#post-deploy) section of the Errands topic for details.
