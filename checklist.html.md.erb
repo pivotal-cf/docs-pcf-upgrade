@@ -113,11 +113,20 @@ Install [BOSH CLI v5.3.1](https://github.com/cloudfoundry/bosh-cli/releases/tag/
 
 With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to PCF v2.4:
 
-1. Check the required machine specifications for Ops Manager v2.4. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, then increase the size of your Ops Manager boot disk to 100&nbsp;GB.
+#### <a id="check-specs"></a> Check Required Machine Specifications
+
+Check the required machine specifications for Ops Manager v2.4. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, then increase the size of your Ops Manager boot disk to 100&nbsp;GB.
+
+#### <a id="ssl-apps-manager"></a> Ensure CA is Trusted by BOSH Director
+
+Starting in PAS v2.4.3, Apps Manager verifies SSL certificates for endpoints to which it proxies. For environments using self-signed certificates or certificates that are signed by a certificate authority that is not trusted by the BOSH Director, this may cause Apps Manager to show no content. 
+
+If you are upgrading to PAS v2.5 from PAS v2.4.2 or earlier, do the following to prevent this issue: Add the certificate authority using the **Trusted Certificates** field in the **Security** pane of the BOSH Director tile.
 
 ### <a id='patch'></a> Configure PAS
 
 With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.4:
+
 
 #### <a id="deselect-override"></a> Deselect Option to Override Deployment Name to CF
 
