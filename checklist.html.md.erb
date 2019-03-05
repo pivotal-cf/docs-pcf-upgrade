@@ -36,40 +36,25 @@ Review each of the following links to understand the changes in the new release,
 
 ## <a id='cflinuxfs3'></a> Migrate Apps to cflinuxfs3
 
-In PAS v2.5, cflinuxfs2 is no longer supported. To upgrade to PAS v2.5, you must change your stack to cflinuxfs3 and restage your apps.
+In PAS v2.5, `cflinuxfs2` is no longer supported. To upgrade to PAS v2.5, you must change your stack to `cflinuxfs3` and restage your apps.
 
-For security, stacks receive regular updates to address Common Vulnerabilities and Exposures ([CVEs](http://www.ubuntu.com/usn/)). Apps pick up on these stack changes through new releases of <%= vars.product_short %>. However, if your app links statically to a library provided in the rootfs, you may have to manually restage it to pick up the changes.
+To change your stack to `cflinuxfs3` and restage your app, run `cf push MY-APP -s cflinuxfs3`:
 
-It can be difficult to know what libraries an app statically links to, and it depends on the languages you are using. One example is an app that uses a Ruby or Python binary, and links out to part of the C standard library. If the C library requires an update, you may need to recompile the app and restage it by doing the following:
-
-1. Use the [cf stacks](http://cli.cloudfoundry.org/en-US/cf/stacks.html) command to list the stacks available in a deployment.
-
-    <pre class='terminal'>
-    $ cf stacks
-    Getting stacks in org MY-ORG / space development as developer@example<span>.</span>com...
-    OK
-
-    name            description
-    cflinuxfs2      Cloud Foundry Linux-based filesystem - Ubuntu Trusty 14.04 LTS
-    cflinuxfs3      Cloud Foundry Linux-based filesystem - Ubuntu Bionic 18.04 LTS
-    </pre>
-
-1. To change your stack and restage your app, use the [cf push](http://cli.cloudfoundry.org/en-US/cf/push.html) command. For example, to restage your app on the stack `cflinuxfs3` you can run `cf push MY-APP -s cflinuxfs3`:
-    <pre class='terminal'>
-    $ cf push MY-APP -s cflinuxfs3
-    Using stack cflinuxfs3...
-    OK
-    Creating app MY-APP in org MY-ORG / space development as developer@example<span>.</span>com...
-    OK
-    ...
-    requested state: started
-    instances: 1/1
-    usage: 1G x 1 instances
-    urls: MY-APP.cfapps.io
-    last uploaded: Wed Apr 8 23:40:57 UTC 2015
-        state    since                    cpu    memory        disk
-    \#0  running  2015-04-08 04:41:54 PM   0.0%   57.3M of 1G   128.8M of 1G
-    </pre>
+<pre class='terminal'>
+$ cf push MY-APP -s cflinuxfs3
+Using stack cflinuxfs3...
+OK
+Creating app MY-APP in org MY-ORG / space development as developer@example<span>.</span>com...
+OK
+...
+requested state: started
+instances: 1/1
+usage: 1G x 1 instances
+urls: MY-APP.cfapps.io
+last uploaded: Wed Apr 8 23:40:57 UTC 2015
+    state    since                    cpu    memory        disk
+\#0  running  2015-04-08 04:41:54 PM   0.0%   57.3M of 1G   128.8M of 1G
+</pre>
 
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
