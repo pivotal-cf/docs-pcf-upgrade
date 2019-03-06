@@ -38,23 +38,25 @@ Review each of the following links to understand the changes in the new release,
 
 In PAS v2.5, `cflinuxfs2` is no longer supported. To upgrade to PAS v2.5, you must change your stack to `cflinuxfs3` and restage your apps.
 
-To change your stack to `cflinuxfs3` and restage your app, run `cf push MY-APP -s cflinuxfs3`:
-
-<pre class='terminal'>
-$ cf push MY-APP -s cflinuxfs3
-Using stack cflinuxfs3...
-OK
-Creating app MY-APP in org MY-ORG / space development as developer@example<span>.</span>com...
-OK
-...
-requested state: started
-instances: 1/1
-usage: 1G x 1 instances
-urls: MY-APP.cfapps.io
-last uploaded: Wed Apr 8 23:40:57 UTC 2015
-    state    since                    cpu    memory        disk
-\#0  running  2015-04-08 04:41:54 PM   0.0%   57.3M of 1G   128.8M of 1G
-</pre>
+1. To change your stack to cflinuxfs3 and restage your app, run the following command:
+    <code>cf push MY-APP -s cflinuxfs3</code>
+    For example:
+    <pre class='terminal'>
+    $ cf push my-example-app -s cflinuxfs3
+    Using stack cflinuxfs3...
+    OK
+    Creating app my-example-app in org my-example-org / space development as 
+    developer@example.com...
+    OK
+    ...
+    requested state: started
+    instances: 1/1
+    usage: 1G x 1 instances
+    urls: my-example-app.cfapps.io
+    last uploaded: Wed Apr 8 23:40:57 UTC 2015
+      state    since                    cpu    memory        disk
+    \#0  running  2015-04-08 04:41:54 PM   0.0%   57.3M of 1G   128.8M of 1G
+    </pre>
 
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
