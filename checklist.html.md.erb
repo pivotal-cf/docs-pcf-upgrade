@@ -38,14 +38,46 @@ Review each of the following links to understand the changes in the new release,
 
 In PAS v2.5, `cflinuxfs2` is no longer supported. To upgrade to PAS v2.5, you must change your stack to `cflinuxfs3` and restage your apps.
 
-1. To change your stack to cflinuxfs3 and restage your app, run the following command: `cf push MY-APP -s cflinuxfs3`<br>
+<p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable.</p>
+
+To migrate your apps to `cflinuxfs3`, do the following for each app.
+
+1. To check what stack your app is running on, run the following command:
+
+    ```
+    cf app MY-APP
+    ```
+
+    For example:
+    <pre class="terminal">
+    $ cf app my-example-app
+    Showing health and status for app my-example-app in org cf-docs-sandbox / space sample-apps as <span>developer</span>@example.com...
+
+    name:              my-example-app
+    requested state:   started
+    instances:         1/1
+    usage:             256M x 1 instances
+    routes:            my-example-app.cfapps.io
+    last uploaded:     Sun 14 May 15:36:20 PDT 2017
+    stack:             <span style="color:black;background-color:yellow">cflinuxfs2</span>
+    buildpack:         java_buildpack
+
+     state     since                  cpu    memory         disk             details
+    \#0   running   2019-03-04T19:27:39Z   0.5%   216M of 256M   147.3M of 256M</pre>
+
+1. To change your stack to `cflinuxfs3` and restage your app, run the following command:
+    
+    ```
+    cf push MY-APP -s cflinuxfs3
+    ```
+    
     For example:
     <pre class='terminal'>
     $ cf push my-example-app -s cflinuxfs3
     Using stack cflinuxfs3...
     OK
     Creating app my-example-app in org my-example-org / space development as 
-    developer@example.com...
+    <span>developer</span>@example.com...
     OK
     ...
     requested state: started
