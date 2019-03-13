@@ -38,6 +38,8 @@ Review each of the following links to understand the changes in the new release,
 
 In PAS v2.5, `cflinuxfs2` is no longer supported. To upgrade to PAS v2.5, you must change your stack to `cflinuxfs3` and restage your apps.
 
+You can use the Stack Auditor Plugin for the cf CLI to help with migration. For more information, see [Using the Stack Auditor Plugin](../adminguide/stack-auditor.html).
+
 <p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable.</p>
 
 To migrate your apps to `cflinuxfs3`, do the following for each app.
