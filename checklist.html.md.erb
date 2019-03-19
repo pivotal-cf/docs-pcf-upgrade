@@ -36,60 +36,33 @@ Review each of the following links to understand the changes in the new release,
 
 ## <a id='cflinuxfs3'></a> Migrate Apps to cflinuxfs3
 
-In PAS v2.5, `cflinuxfs2` is no longer supported. To upgrade to PAS v2.5, you must change your stack to `cflinuxfs3` and restage your apps.
+In PAS v2.5, `cflinuxfs2` is no longer supported. Before upgrading to PAS v2.5, developers must change their stack to `cflinuxfs3` and restage their apps.
 
-You can use the Stack Auditor Plugin for the cf CLI to help with migration. For more information, see [Using the Stack Auditor Plugin](../adminguide/stack-auditor.html).
+To prepare for your upgrade, do the following:
 
-<p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable.</p>
+1. Install the Stack Auditor plugin for the cf CLI. See [Install Stack Auditor](../adminguide/stack-auditor.html#install) in _Using the Stack Auditor Plugin_.
 
-To migrate your apps to `cflinuxfs3`, do the following for each app.
-
-1. To check what stack your app is running on, run the following command:
+1. Audit stack usage to determine which apps need to be migrated from `cflinuxfs2` to `cflinuxfs3`. You can list apps and their stacks by running the following command:
 
     ```
-    cf app MY-APP
+    cf audit-stack
     ```
 
-    For example:
-    <pre class="terminal">
-    $ cf app my-example-app
-    Showing health and status for app my-example-app in org cf-docs-sandbox / space sample-apps as <span>developer</span>@example.com...
+1. Communicate to developers that they must migrate their existing apps to `cflinuxfs3` and begin pushing all new apps on `cflinuxfs3`. Developers can migrate their apps using two methods:
+  * `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_. 
+  * `cf change-stack`: See [Change Stacks](../adminguide/stack-auditor.html#change-stacks) in _Using the Stack Auditor Plugin_. This method does not require the source code of the app.
+  <p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable.</p>
 
-    name:              my-example-app
-    requested state:   started
-    instances:         1/1
-    usage:             256M x 1 instances
-    routes:            my-example-app.cfapps.io
-    last uploaded:     Sun 14 May 15:36:20 PDT 2017
-    stack:             <span style="color:black;background-color:yellow">cflinuxfs2</span>
-    buildpack:         java_buildpack
+1. Confirm that there are no apps running on `cflinuxfs2 ` using the `cf audit-stack` command. 
 
-     state     since                  cpu    memory         disk             details
-    \#0   running   2019-03-04T19:27:39Z   0.5%   216M of 256M   147.3M of 256M</pre>
+1. Delete the `cflinuxfs2` stack:
 
-1. To change your stack to `cflinuxfs3` and restage your app, run the following command:
-    
     ```
-    cf push MY-APP -s cflinuxfs3
+    cf delete-stack cflinuxfs2
     ```
-    
-    For example:
-    <pre class='terminal'>
-    $ cf push my-example-app -s cflinuxfs3
-    Using stack cflinuxfs3...
-    OK
-    Creating app my-example-app in org my-example-org / space development as 
-    <span>developer</span>@example.com...
-    OK
-    ...
-    requested state: started
-    instances: 1/1
-    usage: 1G x 1 instances
-    urls: my-example-app.cfapps.io
-    last uploaded: Wed Apr 8 23:40:57 UTC 2015
-      state    since                    cpu    memory        disk
-    \#0  running  2015-04-08 04:41:54 PM   0.0%   57.3M of 1G   128.8M of 1G
-    </pre>
+    <p class="note"><strong>Note</strong>: If you delete <code>cflinuxfs2</code> and update to a later patch release of PAS v2.4, the stack will return and you must delete it again before upgrading to PAS v2.5.</p>
+
+
 
 ## <a id="pasw"></a>Upgrade to PASW v2.4.4
 
