@@ -47,10 +47,11 @@ To prepare for your upgrade, do the following:
     cf audit-stack
     ```
 
-1. Communicate to developers that they must migrate their existing apps to `cflinuxfs3` and begin pushing all new apps on `cflinuxfs3`. Developers can migrate their apps using two methods:
-  * `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_.
+1. Communicate to developers that they must migrate their existing apps to `cflinuxfs3` and begin pushing all new apps on `cflinuxfs3`. When changing stacks, developers may see errors related to new or changed libraries. If they do, they must update their app accordingly. Developers can migrate their apps using two methods:
+  * `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_. 
   * `cf change-stack`: See [Change Stacks](../adminguide/stack-auditor.html#change-stacks) in _Using the Stack Auditor Plugin_. This method does not require the source code of the app.
   <p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable.</p>
+  
 
 1. Confirm that there are no apps running on `cflinuxfs2 ` using the `cf audit-stack` command.
 
@@ -59,7 +60,7 @@ To prepare for your upgrade, do the following:
     ```
     cf delete-stack cflinuxfs2
     ```
-    <p class="note"><strong>Note</strong>: If you delete <code>cflinuxfs2</code> and update to a later patch release of PAS v2.4, the stack will return and you must delete it again before upgrading to PAS v2.5.</p>
+    <p class="note"><strong>Note</strong>: If you delete <code>cflinuxfs2</code> and update to a later patch release of PAS v2.4, the stack returns and you must delete it again before upgrading to PAS v2.5.</p>
 
 
 ## <a id="pasw"></a>Upgrade to PASW v2.4.4
