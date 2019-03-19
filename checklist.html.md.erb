@@ -25,7 +25,6 @@ Review each of the following links to understand the changes in the new release,
 * **Known Issues**
 	* [Ops Manager v2.5 Known Issues](../../pcf-release-notes/opsmanager-rn.html#known-issues)
 	* [PAS v2.5 Known Issues](../../pcf-release-notes/runtime-rn.html)
-	* The following Pivotal Knowledge Base (KB) articles describe known issues for **PCF v2.5**:
 * **Breaking Changes**
 	* [PCF v2.5 Breaking Changes](../../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
@@ -68,17 +67,17 @@ To migrate your apps to `cflinuxfs3`, do the following for each app.
     \#0   running   2019-03-04T19:27:39Z   0.5%   216M of 256M   147.3M of 256M</pre>
 
 1. To change your stack to `cflinuxfs3` and restage your app, run the following command:
-    
+
     ```
     cf push MY-APP -s cflinuxfs3
     ```
-    
+
     For example:
     <pre class='terminal'>
     $ cf push my-example-app -s cflinuxfs3
     Using stack cflinuxfs3...
     OK
-    Creating app my-example-app in org my-example-org / space development as 
+    Creating app my-example-app in org my-example-org / space development as
     <span>developer</span>@example.com...
     OK
     ...
@@ -91,6 +90,7 @@ To migrate your apps to `cflinuxfs3`, do the following for each app.
     \#0  running  2015-04-08 04:41:54 PM   0.0%   57.3M of 1G   128.8M of 1G
     </pre>
 
+
 ## <a id="pasw"></a>Upgrade to PASW v2.4.4
 
 If you deploy Pivotal Application Service for Windows (PASW), you must upgrade the PASW tile to v2.4.4 before you upgrade to PCF v2.5.
@@ -102,6 +102,7 @@ To upgrade the PASW tile, follow the steps below:
 1. Click **Review Pending Changes**.
 1. Select the PASW tile and review the changes. For more information, see [Reviewing Pending Product Changes](../customizing/review-pending-changes.html).
 1. Click **Apply Changes**.
+
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -159,7 +160,7 @@ Check the required machine specifications for Ops Manager v2.5. These specificat
 
 #### <a id="ssl-apps-manager"></a> Ensure CA is Trusted by BOSH Director
 
-Starting in PAS v2.4.3, Apps Manager verifies SSL certificates for endpoints to which it proxies. For environments using self-signed certificates or certificates that are signed by a certificate authority that is not trusted by the BOSH Director, this may cause Apps Manager to show no content. 
+Starting in PAS v2.4.3, Apps Manager verifies SSL certificates for endpoints to which it proxies. For environments using self-signed certificates or certificates that are signed by a certificate authority that is not trusted by the BOSH Director, this may cause Apps Manager to show no content.
 
 If you are upgrading to PAS v2.5 from PAS v2.4.2 or earlier, you can prevent this issue by adding the certificate authority using the **Trusted Certificates** field in the **Security** pane of the BOSH Director tile.
 
@@ -169,9 +170,9 @@ With each release of a new PCF version, PAS may require specific updates before 
 
 #### <a id="deselect-override"></a> Deselect Option to Override Deployment Name to CF
 
-Ensure that the **Use “cf” as deployment name in emitted metrics instead of unique name** option in the **Advanced Features** pane of the PAS tile is deselected. This is a requirement to upgrade successfully. 
+Ensure that the **Use “cf” as deployment name in emitted metrics instead of unique name** option in the **Advanced Features** pane of the PAS tile is deselected. This is a requirement to upgrade successfully.
 
-Additionally, if you have PCF Healthwatch installed and you changed the value of **Use “cf” as deployment name in emitted metrics instead of unique name** in PAS, you must run the **Push Monitoring Components** errand for Healthwatch to detect the change. 
+Additionally, if you have PCF Healthwatch installed and you changed the value of **Use “cf” as deployment name in emitted metrics instead of unique name** in PAS, you must run the **Push Monitoring Components** errand for Healthwatch to detect the change.
 
 For more information, see [Removed Option to Override Deployment Name to CF](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html#deployment-name).
 
@@ -190,7 +191,7 @@ In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup 
 
 Before upgrading to PAS v2.5, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
-The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running. 
+The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running.
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PASW tile.</p>
 
@@ -213,7 +214,7 @@ To enable TLS or mutual TLS routing, do the following:
 
 Before you scale your Diego cell VM to handle TLS routing, you must determine the number of app instances running on your deployment.
 
-See the following methods for how you can count your app instances. Choose the method that corresponds to your use case. 
+See the following methods for how you can count your app instances. Choose the method that corresponds to your use case.
 
 * **Deployments without Isolation Segments**
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
@@ -225,12 +226,12 @@ See the following methods for how you can count your app instances. Choose the m
 		timestamp:1541543212057232344 deployment:"cf" job:"diego\_database"
 		index:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" ip:"10.0.4.10"
 		tags:&lt; key:"instance\_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
-		tags:&lt; key:"source\_id" value:"bbs" > valueMetric:&lt; name:"LRPsDesired" 
+		tags:&lt; key:"source\_id" value:"bbs" > valueMetric:&lt; name:"LRPsDesired"
 		<span style="color: red">value:200</span> unit:"Metric" ></pre>
 	1. Record the `value` of the `LRPsDesired` for each instance of the `bbs`
-	job. You need the `value` for the procedure in the next section. 
+	job. You need the `value` for the procedure in the next section.
 
-* **Deployments with Isolation Segments**  
+* **Deployments with Isolation Segments**
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
   	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
   	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
@@ -263,7 +264,7 @@ To calculate and configure the amount of RAM you need for your Diego cell, choos
 <p>For each PAS and Isolation Segment tile in your foundation, do the following:</p>
    1. Go to the **Status** tab and see the IP of your Diego cell. To determine the `value`
    that corresponds to this tile, match the IP to the `ip`
-   metric you recorded in the previous section. 
+   metric you recorded in the previous section.
    1. Go to the **Resource Config** pane of the the tile.
    1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
    1. Multiply the `value` for this tile by 32. Add your solution
@@ -304,7 +305,7 @@ Preparing deployment: Preparing deployment (00:00:01)
   L Error: Colocated job 'azure-blobstore-backup-restorer' is already added to the instance group 'backup-restore'.
 </pre>
 
-After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the PAS tile > **File Storage** pane. 
+After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the PAS tile > **File Storage** pane.
 
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
@@ -417,7 +418,7 @@ See the BOSH CLI v2 instructions in the [Running mysql-diag](https://docs.pivota
 
 To export your installation, do the following:
 
-1. In your Ops Manager v2.3 **Installation Dashboard**, click the account dropdown and select **Settings**.
+1. In your Ops Manager v2.4 **Installation Dashboard**, click the account dropdown and select **Settings**.
 
     <%= image_tag("./images/upgrade_to_1.9.png") %>
 
