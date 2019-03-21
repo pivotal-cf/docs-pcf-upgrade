@@ -48,10 +48,9 @@ To prepare for your upgrade, do the following:
     ```
 
 1. Communicate to developers that they must migrate their existing apps to `cflinuxfs3` and begin pushing all new apps on `cflinuxfs3`. When changing stacks, developers may see errors related to new or changed libraries. If they do, they must update their app accordingly. Developers can migrate their apps using two methods:
-  * `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_. 
+  * `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_.
   * `cf change-stack`: See [Change Stacks](../adminguide/stack-auditor.html#change-stacks) in _Using the Stack Auditor Plugin_. This method does not require the source code of the app.
   <p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable.</p>
-  
 
 1. Confirm that there are no apps running on `cflinuxfs2 ` using the `cf audit-stack` command.
 
@@ -67,12 +66,16 @@ To prepare for your upgrade, do the following:
 
 If you deploy Pivotal Application Service for Windows (PASW), you must upgrade the PASW tile to v2.4.4 before you upgrade to PCF v2.5.
 
-To upgrade the PASW tile, follow the steps below:
+To upgrade the PASW tile, do the following:
 
 1. Follow the instructions in [Upgrading PCF Products](../customizing/upgrading-products.html#other-products) with the PASW v2.4.4 product download from [Pivotal Network](https://network.pivotal.io/products/pas-windows).
+
 1. If necessary, configure the product. For more information about configuring PAS for Windows, see [Installing and Configuring PASW](../windows/installing.html).
+
 1. Click **Review Pending Changes**.
+
 1. Select the PASW tile and review the changes. For more information, see [Reviewing Pending Product Changes](../customizing/review-pending-changes.html).
+
 1. Click **Apply Changes**.
 
 
@@ -120,7 +123,7 @@ Upgrade all service tiles to versions compatible with PCF v2.5. Review the [Comp
 
 ### <a id='bosh-cli'></a> Install BOSH CLI v5.4.0 or Later
 
-Install [BOSH CLI v5.4.0](https://github.com/cloudfoundry/bosh-cli/releases/tag/v5.4.0) to avoid IP conflict errors that cause BOSH healthcheck tasks to fail to acquire locks. For more information, see [this KB article](https://community.pivotal.io/s/article/bosh-health-check-tasks-fails-to-acquire-lock).
+Install [BOSH CLI v5.4.0](https://github.com/cloudfoundry/bosh-cli/releases/tag/v5.4.0) to avoid IP conflict errors that cause BOSH healthcheck tasks to fail to acquire locks. For more information, see [BOSH health check tasks fails to acquire lock](https://community.pivotal.io/s/article/bosh-health-check-tasks-fails-to-acquire-lock) in the Pivotal Knowledge Database.
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
