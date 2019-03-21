@@ -31,6 +31,7 @@ Review each of the following links to understand the changes in the new release,
 		* [Errands in upgrade to PCF or PAS 2.3 are failing as deploying on a stack is not supported by the Buildpack](https://community.pivotal.io/s/article/errands-in-upgrade-to-pcf-or-pas-2-3-are-failing-as-deploying-on-a-stack-is-not-supported-by-the-buildpack)
 		* [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror)
 		* [Diego Cell garden healthcheck fails and becomes unhealthy](https://community.pivotal.io/s/article/diego-cell-garden-healthcheck-fails-and-becomes-unhealthy)
+		* [Upgrade to RabbitMQ for PCF tile 1.13 fails with lock against the Mnesia DB](https://community.pivotal.io/s/article/upgrade-to-rabbitmq-for-pcf-tile-1-13-fails-with-lock-against-the-mnesia-db)
 * **Breaking Changes**
 	* [PCF v2.3 Breaking Changes](../../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
@@ -40,17 +41,17 @@ Review each of the following links to understand the changes in the new release,
 
 ## <a id="validate-installed-buildpacks"></a> Validate Installed Buildpacks
 
-PAS v2.2 introduced a stack association feature for buildpacks. You can now have multiple versions of the same buildpack for different stacks. For more information, see [cflinuxfs3 Stack and Compatible Buildpacks](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#cflinuxfs3) in the PAS Release Notes. 
+PAS v2.2 introduced a stack association feature for buildpacks. You can now have multiple versions of the same buildpack for different stacks. For more information, see [cflinuxfs3 Stack and Compatible Buildpacks](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#cflinuxfs3) in the PAS Release Notes.
 
 To avoid errors during upgrade, do the following:
 
-* If you have multiple buildpacks with the same name, associate each of those buildpacks with a stack. For more information, see [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror).  
+* If you have multiple buildpacks with the same name, associate each of those buildpacks with a stack. For more information, see [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror).
 
-* Unlock any default buildpacks that do not have an associated stack. 
+* Unlock any default buildpacks that do not have an associated stack.
 
-* Associate any custom or non-default buildpacks with a stack. 
+* Associate any custom or non-default buildpacks with a stack.
 
-For more information about associating a stack with an existing buildpack, see [Managing Stack Association with the cf CLI](https://docs.pivotal.io/pivotalcf/2-3/buildpacks/stack-association.html#stack-cli). 
+For more information about associating a stack with an existing buildpack, see [Managing Stack Association with the cf CLI](https://docs.pivotal.io/pivotalcf/2-3/buildpacks/stack-association.html#stack-cli).
 
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
@@ -115,7 +116,7 @@ In PAS v2.3, traffic between the Gorouter and Cloud Controller is encrypted. To 
 
 #### <a id="cipher"></a> Confirm Cipher Suites
 
-Ensure that the **TLS Cipher Suites for Router** field contains a cipher suite supported by both Gorouter and CAPI. For details, see [Removal of Default Ciphers Causes Downtime when Upgrading from 2.2 to 2.3 and from 2.3 to 2.4](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn#cipher-downtime). 
+Ensure that the **TLS Cipher Suites for Router** field contains a cipher suite supported by both Gorouter and CAPI. For details, see [Removal of Default Ciphers Causes Downtime when Upgrading from 2.2 to 2.3 and from 2.3 to 2.4](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn#cipher-downtime).
 
 #### <a id="groot"></a> Enable GrootFS
 
@@ -147,7 +148,7 @@ Once you have enabled GrootFS, ensure the apps running on your deployment functi
 
 PAS v2.2 introduced Percona Server as an option for your internal MySQL database and deprecated the older MariaDB option. The Percona Server option is more secure than MariaDB, and later versions of PCF remove the MariaDB entirely. Pivotal recommends that you migrate to Percona Server if you use internal MySQL for your PAS deployment and have not yet migrated.
 
-For more information, see [Migrating to Internal Percona MySQL](../mysql/migrate-percona-mysql.html). 
+For more information, see [Migrating to Internal Percona MySQL](../mysql/migrate-percona-mysql.html).
 
 ### <a id="disable-unused-errands"></a> Disable Unused Errands
 
