@@ -92,16 +92,16 @@ Upgrade all service tiles to versions compatible with PCF v2.4. Review the [Comp
 
 ### <a id="upgrade-mysql"></a> Upgrade MySQL for PCF from v1 to v2
 
-MySQL for PCF v1 is not compatible with PCF v2.4. 
+MySQL for PCF v1 is not compatible with PCF v2.4.
 
 If you are running MySQL for PCF v1.10 or earlier,
 you must do the following before you upgrade to PCF v2.4:
 
-1. Install MySQL for PCF v2. 
-   For more information, see [Installing and Configuring MySQL for PCF](https://docs.pivotal.io/p-mysql/install-config.html). 
+1. Install MySQL for PCF v2.
+   For more information, see [Installing and Configuring MySQL for PCF](https://docs.pivotal.io/p-mysql/install-config.html).
 2. Migrate your service instances from v1 to v2.
-   For more information, see [Migrating Data in MySQL for PCF](https://docs.pivotal.io/p-mysql/migrate-data.html). 
-3. Delete the MySQL for PCF v1 tile. 
+   For more information, see [Migrating Data in MySQL for PCF](https://docs.pivotal.io/p-mysql/migrate-data.html).
+3. Delete the MySQL for PCF v1 tile.
 
 ### <a id='patch'></a> (Optional) Install PAS v2.3.2+, to Avoid Autoscaler Downtime
 
@@ -111,8 +111,7 @@ Updating to PAS v2.3.2 or later before upgrading to PAS v2.4 prevents App Autosc
 
 ### <a id='bosh-cli'></a> Install BOSH CLI v5.3.1 or Later
 
-Install [BOSH CLI v5.3.1](https://github.com/cloudfoundry/bosh-cli/releases/tag/v5.3.1) to avoid IP conflict errors that cause BOSH health check tasks to fail to acquire locks. For more information, see [this KB article](https://community.pivotal.io/s/article/bosh-health-check-tasks-fails-to-acquire-lock).
-
+Install [BOSH CLI v5.3.1](https://github.com/cloudfoundry/bosh-cli/releases/tag/v5.3.1) to avoid IP conflict errors that cause BOSH healthcheck tasks to fail to acquire locks. For more information, see [BOSH health check tasks fails to acquire lock](https://community.pivotal.io/s/article/bosh-health-check-tasks-fails-to-acquire-lock) in the Pivotal Knowledge Database.
 ### <a id='bosh-director'></a> Configure BOSH Director
 
 With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to PCF v2.4:
@@ -132,7 +131,7 @@ In some cases, if you have previously disabled lifecycle errands for any install
 
 #### <a id="cipher"></a> Confirm Cipher Suites
 
-Ensure that the **TLS Cipher Suites for Router** field contains a cipher suite supported by both Gorouter and CAPI. For details, see [Removal of Default Ciphers Causes Downtime when Upgrading from 2.2 to 2.3 and from 2.3 to 2.4](https://docs.pivotal.io/pivotalcf/2-4/pcf-release-notes/runtime-rn#cipher-downtime). 
+Ensure that the **TLS Cipher Suites for Router** field contains a cipher suite supported by both Gorouter and CAPI. For details, see [Removal of Default Ciphers Causes Downtime when Upgrading from 2.2 to 2.3 and from 2.3 to 2.4](https://docs.pivotal.io/pivotalcf/2-4/pcf-release-notes/runtime-rn#cipher-downtime).
 
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
 
@@ -142,7 +141,7 @@ In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup 
 
 Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
-The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running. 
+The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running.
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
 
@@ -163,11 +162,11 @@ To enable TLS or mutual TLS routing, do the following:
 
 <strong><a id="ram-size"></a> Step 2: Determine Number of App Instances</strong>
 
-Before you scale your Diego cell VM to handle TLS routing, you must determine the number of 
+Before you scale your Diego cell VM to handle TLS routing, you must determine the number of
 app instances running on your deployment.
 
 See the following methods for how you can count your app instances. Choose the method that
-corresponds to your use case. 
+corresponds to your use case.
 
 * **Deployments without Isolation Segments**
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
@@ -179,12 +178,12 @@ corresponds to your use case.
 		timestamp:1541543212057232344 deployment:"cf" job:"diego\_database"
 		index:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" ip:"10.0.4.10"
 		tags:&lt; key:"instance\_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
-		tags:&lt; key:"source\_id" value:"bbs" > valueMetric:&lt; name:"LRPsDesired" 
+		tags:&lt; key:"source\_id" value:"bbs" > valueMetric:&lt; name:"LRPsDesired"
 		<span style="color: red">value:200</span> unit:"Metric" ></pre>
 	1. Record the `value` of the `LRPsDesired` for each instance of the `bbs`
-	job. You need the `value` for the procedure in the next section. 
+	job. You need the `value` for the procedure in the next section.
 
-* **Deployments with Isolation Segments**  
+* **Deployments with Isolation Segments**
   	1. Access your platform metrics with your configured monitoring tool or with cf CLI
   	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
   	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
@@ -219,7 +218,7 @@ for your use case:
 <p>For each PAS and Isolation Segment tile in your foundation, do the following:</p>
    1. Go to the **Status** tab and see the IP of your Diego cell. To determine the `value`
    that corresponds to this tile, match the IP to the `ip`
-   metric you recorded in the previous section. 
+   metric you recorded in the previous section.
    1. Go to the **Resource Config** pane of the the tile.
    1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
    1. Multiply the `value` for this tile by 32. Add your solution
@@ -354,17 +353,17 @@ Check that a test app can be pushed and scaled horizontally, manually or through
 
 ### <a id="validate-installed-buildpacks"></a> Validate Installed Buildpacks
 
-PAS includes a stack association feature for buildpacks. You can have multiple versions of the same buildpack for different stacks. For more information, see [cflinuxfs3 Stack and Compatible Buildpacks](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#cflinuxfs3) in the PAS v2.3 Release Notes. 
+PAS includes a stack association feature for buildpacks. You can have multiple versions of the same buildpack for different stacks. For more information, see [cflinuxfs3 Stack and Compatible Buildpacks](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#cflinuxfs3) in the PAS v2.3 Release Notes.
 
 To avoid errors during upgrade, do the following:
 
-* If you have multiple buildpacks with the same name, associate each of those buildpacks with a stack. For more information, see [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror).  
+* If you have multiple buildpacks with the same name, associate each of those buildpacks with a stack. For more information, see [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror).
 
-* Unlock any default buildpacks that do not have an associated stack. 
+* Unlock any default buildpacks that do not have an associated stack.
 
-* Associate any custom or non-default buildpacks with a stack. 
+* Associate any custom or non-default buildpacks with a stack.
 
-For more information about associating a stack with an existing buildpack, see [Managing Stack Association with the cf CLI](https://docs.pivotal.io/pivotalcf/2-4/buildpacks/stack-association.html#stack-cli). 
+For more information about associating a stack with an existing buildpack, see [Managing Stack Association with the cf CLI](https://docs.pivotal.io/pivotalcf/2-4/buildpacks/stack-association.html#stack-cli).
 
 ### <a id="validate-mysql-cluster-health"></a> Validate MySQL Cluster Health
 
