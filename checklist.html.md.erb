@@ -54,6 +54,8 @@ To prepare for your upgrade, do the following:
 
 1. Confirm that there are no apps running on `cflinuxfs2 ` using the `cf audit-stack` command.
 
+1. Delete all buildpacks in your deployment that are associated with `cflinuxfs2`. 
+
 1. Delete the `cflinuxfs2` stack:
 
     ```
