@@ -56,12 +56,14 @@ To prepare for your upgrade, do the following:
 
 1. Delete all buildpacks in your deployment that are associated with `cflinuxfs2`. 
 
-1. Delete the `cflinuxfs2` stack:
+1. Delete the `cflinuxfs2` stack. 
+    
+    <p class="note warning"><strong>WARNING</strong>: You cannot undo this action, with the following exception: If you delete <code>cflinuxfs2</code> and update to a later patch release of PAS v2.4, the stack returns and you must delete it again before upgrading to PAS v2.5.</p>
 
     ```
     cf delete-stack cflinuxfs2
     ```
-    <p class="note"><strong>Note</strong>: If you delete <code>cflinuxfs2</code> and update to a later patch release of PAS v2.4, the stack returns and you must delete it again before upgrading to PAS v2.5.</p>
+    
 
 
 ## <a id="pasw"></a> Upgrade to PASW v2.4.4
