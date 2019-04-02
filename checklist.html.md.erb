@@ -41,7 +41,7 @@ To prepare for your upgrade, do the following:
 
 1. Install the Stack Auditor plugin for the cf CLI. See [Install Stack Auditor](../adminguide/stack-auditor.html#install) in _Using the Stack Auditor Plugin_.
 
-1. Audit stack usage to determine which apps need to be migrated from `cflinuxfs2` to `cflinuxfs3`. You can list apps and their stacks by running the following command:
+1. Audit stack usage to determine which apps need to be migrated from `cflinuxfs2` to `cflinuxfs3`. You can list apps and their stacks for each org you have access to by running the following command. To see all the apps in your deployment, ensure that you are logged in to the cf CLI as a user who can access all orgs. 
 
     ```
     cf audit-stack
