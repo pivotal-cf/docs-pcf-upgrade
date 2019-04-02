@@ -47,6 +47,19 @@ To prepare for your upgrade, do the following:
     cf audit-stack
     ```
 
+    See the following example output:
+
+    <pre class="terminal">
+    $ cf audit-stack
+    first-org/development/first-app cflinuxfs2 
+    first-org/staging/first-app cflinuxfs2
+    first-org/production/first-app cflinuxfs2
+    second-org/development/second-app cflinuxfs3
+    second-org/staging/second-app cflinuxfs3
+    second-org/production/second-app cflinuxfs3
+    ...
+    </pre>
+
 1. Communicate to developers that they must migrate their existing apps to `cflinuxfs3` and begin pushing all new apps on `cflinuxfs3`. When changing stacks, developers may see errors related to new or changed libraries. If they do, they must update their app accordingly. Developers can migrate their apps using two methods:
   * `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_.
   * `cf change-stack`: See [Change Stacks](../adminguide/stack-auditor.html#change-stacks) in _Using the Stack Auditor Plugin_. This method does not require the source code of the app.
@@ -56,13 +69,30 @@ To prepare for your upgrade, do the following:
 
 1. Delete all buildpacks in your deployment that are associated with `cflinuxfs2`. 
 
+
 1. Delete the `cflinuxfs2` stack. This action cannot be undone, with the following exception: If you delete <code>cflinuxfs2</code> and update to a later patch release of PAS v2.4, the stack returns and you must delete it again before upgrading to PAS v2.5.</p>
+  1. Run the following command:
 
-    ```
-    cf delete-stack cflinuxfs2
-    ```
-    
+        ```
+        cf delete-stack cflinuxfs2
+        ```
+  1. When prompted, type `cflinuxfs2` and press enter. 
 
+    See the following example:
+
+    <pre class="terminal">
+    $ cf delete-stack cflinuxfs2
+    Are you sure you want to remove the cflinuxfs2 stack? If so, type the name of the stack [cflinuxfs2]
+    >cflinuxfs2
+    Deleting stack cflinuxfs2...
+    Stack cflinuxfs2 has been deleted. 
+    </pre>
+
+    If you have any apps still running on `cflinuxfs2`, the command returns the following error:
+
+    <pre class="terminal">
+    Failed to delete stack cflinuxfs2 with error: Please delete the app associations for your stack.   
+    </pre>
 
 ## <a id="pasw"></a> Upgrade to PASW v2.4.4
 
