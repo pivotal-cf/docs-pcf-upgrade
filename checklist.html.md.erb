@@ -238,7 +238,7 @@ See the following methods for how you can count your app instances. Choose the m
 		index:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" ip:"10.0.4.10"
 		tags:&lt; key:"instance\_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
 		tags:&lt; key:"source\_id" value:"bbs" > valueMetric:&lt; name:"LRPsDesired"
-		<span style="color: red">value:200</span> unit:"Metric" ></pre>
+		<span style="color: #5FABFF">value:200</span> unit:"Metric" ></pre>
 	1. Record the `value` of the `LRPsDesired` for each instance of the `bbs`
 	job. You need the `value` for the procedure in the next section.
 
@@ -250,10 +250,10 @@ See the following methods for how you can count your app instances. Choose the m
   	1. Find all `ContainerCount` metrics of the `rep` job of each Diego cell VM. See the following example:
    		<pre class="terminal">origin:"rep" eventType:ValueMetric
 		timestamp:1541543910092859448 deployment:"cf" job:"diego\_cell"
-		index:"8007afda-3bff-4856-857f-a47a43cbf994" <span style="color:red">ip:"10.0.4.18"</span>
+		index:"8007afda-3bff-4856-857f-a47a43cbf994" <span style="color:#5FABFF">ip:"10.0.4.18"</span>
 		tags:&lt; key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
 		tags:&lt; key:"source\_id" value:"rep" > valueMetric:&lt; name:
-		"ContainerCount" <span style="color: red">value:200</span> unit:"Metric" ></pre>
+		"ContainerCount" <span style="color: #5FABFF">value:200</span> unit:"Metric" ></pre>
 	1. For each `ContainerCount` metric, record the `value` of the `ContainerCount`
 	and the `ip` of the `job`.
 
