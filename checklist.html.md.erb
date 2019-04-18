@@ -145,11 +145,10 @@ In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup 
 
 Before upgrading to PAS v2.4, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
-The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running.
+The following sections describe how to enable routing with TLS or mutual TLS, scale the Diego cell VM CPU and RAM, and scale the Gorouter. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running. If you do not have enough memory and CPU on the Gorouters, latency may increase and throughput may decrease.
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
 
-<!--- Steps 1-3 below formatted as strong instead of markdown h5 / ##### because h5 looks no different from h4. --->
 <strong><a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing</strong>
 
 To enable TLS or mutual TLS routing, do the following:
@@ -232,6 +231,11 @@ for your use case:
    	<p class="note"><strong>Note</strong>: Alternatively, you can scale your Diego Cell VM by increasing the instance count to support the amount of RAM you need.</p>
    1. Click **Save**.
 
+<strong><a id="scale-gorouter"></a> Step 4: Scale Gorouters</strong>
+
+You may see an increase of memory and CPU usage for your Gorouters after enabling TLS routing. If the memory and CPU usage of the Gorouters in your environment are close to the size limit, scale your Gorouters before enabling TLS routing.
+
+For more information about scaling Gorouters, see [Router Performance Scaling Indicator](https://docs.pivotal.io/pivotalcf/2-4/monitoring/key-cap-scaling.html#router) in _Key Capacity Scaling Indicators_.
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
