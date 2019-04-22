@@ -187,13 +187,6 @@ Additionally, if you have PCF Healthwatch installed and you changed the value of
 
 For more information, see [Removed Option to Override Deployment Name to CF](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html#deployment-name).
 
-#### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
-
-To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-4/tile-errands.html#post-deploy) section of the Errands topic for details.
-Only disable these errands if your environment does not need them.
-
-In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Deleting Products](../customizing/add-delete.html#add-import) topic.
-
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
 
 In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** below has been changed from the default of `10240`, then operators need to pick a new threshold. If the scheduling is set to **Never clean up...** or **Routinely clean up...***, or the threshold value is set to the default, then the no action is necessary, and any threshold will migrate to a sensible value. For more information see [Options for Disk Cleanup](https://docs.pivotal.io/pivotalcf/2-4/opsguide/config-cell-cleanup.html).
@@ -206,7 +199,6 @@ The following sections describe how to enable routing with TLS or mutual TLS and
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PASW tile.</p>
 
-<!--- Steps 1-3 below formatted as strong instead of markdown h5 / ##### because h5 looks no different from h4. --->
 <strong><a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing</strong>
 
 To enable TLS or mutual TLS routing, do the following:
@@ -283,6 +275,25 @@ To calculate and configure the amount of RAM you need for your Diego cell, choos
    1. Select your new **VM Type** based on the amount of RAM you need.
    1. Click **Save**.
 
+#### <a id="metric-registrar"></a> (Optional) Migrate from Metrics Forwarder to Metric Registrar
+
+The Metric Registrar allows app developers to export custom app metrics to Loggregator. Metrics Forwarder for PCF is a service that also allows apps to emit custom metrics.  
+
+Metrics Forwarder for PCF is not supported in PAS v2.5. If you use Metrics Forwarder for PCF to emit custom app metrics to Loggregator, Pivotal recommends enabling and configuring the Metric Registrar before upgrading to PAS v2.5.
+
+The PAS tile does not deploy the Metric Registrar by default. To enable the Metric Registrar, select the **Enable Metric Registrar** checkbox in the **Metric Registrar** pane of the PAS tile.
+
+For more information about enabling the Metric Registrar in PAS, see [(Optional) Configure Metric Registrar](https://docs.pivotal.io/pivotalcf/2-5/customizing/configure-pas.html#metric-registrar) in _Configuring PAS_.
+
+For more information about the Metric Registrar, see [Registering Custom App Metrics](../metric-registrar/using.html).
+
+#### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
+
+To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-4/tile-errands.html#post-deploy) section of the Errands topic for details.
+Only disable these errands if your environment does not need them.
+
+In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Deleting Products](../customizing/add-delete.html#add-import) topic.
+
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
 Before upgrading to PCF v2.5, operators who have deployed any PCF add-ons such as **IPsec for PCF**, **ClamAV for PCF**, or **File Integrity Monitoring for PCF** and who have deployed or are planning to deploy PASW must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](../windows/index.html).
@@ -317,7 +328,6 @@ Preparing deployment: Preparing deployment (00:00:01)
 </pre>
 
 After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the PAS tile > **File Storage** pane.
-
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
 
