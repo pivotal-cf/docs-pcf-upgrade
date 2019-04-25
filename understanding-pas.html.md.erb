@@ -71,7 +71,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
 
 <table border="1" class="nice" >
 <tr>
-  <th rowspan=2><strong>Upgrade Order</strong></th>
   <th rowspan=2><strong>Component</strong></th>
   <th rowspan=2><strong>Scalable</strong></th>
   <th rowspan=2><strong>Extended Downtime</strong></th>
@@ -83,7 +82,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <th><strong>Platform</strong></th>
 </tr>
 <tr>
-  <td>1</td>
   <td>NATS</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -92,7 +90,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>2</td>
   <td>File Storage</td>
   <td></td>
   <td>&#10003;</td>
@@ -101,7 +98,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>3</td>
   <td>MySQL Proxy</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -113,7 +109,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>4</td>
   <td>MySQL Server</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -125,7 +120,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>5</td>
   <td>Backup Restore Node</td>
   <td></td>
   <td></td>
@@ -134,7 +128,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>6</td>
   <td>Diego BBS</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -143,7 +136,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>7</td>
   <td>UAA</td>
   <td>&#10003;</td>
   <td></td>
@@ -154,7 +146,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>8</td>
   <td>Cloud Controller</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -163,7 +154,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>9</td>
   <td>HAProxy</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -175,7 +165,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>10</td>
   <td>Router</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -187,7 +176,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>11</td>
   <td>MySQL Monitor</td>
   <td></td>
   <td></td>
@@ -196,7 +184,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>12</td>
   <td>Clock Global</td>
   <td>&#10003;</td>
   <td></td>
@@ -205,7 +192,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>13</td>
   <td>Cloud Controller Worker</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -214,7 +200,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>14</td>
   <td>Diego Brain</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -223,7 +208,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>15</td>
   <td>Diego Cell</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -234,7 +218,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>16</td>
   <td>Loggregator Trafficcontroller</td>
   <td>&#10003;</td>
   <td></td>
@@ -245,7 +228,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>17</td>
   <td>Syslog Adapter</td>
   <td>&#10003;</td>
   <td></td>
@@ -255,7 +237,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>18</td>
   <td>Syslog Scheduler</td>
   <td>&#10003;</td>
   <td></td>
@@ -265,7 +246,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>19</td>
   <td>Doppler Server</td>
   <td>&#10003;</td>
   <td></td>
@@ -276,7 +256,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   </td>
 </tr>
 <tr>
-  <td>20</td>
   <td>TCP Router (if enabled)</td>
   <td>&#10003;</td>
   <td></td>
@@ -285,7 +264,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
 </tr>
 <tr>
-  <td>21</td>
   <td>CredHub</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
@@ -296,6 +274,30 @@ The table below lists components in the order that Ops Manager upgrades each. It
       Platform downtime for cf CLI commands such as
    <code>bind-service</code> and <code>unbind-service</code> applied to services configured with CredHub.
   </td>
+</tr>
+<tr>
+  <td>Istio Control</td>
+  <td></td>
+  <td>&#10003;</td>
+  <td></td>
+  <td>&#10003;</td>
+  <td></td>
+</tr>
+<tr>
+  <td>Istio Router</td>
+  <td>&#10003;</td>
+  <td>&#10003;</td>
+  <td>&#10003;</td>
+  <td></td>
+  <td>Downtime for this component only affects routes on mesh domains.</td>
+</tr>
+<tr>
+  <td>Route Syncer</td>
+  <td>&#10003;</td>
+  <td>&#10003;</td>
+  <td></td>
+  <td>&#10003;</td>
+  <td>Downtime for this component only affects routes on mesh domains.</td>
 </tr>
 </table>
 
