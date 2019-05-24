@@ -184,6 +184,12 @@ If you are upgrading to PAS v2.5 from PAS v2.4.2 or earlier, you can prevent thi
 
 With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.5:
 
+#### <a id="deselect-override"></a> Remove Healthcheck from SSH Load Balancer
+
+If your SSH load balancer is configured with an HTTP healthcheck, remove the healthcheck before upgrading. This is the load balancer specified in the **Diego Brain** row of the **Resource Config** pane. 
+
+For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes#http-healtcheck). 
+
 #### <a id="deselect-override"></a> Deselect Option to Override Deployment Name to CF
 
 Ensure that the **Use “cf” as deployment name in emitted metrics instead of unique name** option in the **Advanced Features** pane of the PAS tile is deselected. This is a requirement to upgrade successfully.
