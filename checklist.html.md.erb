@@ -117,6 +117,10 @@ To upgrade the PASW tile, do the following:
 
 1. Click **Apply Changes**.
 
+## <a id="restage-windows-apps"></a> Upgrade to PASW v2.4.4
+The `windows2016` stack was deprecated in PAS v2.5.
+
+Before upgrading to PASW v2.6, all Windows apps that were pushed with the `windows2016` stack must be restaged to use the `windows` stack. For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in the PAS for Windows v2.6 Release Notes.
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -185,6 +189,12 @@ If you are upgrading to PAS v2.5 from PAS v2.4.2 or earlier, you can prevent thi
 ### <a id='patch'></a> Configure PAS
 
 With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.5:
+
+#### <a id="ssh-lb"></a> Remove Healthcheck from SSH Load Balancer
+
+If your SSH load balancer is configured with an HTTP healthcheck, remove the healthcheck before upgrading. This is the load balancer specified in the **Diego Brain** row of the **Resource Config** pane. 
+
+For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes#http-healtcheck). 
 
 #### <a id="deselect-override"></a> Deselect Option to Override Deployment Name to CF
 
