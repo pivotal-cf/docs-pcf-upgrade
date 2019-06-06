@@ -104,7 +104,7 @@ To prepare for your upgrade, do the following:
 ## <a id="restage-windows-apps"></a> Restage Windows Apps
 The `windows2016` stack was deprecated in PAS v2.5.
 
-Before upgrading to PASW v2.6, all Windows apps that were pushed with the `windows2016` stack must be restaged to use the `windows` stack. For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in the PAS for Windows v2.6 Release Notes.
+Before upgrading to PAS for Windows v2.6, all Windows apps that were pushed with the `windows2016` stack must be restaged to use the `windows` stack. For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in the PAS for Windows v2.6 Release Notes.
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -148,7 +148,7 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 Upgrade all service tiles to versions that are compatible with PCF v2.5. Service tiles are add-on products you install alongside your runtime. For example, MySQL for PCF, PCF Healthwatch, and RabbitMQ are service tiles.
 
-Do not upgrade runtime tiles, such as PAS, PASW, or Pivotal Container Service (PKS), at this time.
+Do not upgrade runtime tiles, such as PAS, PAS for Windows, or Pivotal Container Service (PKS), at this time.
 
 Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and tile documentation to check version compatibility.
 
@@ -205,7 +205,7 @@ Before upgrading to PAS v2.5, you must secure the Gorouter with TLS or mutual TL
 
 The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running.
 
-<p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PASW tile.</p>
+<p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PAS for Windows tile.</p>
 
 <!--- Steps 1-3 below formatted as strong instead of markdown h5 / ##### because h5 looks no different from h4. --->
 <strong><a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing</strong>
@@ -286,7 +286,7 @@ To calculate and configure the amount of RAM you need for your Diego cell, choos
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
-Before upgrading to PCF v2.5, operators who have deployed any PCF add-ons such as **IPsec for PCF**, **ClamAV for PCF**, or **File Integrity Monitoring for PCF** and who have deployed or are planning to deploy PASW must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](../windows/index.html).
+Before upgrading to PCF v2.5, operators who have deployed any PCF add-ons such as **IPsec for PCF**, **ClamAV for PCF**, or **File Integrity Monitoring for PCF** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](../windows/index.html).
 
 For example, **File Integrity Monitor for PCF** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty` and `ubuntu-xenial`.
 
