@@ -50,6 +50,14 @@ For more information, see [Deprecation of the windows2016 Stack](https://docs.pi
 If you are running PAS for Windows v2.4.4 or later on PCF v2.5, you can also restage your apps before upgrading to PAS for Windows v2.5.
 For more information about upgrading to PAS for Windows v2.5, see [Upgrade to PAS for Windows v2.5](#upgrade-pasw) below.
 
+## <a id='ssh-private-key'></a> (vSphere Only) Add SSH Key to OVF Template for Ops Manager VM
+
+To avoid upgrade failure and errors when authenticating, do the following:
+
+1. Add a public key to the OVF template for the Ops Manager VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see [Deploy Ops Manager](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) in _Deploying Ops Manager on vSphere_. 
+
+For more information about this breaking change, see [Passwords Not Supported for Ops Manager VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key). 
+
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
 The following section describes changes you must make to your product tiles and add-ons before upgrading PCF.
