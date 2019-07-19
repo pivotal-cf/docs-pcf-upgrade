@@ -41,6 +41,7 @@ Review each of the following links to understand the changes in the new release,
 		* [How to audit the admin trails for Ops Manager in PCF 2.4](https://community.pivotal.io/s/article/how-to-audit-the-admin-trails-for-ops-manager)
 		* [PCF upgrade fails with StacklessAndStackfulMatchingBuildpacksExistError](https://community.pivotal.io/s/article/pcf-upgrade-fails-with-stacklessandstackfulmatchingbuildpacksexisterror)
 		* [Missing environment variables when using PAS 2.3+ and the cflinuxfs3 stack](https://community.pivotal.io/s/article/missing-environment-variables-when-using-pas-2-3-and-the-cflinuxfs3-stack)
+		* [Enabling TLS from the Gorouter to application instances results in bad routes in PAS 2.3+](https://community.pivotal.io/s/article/enabling-tls-from-the-gorouter-to-application-instances-results-in-bad-routes)
 * **Breaking Changes**
 	* [PCF v2.4 Breaking Changes](../../pcf-release-notes/breaking-changes.html)
 * **KPI Changes**
@@ -115,11 +116,30 @@ you must do the following before you upgrade to PCF v2.4:
    For more information, see [Migrating Data in MySQL for PCF](https://docs.pivotal.io/p-mysql/migrate-data.html).
 3. Delete the MySQL for PCF v1 tile.
 
+
 ### <a id='patch'></a> (Optional) Install PAS v2.3.2+, to Avoid Autoscaler Downtime
 
 App Autoscaler consumes a new log-cache API. If you are running PAS v2.3.0 or v2.3.1, upgrading directly to v2.4 renders the App Autoscaler intermittently unusable until the upgrade completes.
 
 Updating to PAS v2.3.2 or later before upgrading to PAS v2.4 prevents App Autoscaler downtime.
+
+### <a id='stale-tls-routes'></a> (Optional) Install and Configure PAS v2.3.14+, to Avoid Misrouting of TLS or mTLS Apps
+
+Stale routes can persist in PAS v2.3.13 and earlier deployments that are configured to use TLS or mTLS
+in the **Router application identity verification** setting of **Application Containers**.
+
+To fix this issue, do the following: 
+
+1. Log in to Ops Manager.
+1. Update the PAS tile to PAS v2.3.14 or later.
+1. Select the PAS tile.
+1. Select the **Application Containers** tab.
+1. View the settings in **Router application identity verification**. 
+1. Verify that either **Router uses TLS to verify application identity** or **Router and applications use mutual TLS to verify each other's identity** is selected.
+1. Select the **Prune Routes on TTL Expiry for TLS Backends** checkbox.
+1. Click **Apply Changes**.
+
+When you upgrade PAS, make sure you upgrade to PAS v2.4.10 or later to preserve this configuration.
 
 ### <a id='bosh-cli'></a> Install BOSH CLI v5.3.1 or Later
 
