@@ -117,13 +117,15 @@ you must do the following before you upgrade to PCF v2.4:
 3. Delete the MySQL for PCF v1 tile.
 
 
-### <a id='patch'></a> (Optional) Install PAS v2.3.2+, to Avoid Autoscaler Downtime
+### <a id='patch'></a> (Optional) Install PAS v2.3.2 or Later to Avoid Autoscaler Downtime
 
 App Autoscaler consumes a new log-cache API. If you are running PAS v2.3.0 or v2.3.1, upgrading directly to v2.4 renders the App Autoscaler intermittently unusable until the upgrade completes.
 
 Updating to PAS v2.3.2 or later before upgrading to PAS v2.4 prevents App Autoscaler downtime.
 
-### <a id='stale-tls-routes'></a> (Optional) Install and Configure PAS v2.3.14+, to Avoid Misrouting of TLS or mTLS Apps
+### <a id='stale-tls-routes'></a> (Optional) Install PAS v2.3.14 or Later to Avoid Misrouting Apps
+
+To prevent misrouting of apps, upgrade to PAS v2.3.14 or later.
 
 Stale routes can persist in PAS v2.3 deployments that are configured to use TLS or mTLS
 in the **Router application identity verification** setting of **Application Containers**.
@@ -132,14 +134,16 @@ To fix this issue, do the following:
 
 1. Log in to Ops Manager.
 1. Update the PAS tile to PAS v2.3.14 or later.
-1. Select the PAS tile.
-1. Select the **Application Containers** tab.
+1. In the PAS tile, select **Application Containers**.
 1. View the settings in **Router application identity verification**. 
 1. Verify that either **Router uses TLS to verify application identity** or **Router and applications use mutual TLS to verify each other's identity** is selected.
 1. Select the **Prune Routes on TTL Expiry for TLS Backends** checkbox.
+1. Click **Review Pending Changes**.
 1. Click **Apply Changes**.
 
-When you upgrade PAS, make sure you upgrade to PAS v2.4.10 or later to preserve this configuration.
+<p class="note"><strong>Note</strong>: When you upgrade PAS, make sure you upgrade to PAS v2.4.10 or later to preserve this configuration.</p>
+
+For more information, see [Intermittent Misrouting of Apps in Large PCF Foundations](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#stale-routes) in the _PAS v2.6 Release Notes_.
 
 ### <a id='bosh-cli'></a> Install BOSH CLI v5.3.1 or Later
 
