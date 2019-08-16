@@ -3,18 +3,18 @@ title: Upgrade Preparation Checklist for <%= vars.product_name %> v2.6
 owner: Ops Manager
 ---
 
-This topic serves as a checklist for preparing to upgrade Pivotal Cloud Foundry (<%= vars.product_name %>) from v2.5 to v2.6.
+This topic serves as a checklist for preparing to upgrade <%= vars.first_product_name %> from v2.5 to v2.6.
 
 This topic contains important preparation steps that you must follow before beginning your upgrade. Failure to follow these instructions may jeopardize your existing deployment data and cause the upgrade to fail.
 
-After completing the steps in this topic, you can continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
+After completing the steps in this topic, you can continue to [Upgrading <%= vars.product_name_full %>](../customizing/upgrading-pcf.html).
 
 <p class="note warning"><b>Warning:</b> Pivotal does not recommend that you skip minor versions when upgrading <%= vars.product_name %>. Skipping minor versions when upgrading <%= vars.product_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.product_name %> to the minor version that directly follows your current version of <%= vars.product_name %>.</p>
 
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your <%= vars.product_name %> Deployment
 
-Pivotal recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in the [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html) topic.
+Pivotal recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in the [Backing Up <%= vars.product_name_full %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html) topic.
 
 
 ## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for Ops Manager
@@ -97,16 +97,16 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 |                                                                         |                                                                  | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
 | ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------ | ------------- | -------- | ------------ |
-| **Pivotal Cloud Foundry**                                                   | [Ops Manager](https://network.pivotal.io/products/ops-manager) |              |               |          |              |
+| **<%= vars.product_name_full %>**                                                   | [Ops Manager](https://network.pivotal.io/products/ops-manager) |              |               |          |              |
 |                                                                         | [Pivotal Application Service](https://network.pivotal.io/products/elastic-runtime) (PAS)     |              |               |          |              |
-| **Pivotal Cloud Foundry Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
+| **<%= vars.product_name_full %> Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
 |                                                                         | [Redis](https://network.pivotal.io/products/p-redis)                                                            |              |               |          |              |
 |                                                                         | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq)                                                         |              |               |          |              |
 |                                                                         | [Single Sign On](https://network.pivotal.io/products/p-identity) (SSO)                                                              |              |               |          |              |
 |                                                                         | [Spring Cloud Services](https://network.pivotal.io/products/p-spring-cloud-services)                                            |              |               |          |              |
 |                                                                         | [Concourse](https://network.pivotal.io/products/p-concourse)                                                        |              |               |          |              |
 |                                                                         | ...                                                              |              |               |          |              |
-| **Pivotal Cloud Foundry Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic)                                                        |              |               |          |              |
+| **<%= vars.product_name_full %> Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic)                                                        |              |               |          |              |
 |                                                                         | ...                                                           |              |               |          |              |
 
 
@@ -232,7 +232,7 @@ Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI 
 
 During the <%= vars.product_name %> upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of <%= vars.product_name %>, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Upgrade Considerations for Selecting Pivotal Cloud Foundry Storage](../upgrading/configuring.html#file-storage).
+To ensure a successful upgrade of <%= vars.product_name %>, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Upgrade Considerations for Selecting <%= vars.product_name_full %> Storage](../upgrading/configuring.html#file-storage).
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
@@ -305,7 +305,7 @@ To export your installation, do the following:
 
 This exports the current <%= vars.product_name %> installation with all of its assets.
 
-When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.product_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.product_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up <%= vars.product_name_full %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 * The export time depends on the size of the exported file.
 * Some browsers do not provide feedback on the status of the export process and might appear to hang.
@@ -319,7 +319,7 @@ When you export an installation, the export contains the base VM images, necessa
 
 ## <a id="next-steps"></a> Next Steps
 
-Now that you have completed the Upgrade Preparation Checklist, continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
+Now that you have completed the Upgrade Preparation Checklist, continue to [Upgrading <%= vars.product_name_full %>](../customizing/upgrading-pcf.html).
 
 
 ## <a id="survey"></a> Complete Survey
