@@ -5,22 +5,24 @@ owner:
 
 This topic describes several configuration options for Pivotal Application Service (PAS) that can help ensure successful upgrades. In addition to following the [Upgrade Preparation Checklist](./checklist.html), review the sections in this document to better understand how to prepare for PAS Upgrades. 
 
+
 ## <a id="limit-restart"></a> Limit <%= vars.product_name %> Component Instance Restarts
 
-The `max_in_flight` variable limits how many instances of a component can restart simultaneously during updates or upgrades. Increasing the value of `max_in_flight` can make updates run faster, but setting it too high risks overloading VMs and causing failure. See [Best Practices](#best-practices) for guidance on setting `max_in_flight` values.
+The `max_in_flight` variable limits how many instances of a component can restart simultaneously during updates or upgrades. Increasing the value of `max_in_flight` can make updates run faster, but setting it too high risks overloading VMs and causing failure. For guidance on setting `max_in_flight` values, see [Best Practices](#best-practices).
 
-Values for `max_in_flight` can be any integer between 1 and 100, or a percentage of the total number of instances. For example, a `max_in_flight` value of `20%` in a deployment with 10 Diego cell instances would make no more than two cell instances restart at once.
+Values for `max_in_flight` can be any integer between 1 and 100, or a percentage of the total number of instances. For example, a `max_in_flight` value of `20%` in a deployment with 10 Diego Cell instances would make no more than two Diego Cell instances restart at once.
 
-### <a id="setting"></a>Set max\_in\_flight
+### <a id="setting"></a> Set max\_in\_flight
+
 The `max_in_flight` variable is a system-wide value with optional component-specific overrides. You can override the default value for individual jobs using an API endpoint.
 
-#### <a id="endpoint"></a>Use the max\_in\_flight API Endpoint
+#### <a id="endpoint"></a> Use the max\_in\_flight API Endpoint
 
 Use the `max_in_flight` API endpoint to configure the maximum value for component instances that can start at a given time. This endpoint overrides product defaults. You can specify values as a percentage or an integer.
 
-Use the string “default” as the `max_in_flight` value to force the component to use the deployment's default value.
+Use the string `default` as the `max_in_flight` value to force the component to use the deployment's default value.
 
-<p class="note"><strong>Note:</strong> The example below lists three JOB_GUIDs. These three GUIDs are examples of the three different types of values you can use to configure <code>max_in_flight</code>.  The endpoint only requires one GUID.</p>
+<p class="note"><strong>Note:</strong> The example below lists three JOB_GUIDs. These three GUIDs are examples of the three different types of values you can use to configure <code>max_in_flight</code>. The endpoint only requires one GUID.</p>
 
 <pre class="terminal">
 	curl "https://EXAMPLE.com/api/v0/staged/products/PRODUCT-TYPE1-GUID/max_in_flight" \
@@ -38,15 +40,15 @@ Use the string “default” as the `max_in_flight` value to force the component
 
 ### <a id="diego-cells"></a> Specific Guidance for Diego Cells
 
-To upgrade Cloud Foundry, BOSH must drain all Diego cell VMs that host app instances. BOSH manages this process by upgrading a batch of cells at a time. 
+To upgrade Cloud Foundry, BOSH must drain all Diego Cell VMs that host app instances. BOSH manages this process by upgrading a batch of Diego Cells at a time. 
 
-The number of cells that undergo upgrade simultaneously (either in a state of shutting down or coming back online) is controlled by the `max_in_flight` value of the Diego cell job. For example, if `max_in_flight` is set to `10%` and your deployment has 20 Diego cell job instances, then the maximum number of cells that BOSH can upgrade at a single time is `2`. 
+The number of Diego Cells that undergo upgrade simultaneously (either in a state of shutting down or coming back online) is controlled by the `max_in_flight` value of the Diego Cell job. For example, if `max_in_flight` is set to `10%` and your deployment has 20 Diego Cell job instances, then the maximum number of Diego Cells that BOSH can upgrade at a single time is `2`. 
 
-When BOSH triggers an upgrade, each Diego cell undergoing upgrade enters "evacuation" mode. Evacuation mode means that the cell stops accepting new work and signals the rest of the Diego system to schedule replacements for its app instances. This scheduling is managed by the [Diego auctioneer process](../concepts/diego/diego-auction.html).
+When BOSH triggers an upgrade, each Diego Cell undergoing upgrade enters "evacuation" mode. Evacuation mode means that the Diego Cell stops accepting new work and signals the rest of the Diego system to schedule replacements for its app instances. This scheduling is managed by the Diego auctioneer process. For more information, see [How Diego Balances App Processes](../concepts/diego/diego-auction.html).
 
-The evacuating cells continue to interact with the Diego system as replacements come online. The cell undergoing upgrade waits until either its app instance replacements run successfully before shutting down the original local instances, or for the evacuation process to time out. This "evacuation timeout" defaults to 10 minutes. 
+The evacuating Diego Cells continue to interact with the Diego system as replacements come online. The Diego Cell undergoing upgrade waits until either its app instance replacements run successfully before shutting down the original local instances, or for the evacuation process to time out. This "evacuation timeout" defaults to 10 minutes. 
 
-If cell evacuation exceeds this timeout, then the cell stops its app instances and shuts down. The Diego system continues to re-emit start requests for the app replacements.
+If Diego Cell evacuation exceeds this timeout, then the Diego Cell stops its app instances and shuts down. The Diego system continues to re-emit start requests for the app replacements.
 
 #### <a id="limitations-considerations"></a> Prevent Overload 
 
@@ -54,7 +56,7 @@ A potential issue arises if too many app instance replacements are slow to start
 
 If too many app instances are starting concurrently, then the load of these starts on the rest of the system can cause other applications that are already running to crash and be rescheduled. These events can result in a cascading failure.
 
-To prevent this issue, <%= vars.product_name %> provides two throttle configurations: the maximum number of in-flight diego cell instances and the maximum number of starting containers. 
+To prevent this issue, <%= vars.product_name %> provides two throttle configurations: the maximum number of in-flight Diego Cell instances and the maximum number of starting containers. 
 
 The values of the above throttle configurations depend on the version of <%= vars.product_name %> that you have deployed and whether you have overridden the default values.
 
@@ -65,8 +67,8 @@ Refer to the following table for existing defaults and, if necessary, determine 
     <th><%= vars.product_name %> Version</th>
     <th>Starting Container Count Maximum</th>
     <th>Starting Container Count Overridable?</th>
-    <th>Maximum In Flight Diego Cell Instances</th>
-    <th>Maximum In Flight Diego Cell Instances Overridable?</th>
+    <th>Maximum In-Flight Diego Cell Instances</th>
+    <th>Maximum In-Flight Diego Cell Instances Overridable?</th>
   </tr>
   <tr>
     <td><%= vars.product_name %> 1.7.43 and earlier</td>
@@ -133,53 +135,60 @@ Refer to the following table for existing defaults and, if necessary, determine 
   </tr>
 </table>
 
-### <a id="best-practices"></a>Best Practices
+### <a id="best-practices"></a> Best Practices
 
 Set the `max_in_flight` variable high enough that the remaining component instances are not overloaded by typical use. If component instances are overloaded during updates, upgrades, or typical use, users may experience downtime. 
 
 Some more precise guidelines include:
 
-* For jobs with high resource usage, set `max_in_flight` low. For example, for Diego cells, `max_in_flight` allows non-migrating cells to pick up the work of cells stopping and restarting during migration. If resource usage is already close to 100%, scale up your jobs before making any updates.
-* For quorum-based components (these are components with odd-numbered settings in the manifest), such as etcd, consul, and Diego BBS, set `max_in_flight` to 1. This preserves quorum and prevents a [split-brain scenario](https://en.wikipedia.org/wiki/Split-brain_(computing)) from occurring as jobs restart.
-* For other components, set `max_in_flight` to the number of instances that you can afford to have down at any one time. The best values for your deployment vary based on your capacity planning. In a highly redundant deployment, you can make the number high so that updates run faster. If your components are at high utilization, however, you should keep the number low to prevent downtime.
+* For jobs with high resource usage, set `max_in_flight` low. For example, for Diego Cells, `max_in_flight` allows non-migrating Diego Cells to pick up the work of Diego Cells stopping and restarting during migration. If resource usage is already close to 100%, scale up your jobs before making any updates.
+
+* Quorum-based components are components with odd-numbered settings in the manifest. For quorum-based components such as etcd and Diego BBS, set `max_in_flight` to 1. This preserves quorum and prevents a split-brain scenario from occurring as jobs restart. For more information, about split-brain scenarios, see [Split-brain (computing)](https://en.wikipedia.org/wiki/Split-brain_(computing)) on Wikipedia.
+
+* For other components, set `max_in_flight` to the number of instances that you can afford to have down at any one time. The best values for your deployment vary based on your capacity planning. In a highly redundant deployment, you can make the number high so that updates run faster. However, if your components are at high utilization, you should keep the number low to prevent downtime.
+
 * Never set `max_in_flight` to a value greater than or equal to the number of instances you have running for a component.
+
 
 ## <a id="container-starts"></a> Set a Maximum Number of Starting Containers
 
 This section describes how to use the auctioneer job to configure the maximum number of app instances starting at a given time. This prevents Diego from scheduling too much new work for your platform to handle concurrently. A lower default can prevent server overload during cold start, which may be important if your infrastructure is not sized for a large number of concurrent cold starts.
 
-The auctioneer only schedules a fixed number of app instances to start concurrently. This limit applies to both single and multiple Diego Cells. For example, if you set the limit to five starting instances, it does not matter if you have one Diego Cell with ten instances or five Diego Cells with two instances each. The auctioneer will not allow more than five instances to start at the same time.
+The auctioneer only schedules a fixed number of app instances to start concurrently. This limit applies to both single and multiple Diego Cells. For example, if you set the limit to five starting instances, it does not matter if you have one Diego Cell with ten instances or five Diego Cells with two instances each. The auctioneer does not allow more than five instances to start at the same time.
 
 If you are using a cloud-based IaaS, rather than a smaller on-premise solution, Pivotal recommends setting a larger default. By default, the maximum number of started instances is 200.
 
-You can configure the maximum number of started instances in the Settings tab of the Pivotal Application Service (PAS) tile. 
+To configure the maximum number of started instances in the **Settings** tab of the PAS tile: 
 
-<ol>
-<li>Log in to Operations Manager.</li>
-<li>Click the PAS tile.</li>
-<li>Click <strong>Application instances</strong> in the sidebar.</li>
-<li>In the Max Inflight Container Starts field, type the maximum number of started
-instances.
-  <%=vars.inflight_img%></li>
-<li>Click <strong>Save</strong>.</li>
+1. Log in to Ops Manager.
+
+1. Click the PAS tile.
+
+1. Go to the **App Containers** pane.
+
+1. In the **Max-in-flight container starts** field, type the maximum number of started instances.
+  <%=vars.inflight_img%>
+
+1. Click **Save**.
+
 
 ## <a id="file-storage"></a> Configure File Storage
 
-This section describes critical factors to consider when evaluating the type of file storage to use in your <%= vars.product_name_full %> (<%= vars.product_name %>) deployment. The [Pivotal Application Service (PAS) blobstore](../concepts/architecture/cloud-controller.html#blob-store) relies on the file storage system to read and write resources, app packages, and droplets.
+This section describes critical factors to consider when evaluating the type of file storage to use in your <%= vars.product_name_full %> (<%= vars.product_name %>) deployment. The PAS blobstore relies on the file storage system to read and write resources, app packages, and droplets. For more information, see the [Blobstore](../concepts/architecture/cloud-controller.html#blob-store) section of the _Cloud Controller_ topic.
 
 During an upgrade of <%= vars.product_name %>, file storage with insufficient IOPS numbers can negatively impact the performance and stability of your <%= vars.product_name %> deployment. 
 
-If disk processing time takes longer than the evacuation timeout for Diego cells, then Diego cells and app instances may take too long to start up, resulting in a cascading failure. 
+If disk processing time takes longer than the evacuation timeout for Diego Cells, then Diego Cells and app instances may take too long to start up, resulting in a cascading failure. 
 
 However, the minimum required IOPS depends upon a number of deployment-specific factors and configuration choices. Use this section as a guide when deciding on the file storage configuration for your deployment.
 
-To see an example of system performance and IOPS load during an upgrade, refer to [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
+For an example of system performance and IOPS load during an upgrade, see [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
 
 ### <a id="types"></a> Select Internal or External File Storage
 
 When you deploy <%= vars.product_name %>, you can select internal file storage or external file storage, either network-accessible or IaaS-provided, as an option in the PAS tile. 
 
-Selecting internal storage causes <%= vars.product_name %> to deploy a dedicated virtual machine (VM) that uses either NFS or WebDAV for file storage. Selecting external storage allows you to configure file storage provided in network-accessible location or by an IaaS, such as Amazon S3, Google Cloud Storage, or Azure Storage. 
+Selecting internal storage causes <%= vars.product_name %> to deploy a dedicated VM that uses either NFS or WebDAV for file storage. Selecting external storage allows you to configure file storage provided in network-accessible location or by an IaaS, such as Amazon S3, Google Cloud Storage, or Azure Storage. 
 
 Whenever possible, Pivotal recommends using external file storage. 
 
@@ -188,7 +197,7 @@ Whenever possible, Pivotal recommends using external file storage.
 As a best-effort calculation, estimate the total number of bits needed to move during a system upgrade to determine how IOPS-performant your file storage needs to be.  
 
 * **Number of Diego Cells**
-	* As a first calculation, determine the number of Diego cells that your deployment currently uses. To view the number of Diego cell instances currently running in your deployment, see the **Resource Config** section of your PAS tile. If you expect to scale up the number of instances, use the anticipated scaled number.
-	<p class="note"><b>Note</b>: If your deployment uses more than 20 Diego cells, you should avoid using internal file storage. Instead, you should always select external or IaaS-provided file storage.</p>
+	* As a first calculation, determine the number of Diego Cells that your deployment currently uses. To view the number of Diego Cell instances currently running in your deployment, see the **Resource Config** section of your PAS tile. If you expect to scale up the number of instances, use the anticipated scaled number.
+	<p class="note"><strong>Note:</strong> If your deployment uses more than 20 Diego Cells, you should avoid using internal file storage. Instead, you should always select external or IaaS-provided file storage.</p>
 * **Maximum In-Flight Load and Container Starts for Diego Cells**
-	* Operators can limit the number of containers and Diego cell instances that Diego starts concurrently. If operators impose no limits, your file storage may experience exceptionally heavy load during an upgrade. 
+	* Operators can limit the number of containers and Diego Cell instances that Diego starts concurrently. If operators impose no limits, your file storage may experience exceptionally heavy load during an upgrade. 

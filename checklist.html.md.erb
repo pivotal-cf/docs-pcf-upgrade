@@ -11,12 +11,12 @@ This topic contains important preparation steps that you must follow before begi
 
 After completing the steps in this topic, you can continue to [Upgrading <%= vars.product_name_full %>](../customizing/upgrading-pcf.html).
 
-<p class="note warning"><b>Warning:</b> Pivotal does not recommend that you skip minor versions when upgrading <%= vars.product_name %>. Skipping minor versions when upgrading <%= vars.product_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.product_name %> to the minor version that directly follows your current version of <%= vars.product_name %>.</p>
+<p class="note warning"><strong>Warning:</strong> Pivotal does not recommend that you skip minor versions when upgrading <%= vars.product_name %>. Skipping minor versions when upgrading <%= vars.product_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.product_name %> to the minor version that directly follows your current version of <%= vars.product_name %>.</p>
 
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your <%= vars.product_name %> Deployment
 
-Pivotal recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in the [Backing Up <%= vars.product_name_full %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html) topic.
+Pivotal recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up <%= vars.product_name_full %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
 ## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for Ops Manager
@@ -41,6 +41,7 @@ Review each of the following links to understand the changes in the new release,
 * **Diego Network Communications**:
 	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
+
 ## <a id="restage-windows-apps"></a> Restage Windows Apps
 
 The `windows2016` stack is deprecated in PAS for Windows v2.6.
@@ -49,16 +50,17 @@ Before upgrading to PAS for Windows v2.6 from PAS for Windows v2.5, all Windows 
 
 For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in the PAS for Windows v2.6 Release Notes.
 
-If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.5, you can also restage your apps before upgrading to PAS for Windows v2.5.
-For more information about upgrading to PAS for Windows v2.5, see [Upgrade to PAS for Windows v2.5](#upgrade-pasw) below.
+If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.5, you can also restage your apps before upgrading to PAS for Windows v2.5. For more information about upgrading to PAS for Windows v2.5, see [Upgrade to PAS for Windows v2.5](#upgrade-pasw) below.
+
 
 ## <a id='ssh-private-key'></a> (vSphere Only) Add SSH Key to OVF Template for Ops Manager VM
 
-To avoid upgrade failure and errors when authenticating, do the following:
+To avoid upgrade failure and errors when authenticating:
 
 1. Add a public key to the OVF template for the Ops Manager VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see [Deploy Ops Manager](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) in _Deploying Ops Manager on vSphere_. 
 
 For more information about this breaking change, see [Passwords Not Supported for Ops Manager VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key). 
+
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -66,16 +68,13 @@ The following section describes changes you must make to your product tiles and 
 
 ### <a id="upgrade-pasw"></a> Upgrade to PAS for Windows v2.5
 
-If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.5 and want to upgrade to <%= vars.product_name %> v2.6,
-you must upgrade to PAS for Windows v2.5 before upgrading to <%= vars.product_name %> v2.6.
-To download PAS for Windows, navigate to [Pivotal Network](https://network.pivotal.io/).
+If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.5 and want to upgrade to <%= vars.product_name %> v2.6, you must upgrade to PAS for Windows v2.5 before upgrading to <%= vars.product_name %> v2.6. To download PAS for Windows, go to [Pivotal Network](https://network.pivotal.io/).
 
 ### <a id="upgrade-stemcell"></a> Upgrade Stemcell to v2019.3 or Later for PAS for Windows v2.5
 
-If you are running PAS for Windows v2.5 using Windows stemcell v2019.2,
-you must upgrade your stemcell to v2019.3 or later before you upgrade to Ops Manager v2.6.
+If you are running PAS for Windows v2.5 using Windows stemcell v2019.2, you must upgrade your stemcell to v2019.3 or later before you upgrade to Ops Manager v2.6.
 
-<p class="note warning"><b>Warning:</b> Windows stemcell v2019.2 is not compatible with Ops Manager v2.6.</p>
+<p class="note warning"><strong>Warning:</strong> Windows stemcell v2019.2 is not compatible with Ops Manager v2.6.</p>
 
 ### <a id="compatibility"></a> Review Service Tile Compatibility
 
@@ -85,7 +84,7 @@ To check <%= vars.product_name %> versions supported by a service tile, either f
 
 * Navigate to the tile's download page on [Pivotal Network](https://network.pivotal.io).
 * Select the tile version in the **Releases** dropdown.
-* See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
+* See the **Depends On** section under **Release Details**. For more information, see the tile's release notes.
 
 If the currently-deployed version of a tile is not compatible with <%= vars.product_name %> v2.6, you must upgrade the tile to a compatible version before you upgrade <%= vars.product_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.product_name %> v2.5 and v2.6.
 
@@ -126,7 +125,7 @@ With each release of a new <%= vars.product_name %> version, BOSH Director may r
 
 #### <a id="check-specs"></a> Check Required Machine Specifications
 
-Check the required machine specifications for Ops Manager v2.6. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, then increase the size of your Ops Manager boot disk to 100&nbsp;GB.
+Check the required machine specifications for Ops Manager v2.6. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, increase the size of your Ops Manager boot disk to 100&nbsp;GB.
 
 ### <a id='patch'></a> Configure PAS
 
@@ -140,16 +139,15 @@ For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
-To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-6/tile-errands.html#post-deploy) section of the Errands topic for details.
-Only disable these errands if your environment does not need them.
+To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-6/tile-errands.html#post-deploy) section of the Errands topic for details. Only disable these errands if your environment does not need them.
 
-In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Deleting Products](../customizing/add-delete.html#add-import) topic.
+In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see [Adding and Deleting Products](../customizing/add-delete.html#add-import).
 
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
 
-In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** is different than the default of `10240`, then you must specify a new threshold. 
+In the PAS tile **App Containers** pane, if **Docker images disk cleanup scheduling on Diego Cell VMs** is set to **Clean up disk space once usage fills disk** and the value of **Reserved disk space for other jobs** is different from the default of `10240`, you must specify a new threshold. 
 
-If the scheduling is set to **Never clean up...** or **Routinely clean up...**, or the threshold value is set to the default of `10240`, then no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information see [Options for Disk Cleanup](../opsguide/config-cell-cleanup.html).
+If the scheduling is set to **Never clean up Diego Cell disk space** or **Routinely clean up Diego Cell disk space**, or the reserved disk space value is set to the default of `10240`, no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information, see [Options for Disk Cleanup](../opsguide/config-cell-cleanup.html).
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
@@ -159,7 +157,7 @@ For example, **File Integrity Monitor for <%= vars.product_name %>** (FIM) is no
 
 <p class="note"><strong>Note:</strong> To upgrade to a Xenial stemcell, see the documentation for each add-on and follow the instructions.</p>
 
-To update an add-on manifest, do the following:
+To update an add-on manifest:
 
 1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the Ops Manager VM.
 
@@ -177,21 +175,23 @@ If you use any other BOSH-managed add-ons in your deployment, you should verify 
 
 ### <a id="azure-blobstore-addon"></a> Check Backup and Restore External Blobstore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the [Blobstore Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading. If you do not remove this job, upgrading PAS fails with the error:
+If you have enabled external blobstore backups for an Azure Blobstore using the blobstore add-on, you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading. If you do not remove this job, upgrading PAS fails with the error:
 
 <pre>
 Preparing deployment: Preparing deployment (00:00:01)
   L Error: Colocated job 'azure-blobstore-backup-restorer' is already added to the instance group 'backup-restore'.
 </pre>
 
-After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the PAS tile > **File Storage** pane.
+After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the **File Storage** pane in PAS.
+
+For more information, see the [Azure Blobstores](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure) section of the _Enabling External Blobstore Backups_ topic.
 
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
 
 Depending on the requirements of your deployment, you may need to rotate your Certificate Authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
 
-<p class="note"><strong>Note:</strong> <%= vars.product_name %> uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Regenerating and Rotating Non-Configurable TLS/SSL Certificates</a> section of <em>Managing TLS Certificates</em>.</p>
+<p class="note"><strong>Note:</strong> <%= vars.product_name %> uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Regenerating and Rotating Non-Configurable TLS/SSL Certificates</a> section of the <em>Managing TLS Certificates</em> topic.</p>
 
 To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the Ops Manager API.
 
@@ -215,7 +215,7 @@ The following sections describe steps for ensuring your deployment has adequate 
 
 ### <a id="check-diego-cell-ram-and-disk"></a> Check Diego Cell RAM and Disk
 
-Check that Diego cells have sufficient available RAM and disk capacity to support app containers.
+Check that Diego Cells have sufficient available RAM and disk capacity to support app containers.
 
 The KPIs that monitor these these resources are are:
 
@@ -224,17 +224,17 @@ The KPIs that monitor these these resources are are:
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Limit <%= vars.product_name %> Component Instances During Restart](./configuring.html#limit-restart).
+If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Cells. For more information, see [Limit <%= vars.product_name %> Component Instances During Restart](./configuring.html#limit-restart).
 
-For <%= vars.product_name %> v1.10 and later, the maximum number of cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego cell definition. For more information, see the [Prevent Overload](./configuring.html#limitations-considerations) section.
+For <%= vars.product_name %> v1.10 and later, the maximum number of Diego Cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see the [Prevent Overload](./configuring.html#limitations-considerations) section of the _Configuring PAS for Upgrades_ topic.
 
-Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
+For more information about these KPIs, see the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the _Key Performance Indicators_ topic.
 
 ### <a id="storage"></a> Review File Storage IOPS and Other Upgrade Limiting Factors
 
 During the <%= vars.product_name %> upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of <%= vars.product_name %>, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Upgrade Considerations for Selecting <%= vars.product_name_full %> Storage](../upgrading/configuring.html#file-storage).
+To ensure a successful upgrade of <%= vars.product_name %>, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see the [Configure File Storage](../upgrading/configuring.html#file-storage) section of the _Configuring PAS for Upgrades_ topic.
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
@@ -244,7 +244,7 @@ In addition to file storage IOPS, consider additional existing deployment factor
 |**Number of ASGs**| A large number of [Application Security Groups](../concepts/asg.html) in your deployment can contribute to an increase in app instance container startup time. |
 |**Number of app instances and application growth**| A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
 
-To review example upgrade-related performance measurements of an existing production Cloud Foundry deployment, see the [Pivotal Web Services Performance During Upgrade](../opsguide/pws_upgrade_load.html) topic.
+To review example upgrade-related performance measurements of an existing production Cloud Foundry deployment, see [Pivotal Web Services Performance During Upgrade](../opsguide/pws_upgrade_load.html).
 
 ### <a id="bosh-clean-up"></a> Run BOSH Clean-Up
 
@@ -262,14 +262,17 @@ For collecting foundation health status, Pivotal recommends <%= vars.product_nam
 If you are not using <%= vars.product_name %> Healthwatch, you can do some or all of the following to collect foundation health status:
 
 * If your <%= vars.product_name %> deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.
+
 * Run BOSH CLI commands to check system status:
 	* `bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps`. <p>`bosh instances` with the flags `--ps`, `--vitals`, or `--failing` highlights individual job failure.</p>
 	* `bosh -e ALIAS vms --vitals`. This reveals VMs with high CPU, high memory, high disk utilization, and with `state` != `running`.
 	* `bosh -e ALIAS -d DEPLOYMENT_NAME cck --report`
-* Check Ops Manager GUI each PAS/Tiles the status page for CPU/RAM/DISK utilization
+
+* Check the **Status** tab of each PAS tile for VM CPU, RAM, and disk use levels.
+
 * Validate Ops Manager persistent disk usage is below 50%. If not, follow the procedure in [Confirm Adequate Disk Space](#confirm-om-disk).
 
-(Optional) Check the logs for errors before proceeding with the upgrade. For more information, see [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view).
+* (Optional) Check the logs for errors before proceeding with the upgrade. For more information, see [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view).
 
 ### <a id="push-test-app"></a> Push and Scale a Test App
 
@@ -279,11 +282,11 @@ Check that a test app can be pushed and scaled horizontally, manually or through
 
 If you are running PAS MySQL as a cluster, run the `mysql-diag` tool to validate health of the cluster.
 
-See the BOSH CLI v2 instructions in the [Running mysql-diag](../pas/mysql-diag.html) topic.
+For BOSH CLI v2 instructions, see [Running mysql-diag](../pas/mysql-diag.html).
 
 ### <a id="check-health"></a> Review Pending and Recent Changes
 
-1. Confirm there are no outstanding changes in Ops Manager or any other tile. All tiles should be **green**. Click **Review Pending Changes**, then **Apply Changes** if necessary.
+1. Confirm there are no outstanding changes in Ops Manager or any other tile. All tiles should be green. Click **Review Pending Changes**, then **Apply Changes** if necessary.
 
 1. After applying changes, click **Recent Install Logs** to confirm that the changes completed cleanly:
     <pre>
@@ -295,7 +298,7 @@ See the BOSH CLI v2 instructions in the [Running mysql-diag](../pas/mysql-diag.h
 
 ## <a id="export"></a> Export Your Installation
 
-To export your installation, do the following:
+To export your installation:
 
 1. In your Ops Manager **Installation Dashboard**, click the account dropdown and select **Settings**.
 
@@ -316,7 +319,7 @@ When you export an installation, the export contains the base VM images, necessa
 
 <%= image_tag("./images/compress.png") %>
 
-<p class="note warning"><strong>WARNING:</strong> If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p>
+<p class="note warning"><strong>WARNING:</strong> If you do not perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p>
 
 
 ## <a id="next-steps"></a> Next Steps
