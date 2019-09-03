@@ -32,15 +32,15 @@ When performing an upgrade, Ops Manager first upgrades individual components, an
 
 1. The [One-Time Tasks](#tasks) section lists the tasks that Ops Manager runs after it upgrades the PAS components.
 
-### <a id= "components"></a>Components
+### <a id= "components"></a> Components
 
 Ops Manager upgrades PAS components in a fixed order that honors component dependencies and minimizes downtime and other system limitations during the upgrade process.
 
 The type and duration of downtime and other limitations that you can expect during a PAS upgrade reflect the following:
 
-* Component instance scaling. See [How Single-Component Scaling Affects Upgrades](#single-components)
+* Component instance scaling. For more information, see [How Single-Component Scaling Affects Upgrades](#single-components).
 
-* Component upgrade order. See [Component Upgrade Order and Behavior](#order-behavior)
+* Component upgrade order. For more information, see [Component Upgrade Order and Behavior](#order-behavior).
 
 #### <a id= "single-components"></a> How Single-Component Scaling Affects Upgrades
 
@@ -53,14 +53,14 @@ When a component is scaled at a single instance, it can experience downtime and 
 
 For more information about how the scale of each component affects upgrade behavior, see the [Component Upgrade Order and Behavior](#order-behavior) table below.
 
-<p class="note"><strong>Note:</strong> A full Ops Manager upgrade may take close to two hours, and you will have limited ability to deploy an application during this time.</p>
+<p class="note"><strong>Note:</strong> A full Ops Manager upgrade may take close to two hours, and you will have limited ability to deploy an app during this time.</p>
 
 #### <a id= "order-behavior"></a> Component Upgrade Order and Behavior
 
 The table below lists components in the order that Ops Manager upgrades each. It also lists which components are scalable and explains how component downtime affects PAS app and control availability. The table includes the following columns:
 
 * **Scalable**: Indicates whether the component is scalable above a single instance.
-    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, we recommend that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, refer to the [Scaling Cloud Foundry topic](../concepts/high-availability.html).</p>
+    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, we recommend that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see [High Availability in Cloud Foundry](../concepts/high-availability.html).</p>
 
 * **Extended Downtime**: Indicates that if there is only one instance of the component, that component is unavailable for up to five minutes during an Ops Manager upgrade.
 
@@ -70,7 +70,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
 
 * **Other Limitations and Information**: Provides the following information:
     * Component availability, behavior, and usage during an upgrade
-    * Guidance on disabling the component before an upgrade</p>
+    * Guidance on disabling the component before an upgrade
 
 <table border="1" class="nice" >
 <tr>
@@ -107,8 +107,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td>&#10003;</td>
   <td>
-    The MySQL Proxy is responsible for managing failover of the MySQL Servers.
-    If the Proxy becomes unavailable, then access to the MySQL Server could be broken.
+    The MySQL Proxy is responsible for managing failover of the MySQL Servers. If the Proxy becomes unavailable, then access to the MySQL Server could be broken.
   </td>
 </tr>
 <tr>
@@ -118,8 +117,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td>&#10003;</td>
   <td>
-    The MySQL Server is responsible for persisting internal databases for the platform.
-    If the MySQL Server becomes unavailable, then platform services that rely upon a database (Cloud Controller, UAA) will also become unavailable. See <a href="../mysql/scaling-mysql.html#downtime-effects">Effects of MySQL Downtime</a> for details.
+    The MySQL Server is responsible for persisting internal databases for the platform. If the MySQL Server becomes unavailable, then platform services that rely upon a database (Cloud Controller, UAA) also becomes unavailable. For more information, see <a href="../mysql/scaling-mysql.html#downtime-effects">Effects of MySQL Downtime</a>.
   </td>
 </tr>
 <tr>
@@ -163,8 +161,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td></td>
   <td>
-    HAProxy is used to load-balance incoming requests to the Router.
-    If HAProxy is unavailable, you may lose the ability to make requests to applications unless there is another routing path from your load balancer to the Router.
+    HAProxy is used to load-balance incoming requests to the Router. If HAProxy is unavailable, you may lose the ability to make requests to apps unless there is another routing path from your load balancer to the Router.
   </td>
 </tr>
 <tr>
@@ -174,8 +171,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td></td>
   <td>
-    The Router is responsible for routing requests to their application containers.
-    If the Router is not available, then applications cannot receive requests.
+    The Router is responsible for routing requests to their app containers. If the Router is not available, then apps cannot receive requests.
   </td>
 </tr>
 <tr>
@@ -255,9 +251,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td>
-      App downtime for apps that use secure credentials.
-      Platform downtime for cf CLI commands such as
-   <code>bind-service</code> and <code>unbind-service</code> applied to services configured with CredHub.
+      App downtime for apps that use secure credentials. Platform downtime for cf CLI commands such as <code>bind-service</code> and <code>unbind-service</code> applied to services configured with CredHub.
   </td>
 </tr>
 <tr>
@@ -286,7 +280,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
 </tr>
 </table>
 
-### <a id= "tasks"></a>One-Time Tasks
+### <a id= "tasks"></a> One-Time Tasks
 
 After Ops Manager upgrades components, it performs system checks and launches UI apps and other PAS components as Cloud Foundry apps. These tasks run in the following order:
 
@@ -336,6 +330,7 @@ After Ops Manager upgrades components, it performs system checks and launches UI
   <td>MySQL Rejoin Unsafe Errand</td>
 </tr>
 </table>
+
 
 ## <a id="upgrade-example"></a> Upgrading Installation Example
 
