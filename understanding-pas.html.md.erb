@@ -5,6 +5,7 @@ owner: Ops Manager
 
 This topic explains what happens to Pivotal Application Service (PAS) components and apps during a PAS upgrade. 
 
+
 ## <a id="bosh-drains"></a> BOSH Drains Diego Cell VMs
 
 During a PAS upgrade, BOSH drains all Diego cell VMs that host app instances. BOSH manages this process by upgrading a batch of cells one at a time.
@@ -13,13 +14,15 @@ When BOSH triggers an upgrade, each upgrading Diego cell enters evacuation mode.
 
 For more information, see the [Specific Guidance for Diego Cells](./configuring.html#diego-cells) section of the _Configuring PAS for Upgrades_ topic.
 
+
 ## <a id="cf-push"></a> cf push Can Become Unavailable
 
 `cf push` is mostly available for the duration of a PAS upgrade. However, `cf push` can become unavailable when a single VM is in use or during BOSH Backup and Restore (BBR).
 
 For more information, see [cf push Availability During Pivotal Application Service Upgrades](https://docs.pivotal.io/pivotalcf/2-3/customizing/cfpush-availability-during-upgrade.html).
 
-## <a id="upgrade-limitations"></a>PAS Components Upgrade
+
+## <a id="upgrade-limitations"></a> PAS Components Upgrade
 
 This section describes the order in which Ops Manager upgrades components and runs tasks during a full platform upgrade. It also explains how the scale of different Pivotal Application Service (PAS) components affects uptime during upgrades, and which components are scalable.
 
@@ -27,7 +30,7 @@ When performing an upgrade, Ops Manager first upgrades individual components, an
 
 1. The [Components](#components) section describes how Ops Manager upgrades PAS components and explains how individual component upgrades affect broader PAS capabilities.
 
-2. The [One-Time Tasks](#tasks) section lists the tasks that Ops Manager runs after it upgrades the PAS components.
+1. The [One-Time Tasks](#tasks) section lists the tasks that Ops Manager runs after it upgrades the PAS components.
 
 ### <a id= "components"></a>Components
 
@@ -39,7 +42,7 @@ The type and duration of downtime and other limitations that you can expect duri
 
 * Component upgrade order. See [Component Upgrade Order and Behavior](#order-behavior)
 
-#### <a id= "single-components"></a>How Single-Component Scaling Affects Upgrades
+#### <a id= "single-components"></a> How Single-Component Scaling Affects Upgrades
 
 In [<%= vars.product_name_full %>](https://network.pivotal.io/products/pivotal-cf) (<%= vars.product_name %>) Ops Manager, the Pivotal Application Service (PAS) tile > **Resource Config** pane shows the components that the BOSH Director installs:
 
@@ -52,7 +55,7 @@ For more information about how the scale of each component affects upgrade behav
 
 <p class="note"><strong>Note:</strong> A full Ops Manager upgrade may take close to two hours, and you will have limited ability to deploy an application during this time.</p>
 
-#### <a id= "order-behavior"></a>Component Upgrade Order and Behavior
+#### <a id= "order-behavior"></a> Component Upgrade Order and Behavior
 
 The table below lists components in the order that Ops Manager upgrades each. It also lists which components are scalable and explains how component downtime affects PAS app and control availability. The table includes the following columns:
 
@@ -225,24 +228,6 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td>
     Ops Manager operators experience 2-5 minute gaps in logging.
-  </td>
-</tr>
-<tr>
-  <td>Syslog Adapter</td>
-  <td>&#10003;</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td>
-  </td>
-</tr>
-<tr>
-  <td>Syslog Scheduler</td>
-  <td>&#10003;</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td>
   </td>
 </tr>
 <tr>
