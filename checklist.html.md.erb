@@ -44,7 +44,7 @@ Review each of the following links to understand the changes in the new release,
 
 PAS v2.5 patch versions v2.5.10 and later support pre-existing apps that were staged with `cflinuxfs2` buildpacks, but do not support restaging on `cflinuxfs2`. PAS versions v2.5.0 to v2.5.9 do not support apps running on `cflinuxfs2`.
 
-If your PAS v2.4 deployment hosts `cflinuxfs2` apps, Pivotal recommends that you upgrade to the latest v2.5 and encourage developers to migrate all their apps and upgrade any custom buildpacks to `cflinuxfs3`.  If you upgrade PAS to an older v2.5 patch version, apps staged on `cflinuxfs2` will stop running.
+If your PAS v2.4 deployment hosts `cflinuxfs2` apps, Pivotal recommends that you upgrade to the latest v2.5 and encourage developers to migrate all their apps and upgrade any custom buildpacks to `cflinuxfs3`.  If you upgrade PAS to an older v2.5 patch version, apps staged on `cflinuxfs2` stop running.
 
 To work with developers to migrate all PAS-hosted apps to `cflinuxfs3`, do the following:
 
@@ -181,7 +181,7 @@ For more information, see [Removed Option to Override Deployment Name to CF](htt
 
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
 
-In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** below has been changed from the default of `10240`, then operators need to pick a new threshold. If the scheduling is set to **Never clean up...** or **Routinely clean up...***, or the threshold value is set to the default, then the no action is necessary, and any threshold will migrate to a sensible value. For more information see [Options for Disk Cleanup](https://docs.pivotal.io/pivotalcf/2-4/opsguide/config-cell-cleanup.html).
+In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** below has been changed from the default of `10240`, then operators need to pick a new threshold. If the scheduling is set to **Never clean up...** or **Routinely clean up...***, or the threshold value is set to the default, then no action is necessary and any threshold migrates to a sensible value. For more information see [Options for Disk Cleanup](https://docs.pivotal.io/pivotalcf/2-4/opsguide/config-cell-cleanup.html).
 
 #### <a id="route-integrity"></a> Configure Gorouter with TLS
 
