@@ -42,11 +42,9 @@ Review each of the following links to understand the changes in the new release,
 
 ## <a id='cflinuxfs3'></a> Migrate Apps to cflinuxfs3
 
-PAS v2.5 patch versions v2.5.10 and later support pre-existing apps that were staged with `cflinuxfs2` buildpacks, but do not support restaging on `cflinuxfs2`. PAS versions v2.5.0 to v2.5.9 do not support apps running on `cflinuxfs2`.
+In PAS v2.5, `cflinuxfs2` is no longer supported. Before upgrading to PAS v2.5, developers must change their stack to `cflinuxfs3` and restage their apps.
 
-If your PAS v2.4 deployment hosts `cflinuxfs2` apps, Pivotal recommends that you upgrade to the latest v2.5 and encourage developers to migrate all their apps and upgrade any custom buildpacks to `cflinuxfs3`.  If you upgrade PAS to an older v2.5 patch version, apps staged on `cflinuxfs2` stop running.
-
-To work with developers to migrate all PAS-hosted apps to `cflinuxfs3`, do the following:
+To prepare for your upgrade, do the following:
 
 1. Install the Stack Auditor plugin for the cf CLI. See [Install Stack Auditor](../adminguide/stack-auditor.html#install) in _Using the Stack Auditor Plugin_.
 
