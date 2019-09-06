@@ -9,14 +9,14 @@ This topic serves as a checklist for preparing to upgrade <%= vars.first_product
 
 This topic contains important preparation steps that you must follow before beginning your upgrade. Failure to follow these instructions may jeopardize your existing deployment data and cause the upgrade to fail.
 
-After completing the steps in this topic, you can continue to [Upgrading <%= vars.product_name_full %>](../customizing/upgrading-pcf.html).
+After completing the steps in this topic, you can continue to [Upgrading <%= vars.product_name %>](../customizing/upgrading-pcf.html).
 
 <p class="note warning"><strong>Warning:</strong> Pivotal does not recommend that you skip minor versions when upgrading <%= vars.product_name %>. Skipping minor versions when upgrading <%= vars.product_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.product_name %> to the minor version that directly follows your current version of <%= vars.product_name %>.</p>
 
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your <%= vars.product_name %> Deployment
 
-Pivotal recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up <%= vars.product_name_full %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+Pivotal recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up <%= vars.product_name %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
 ## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for Ops Manager
@@ -57,9 +57,9 @@ If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v
 
 To avoid upgrade failure and errors when authenticating:
 
-1. Add a public key to the OVF template for the Ops Manager VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see [Deploy Ops Manager](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) in _Deploying Ops Manager on vSphere_. 
+1. Add a public key to the OVF template for the Ops Manager VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see [Deploy Ops Manager](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) in _Deploying Ops Manager on vSphere_.
 
-For more information about this breaking change, see [Passwords Not Supported for Ops Manager VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key). 
+For more information about this breaking change, see [Passwords Not Supported for Ops Manager VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key).
 
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
@@ -98,16 +98,16 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 |                                                                         |                                                                  | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
 | ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------ | ------------- | -------- | ------------ |
-| **<%= vars.product_name_full %>**                                                   | [Ops Manager](https://network.pivotal.io/products/ops-manager) |              |               |          |              |
+| **<%= vars.product_name %>**                                                   | [Ops Manager](https://network.pivotal.io/products/ops-manager) |              |               |          |              |
 |                                                                         | [Pivotal Application Service](https://network.pivotal.io/products/elastic-runtime) (PAS)     |              |               |          |              |
-| **<%= vars.product_name_full %> Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
+| **<%= vars.product_name %> Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
 |                                                                         | [Redis](https://network.pivotal.io/products/p-redis)                                                            |              |               |          |              |
 |                                                                         | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq)                                                         |              |               |          |              |
 |                                                                         | [Single Sign On](https://network.pivotal.io/products/p-identity) (SSO)                                                              |              |               |          |              |
 |                                                                         | [Spring Cloud Services](https://network.pivotal.io/products/p-spring-cloud-services)                                            |              |               |          |              |
 |                                                                         | [Concourse](https://network.pivotal.io/products/p-concourse)                                                        |              |               |          |              |
 |                                                                         | ...                                                              |              |               |          |              |
-| **<%= vars.product_name_full %> Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic)                                                        |              |               |          |              |
+| **<%= vars.product_name %> Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic)                                                        |              |               |          |              |
 |                                                                         | ...                                                           |              |               |          |              |
 
 
@@ -133,9 +133,9 @@ With each release of a new <%= vars.product_name %> version, PAS may require spe
 
 #### <a id="ssh-lb"></a> Remove Healthcheck from SSH Load Balancer
 
-If your SSH load balancer is configured with an HTTP healthcheck, remove the healthcheck before upgrading. This is the load balancer specified in the **Diego Brain** row of the **Resource Config** pane. 
+If your SSH load balancer is configured with an HTTP healthcheck, remove the healthcheck before upgrading. This is the load balancer specified in the **Diego Brain** row of the **Resource Config** pane.
 
-For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes#http-healtcheck). 
+For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes#http-healtcheck).
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
@@ -145,7 +145,7 @@ In some cases, if you have previously disabled lifecycle errands for any install
 
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
 
-In the PAS tile **App Containers** pane, if **Docker images disk cleanup scheduling on Diego Cell VMs** is set to **Clean up disk space once usage fills disk** and the value of **Reserved disk space for other jobs** is different from the default of `10240`, you must specify a new threshold. 
+In the PAS tile **App Containers** pane, if **Docker images disk cleanup scheduling on Diego Cell VMs** is set to **Clean up disk space once usage fills disk** and the value of **Reserved disk space for other jobs** is different from the default of `10240`, you must specify a new threshold.
 
 If the scheduling is set to **Never clean up Diego Cell disk space** or **Routinely clean up Diego Cell disk space**, or the reserved disk space value is set to the default of `10240`, no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information, see [Options for Disk Cleanup](../opsguide/config-cell-cleanup.html).
 
@@ -310,7 +310,7 @@ To export your installation:
 
 This exports the current <%= vars.product_name %> installation with all of its assets.
 
-When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.product_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up <%= vars.product_name_full %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.product_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up <%= vars.product_name %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 * The export time depends on the size of the exported file.
 * Some browsers do not provide feedback on the status of the export process and might appear to hang.
@@ -324,7 +324,7 @@ When you export an installation, the export contains the base VM images, necessa
 
 ## <a id="next-steps"></a> Next Steps
 
-Now that you have completed the Upgrade Preparation Checklist, continue to [Upgrading <%= vars.product_name_full %>](../customizing/upgrading-pcf.html).
+Now that you have completed the Upgrade Preparation Checklist, continue to [Upgrading <%= vars.product_name %>](../customizing/upgrading-pcf.html).
 
 
 ## <a id="survey"></a> Complete Survey
