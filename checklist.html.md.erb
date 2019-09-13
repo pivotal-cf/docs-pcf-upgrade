@@ -44,7 +44,13 @@ Review each of the following links to understand the changes in the new release,
 
 ## <a id="restage-windows-apps"></a> Restage Windows Apps
 
-If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.6, you can also restage your apps before upgrading to PAS for Windows v2.6. For more information about upgrading to PAS for Windows v2.6, see [Upgrade to PAS for Windows v2.6](#upgrade-pasw) below.
+The `windows2016` stack is deprecated in PAS for Windows v2.7.
+
+Before upgrading to PAS for Windows v2.7 from PAS for Windows v2.6, all Windows apps that were pushed with the `windows2016` stack must be restaged to use the `windows` stack.	
+
+For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in the PAS for Windows v2.6 Release Notes.	
+
+If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.6, you can also restage your apps before upgrading to PAS for Windows v2.6. For more information about upgrading to PAS for Windows v2.6, see [Upgrade to PAS for Windows v2.6](#upgrade-pasw).
 
 
 ## <a id='ssh-private-key'></a> (vSphere Only) Add SSH Key to OVF Template for Ops Manager VM
@@ -67,6 +73,8 @@ If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v
 ### <a id="upgrade-stemcell"></a> Upgrade Stemcell to v2019.3 or Later for PAS for Windows v2.6
 
 If you are running PAS for Windows v2.6 using Windows stemcell v2019.3, you must upgrade your stemcell to v2019.4 or later before you upgrade to Ops Manager v2.7.
+
+To upgrade your stemcell, see [Stemcells for PCF (Windows)](https://network.pivotal.io/products/stemcells-windows-server) on Pivotal Network.
 
 ### <a id="compatibility"></a> Review Service Tile Compatibility
 
