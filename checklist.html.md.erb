@@ -145,7 +145,7 @@ If the scheduling is set to **Never clean up Diego Cell disk space** or **Routin
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
-Before upgrading to <%= vars.product_name %> v2.7, operators who have deployed any <%= vars.product_name %> add-ons such as **IPsec for <%= vars.product_name %>**, **ClamAV for <%= vars.product_name %>**, or **File Integrity Monitoring for <%= vars.product_name %>** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](../windows/index.html).
+Before upgrading to <%= vars.product_name %> v2.7, operators who have deployed any <%= vars.product_name %> add-ons such as **IPsec for <%= vars.product_name %>**, **ClamAV for <%= vars.product_name %>**, or **File Integrity Monitoring for <%= vars.product_name %>** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](https://docs.pivotal.io/platform/application-service-windows/index.html).
 
 For example, **File Integrity Monitor for <%= vars.product_name %>** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty` and `ubuntu-xenial`.
 
