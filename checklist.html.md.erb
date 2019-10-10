@@ -5,7 +5,7 @@ owner: Ops Manager
 
 <% current_page.data.title = "Upgrade Preparation Checklist for " + vars.product_name + " " + vars.v_major_version %>
 
-This topic serves as a checklist for preparing to upgrade <%= vars.product_name %> from v2.6 to <%= vars.v_major_version %>.
+This topic serves as a checklist for preparing to upgrade <%= vars.product_name %> from v2.7 to <%= vars.v_major_version %>.
 
 This topic contains important preparation steps that you must follow before beginning your upgrade. Failure to follow these instructions may jeopardize your existing deployment data and cause the upgrade to fail.
 
@@ -24,48 +24,34 @@ Pivotal recommends backing up your <%= vars.product_name %> deployment before up
 To complete the Ops Manager upgrade, you must have your Ops Manager decryption passphrase. You defined this decryption passphrase during the initial installation of Ops Manager.
 
 
-## <a id="review-pas-release-notes"></a> Review Changes in <%= vars.product_name %> v2.7
+## <a id="review-pas-release-notes"></a> Review Changes in <%= vars.product_name %> <%= vars.v_major_version %>
 
 Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
 * **Release Notes**
-	* [Pivotal Operations Manager Release v2.7 Release Notes](https://docs.pivotal.io/platform/2-7/opsmanager-rn.html)
-	* [PAS v2.7 Release Notes](https://docs.pivotal.io/platform/2-7/runtime-rn.html)
+	* [Pivotal Operations Manager Release <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/2-7/opsmanager-rn.html)
+	* [PAS <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/2-7/runtime-rn.html)
 * **Known Issues**
-	* [Ops Manager v2.7 Known Issues](https://docs.pivotal.io/platform/2-7/opsmanager-rn.html#known-issues)
-	* [PAS v2.7 Known Issues](https://docs.pivotal.io/platform/2-7/runtime-rn.html)
+	* [Ops Manager <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/2-7/opsmanager-rn.html#known-issues)
+	* [PAS <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/2-7/runtime-rn.html)
 * **Breaking Changes**
-	* [<%= vars.product_name %> v2.7 Breaking Changes](https://docs.pivotal.io/platform/2-7/breaking-changes.html)
+	* [<%= vars.product_name %> <%= vars.v_major_version %> Breaking Changes](https://docs.pivotal.io/platform/2-7/breaking-changes.html)
 * **KPI Changes**
 	* [KPI Changes](../monitoring/index.html#new)
 * **Diego Network Communications**:
 	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
+## <a id="reset-certificates"></a> Reset All Manually Set Certificates
 
-## <a id="restage-windows-apps"></a> Restage Windows Apps
+Reset all manually set certificates in CredHub. This prevents the rotation of manually set certificates during a bulk certificate rotation in Ops Manager v2.8. 
 
-The `windows2016` stack is deprecated in PAS for Windows v2.7.
+For more information, see [Operators Must Reset Manually Set Certificates in CredHub Before Ops Manager v2.8 Upgrade](https://docs.pivotal.io/platform/2-8/pcf-release-notes/breaking-changes.html#credhub-generated-field) in _Pivotal Platform v2.8 Breaking Changes_.
 
-Before upgrading to PAS for Windows v2.7 from PAS for Windows v2.6, all Windows apps that were pushed with the `windows2016` stack must be restaged to use the `windows` stack.	
-
-For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in the PAS for Windows v2.6 Release Notes.	
-
-If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.6, you can also restage your apps before upgrading to PAS for Windows v2.6. For more information about upgrading to PAS for Windows v2.6, see [Upgrade to PAS for Windows v2.6](#upgrade-pasw).
-
+To reset a certificate in CredHub, see [Reviewing and Resetting Manually Set Certificates in CredHub](https://docs.pivotal.io/platform/2-8/security/pcf-infrastructure/manual-credhub-certificate.html).	
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
 The following section describes changes you must make to your product tiles and add-ons before upgrading <%= vars.product_name %>.
-
-### <a id="upgrade-pasw"></a> Upgrade to PAS for Windows v2.6
-
-If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.6 and want to upgrade to <%= vars.product_name %> v2.7, you must upgrade to PAS for Windows v2.6 before upgrading to <%= vars.product_name %> v2.7. To download PAS for Windows, go to [Pivotal Network](https://network.pivotal.io/).
-
-### <a id="upgrade-stemcell"></a> Upgrade Stemcell to v2019.4 or Later for PAS for Windows v2.6
-
-If you are running PAS for Windows v2.6 using Windows stemcell v2019.3, you must upgrade your stemcell to v2019.4 or later before you upgrade to Ops Manager v2.7.
-
-To upgrade your stemcell, see [Stemcells for PCF (Windows)](https://network.pivotal.io/products/stemcells-windows-server) on Pivotal Network.
 
 ### <a id="compatibility"></a> Review Service Tile Compatibility
 
@@ -77,9 +63,9 @@ To check <%= vars.product_name %> versions supported by a service tile, either f
 * Select the tile version in the **Releases** dropdown.
 * See the **Depends On** section under **Release Details**. For more information, see the tile's release notes.
 
-If the currently-deployed version of a tile is not compatible with <%= vars.product_name %> v2.7, you must upgrade the tile to a compatible version before you upgrade <%= vars.product_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.product_name %> v2.6 and v2.7.
+If the currently-deployed version of a tile is not compatible with <%= vars.product_name %> <%= vars.v_major_version %>, you must upgrade the tile to a compatible version before you upgrade <%= vars.product_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.product_name %> v2.7 and <%= vars.v_major_version %>.
 
-Some partner service tiles may be incompatible with <%= vars.product_name %> v2.7. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of <%= vars.product_name %>. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, the partners services release documentation in [Pivotal Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
+Some partner service tiles may be incompatible with <%= vars.product_name %> <%= vars.v_major_version %>. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of <%= vars.product_name %>. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, the partners services release documentation in [Pivotal Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
 
 The [Product Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which <%= vars.product_name %> versions support which versions of the most popular service tiles from Pivotal.
 
@@ -104,7 +90,7 @@ Pivotal provides the empty table below as a model to print out or adapt for reco
 
 ### <a id="upgrade-service-tiles"></a> Upgrade Services Tiles
 
-Upgrade all service tiles to versions that are compatible with <%= vars.product_name %> v2.7. Service tiles are add-on products you install alongside your runtime. For example, MySQL for <%= vars.product_name %>, <%= vars.product_name %> Healthwatch, and RabbitMQ are service tiles.
+Upgrade all service tiles to versions that are compatible with <%= vars.product_name %> <%= vars.v_major_version %>. Service tiles are add-on products you install alongside your runtime. For example, MySQL for <%= vars.product_name %>, <%= vars.product_name %> Healthwatch, and RabbitMQ are service tiles.
 
 Do not upgrade runtime tiles, such as PAS, PAS for Windows, or Pivotal Container Service (PKS), at this time.
 
@@ -112,15 +98,15 @@ Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compa
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
-With each release of a new <%= vars.product_name %> version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to <%= vars.product_name %> v2.7:
+With each release of a new <%= vars.product_name %> version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to <%= vars.product_name %> <%= vars.v_major_version %>:
 
 #### <a id="check-specs"></a> Check Required Machine Specifications
 
-Check the required machine specifications for Ops Manager v2.7. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, increase the size of your Ops Manager boot disk to 100&nbsp;GB.
+Check the required machine specifications for Ops Manager <%= vars.v_major_version %>. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, increase the size of your Ops Manager boot disk to 100&nbsp;GB.
 
 ### <a id='patch'></a> Configure PAS
 
-With each release of a new <%= vars.product_name %> version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to <%= vars.product_name %> v2.7:
+With each release of a new <%= vars.product_name %> version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to <%= vars.product_name %> <%= vars.v_major_version %>:
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
@@ -136,7 +122,7 @@ If the scheduling is set to **Never clean up Diego Cell disk space** or **Routin
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
-Before upgrading to <%= vars.product_name %> v2.7, operators who have deployed any <%= vars.product_name %> add-ons such as **IPsec for <%= vars.product_name %>**, **ClamAV for <%= vars.product_name %>**, or **File Integrity Monitoring for <%= vars.product_name %>** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](https://docs.pivotal.io/platform/application-service-windows/index.html).
+Before upgrading to <%= vars.product_name %> <%= vars.v_major_version %>, operators who have deployed any <%= vars.product_name %> add-ons such as **IPsec for <%= vars.product_name %>**, **ClamAV for <%= vars.product_name %>**, or **File Integrity Monitoring for <%= vars.product_name %>** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](https://docs.pivotal.io/platform/application-service-windows/index.html).
 
 For example, **File Integrity Monitor for <%= vars.product_name %>** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty` and `ubuntu-xenial`.
 
