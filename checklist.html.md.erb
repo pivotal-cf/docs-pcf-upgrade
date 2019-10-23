@@ -41,77 +41,88 @@ Review each of the following links to understand the changes in the new release,
 
 ## <a id="rebind-nfs-legacy-volume-services"></a> Migrate NFS Legacy Volume Services
 
-If you are using the `nfs-legacy` volume service and your service instances are configured/bound with `uid=0` or `gid=0` you may need to migrate.
-The following steps will take you through the process before you upgrade.
+If you are using the `nfs-legacy` volume service and your service instances are configured with `uid=0` or `gid=0` you may need to migrate.
 
-1) Copy this bash script to your opsman/jumpbox into the following directory `/tmp/get-affected-apps.sh` and `chmod +x` it:
+### <a name="find-apps"></a> Get the Apps that Need Migration
 
-```
-#!/bin/bash
-source /var/vcap/jobs/cfdot/bin/setup
-for container_id in $(ps aux | grep fuse-nfs |  grep -oE '(nfs:.*uid=0.*|nfs:.*gid=0.*)' |grep -o '/var/vcap/data/volumes/nfs.*' | grep -n '\-\-auto_cache' | awk '{print $1}' | awk -F_ '{print $2}'); do /var/vcap/packages/cfdot/bin/cfdot cell-state `cat /var/vcap/bosh/spec.json | /var/vcap/packages/cfdot/bin/jq -r .id` | jq -r ".LRPs[] | select(.instance_guid == \"${container_id}\") | .process_guid" | cut -c1-36; done
-```
+To get the apps that you need to migrate, do the following:
 
-2) SCP `/tmp/get-affected-apps.sh` to the diego-cells (substitute diego-cell to compute if you are running a small footprint PAS):
-`bosh scp /tmp/get-affected-apps.sh diego_cell:/tmp/get-affected-apps.sh`
+1. Copy the following bash script to your Ops Manager jumpbox. Put the script in `/tmp/get-affected-apps.sh` and `chmod +x` it.
 
-3) Run the script to find if there are applications that will need to be manually updated to be compatible with PCF 2.7 (substitute diego-cell to compute if you are running a small footprint PAS):
-`bosh ssh diego_cell -c 'mv /tmp/get-affected-apps.sh ~/get-affected-apps.sh && sudo ~/get-affected-apps.sh' | grep 'stdout' | awk '{print $4}'  > /tmp/file_with_guids`
+    ```
+    #!/bin/bash
+    source /var/vcap/jobs/cfdot/bin/setup
+    for container_id in $(ps aux | grep fuse-nfs |  grep -oE '(nfs:.*uid=0.*|nfs:.*gid=0.*)' |grep -o '/var/vcap/data/volumes/nfs.*' | grep -n '\-\-auto_cache' | awk '{print $1}' | awk -F_ '{print $2}'); do /var/vcap/packages/cfdot/bin/cfdot cell-state `cat /var/vcap/bosh/spec.json | /var/vcap/packages/cfdot/bin/jq -r .id` | jq -r ".LRPs[] | select(.instance_guid == \"${container_id}\") | .process_guid" | cut -c1-36; done
+    ```
 
-4) scp the file `/tmp/file_with_guids` (generated from the previous step) from the opsman/jumpbox to a machine with the cf cli installed.
+2. Use `scp` to copy `/tmp/get-affected-apps.sh` to the Diego Cells. If you are running a small footprint PAS, substitute `diego-cell` in the command.
 
-5) From the machine with the cf cli, target the correct foundation, and copy this bash script into the following directory `/tmp/print-apps-to-migrate.sh` and `chmod +x` it:
+    ```
+    bosh scp /tmp/get-affected-apps.sh diego_cell:/tmp/get-affected-apps.sh
+    ```
 
-```
-#!/bin/bash
+3. Find if there are apps that need to be manually updated to be compatible with v2.7. If you are running a small footprint PAS, substitute `diego-cell` in the command.
 
-cat /tmp/file_with_guids | sort -n | uniq | while read guid; do
-  app_name=$(cf curl /v2/apps/$guid | jq -r '.entity.name')
-  space_url=$(cf curl /v2/apps/$guid | jq -r '.entity.space_url')
-  space_name=$(cf curl ${space_url} | jq -r '.entity.name')
-  org_name=$(cf curl $(cf curl ${space_url} | jq -r '.entity.organization_url') | jq -r '.entity.name')
+    ```
+    bosh ssh diego_cell -c 'mv /tmp/get-affected-apps.sh ~/get-affected-apps.sh && sudo ~/get-affected-apps.sh' | grep 'stdout' | awk '{print $4}'  > /tmp/file_with_guids
+    ```
+
+4. Using the file generated from the previous step, use `scp` to copy the file `/tmp/file_with_guids` from the Ops Manager jumpbox to a machine with the cf cli installed.
+
+5. From the machine with the cf cli installed, target the correct foundation and copy the following bash script into the `/tmp/print-apps-to-migrate.sh` directory and `chmod +x` it.
+
+    ```
+    #!/bin/bash
+
+    cat /tmp/file_with_guids | sort -n | uniq | while read guid; do
+      app_name=$(cf curl /v2/apps/$guid | jq -r '.entity.name')
+      space_url=$(cf curl /v2/apps/$guid | jq -r '.entity.space_url')
+      space_name=$(cf curl ${space_url} | jq -r '.entity.name')
+      org_name=$(cf curl $(cf curl ${space_url} | jq -r '.entity.organization_url') | jq -r '.entity.name')
 
 
-  cf target -o $org_name -s $space_name 2>&1 1>/dev/null
-  service_name=$(cf services | grep nfs-legacy | grep $app_name | awk '{print $1}')
-  echo service name=$service_name, org name=$org_name, space name=$space_name, app name=$app_name
-done
-```
+      cf target -o $org_name -s $space_name 2>&1 1>/dev/null
+      service_name=$(cf services | grep nfs-legacy | grep $app_name | awk '{print $1}')
+      echo service name=$service_name, org name=$org_name, space name=$space_name, app name=$app_name
+    done
+    ```
+6. Run the `/tmp/print-apps-to-migrate.sh` file. This action gives you the service name, organization, space and app name that you need to migrate. If you receive a list of apps, continue to the procedure in the next section.
 
-6) Run it
-`/tmp/print-apps-to-migrate.sh`
 
-And this should give you the service name, organization, space and application name that you will need to migrate.
+### <a name="rebind-apps"></a> Rebind Your Apps
 
-7) If step 6 yields one or more applications then these applications will need to be rebound specifying non-zero uid and gid values:
-7.1) Decide on a non-root user that will access the files on the remote share.
-7.2) Work with the administrator of the remote NAS server to ensure that the POSIX permissions on the share are compatible with the uid/gid (non-root) that
-is going to be used by the application as decided in step 7.1
-7.3) Unbind the existing volume service(s)
+If you get a list of apps from the `print-apps-to-migrate.sh` file in the previous procedure, the apps need to be rebound with a non-zero or non-root `uid` or `gid` value.
 
-i.e.
-```
-cf stop <app>
-cf unbind-service <app> <service-name>
-```
-7.4) Create a new "nfs" volume service to the remote share
+Do the following to rebind your apps:
 
-i.e.
-```
-cf create-service nfs Existing <new-service-name> -c '{"share": "<share url>"}'
-```
-7.5) Bind the "nfs" service to the application in question using the `uid` and `gid` of user decided upon in step 7.1.
+1. Decide on a non-root user that can access the files on the remote share.
 
-i.e.
-```
-cs bind-service <app> <new-service-name> -c '{"uid": <uid. Cannot be 0>, "gid": <gid. Cannot be 0>[, <other original options>]}'
-```
-7.6) Start the app
+2. Work with the administrator of the remote NAS server to ensure that the POSIX permissions on the share are compatible with the non-root `uid` or `gid` that is going to be used by the app.
 
-i.e.
-```
-cf start <app>
-```
+3. To unbind the existing volume services, run:
+
+    ```
+    cf stop APP-NAME
+    cf unbind-service APP-NAME SERVICE-NAME
+    ```
+
+4. To create a new `nfs` volume service to the remote share, run:
+
+
+    ```
+    cf create-service nfs Existing NEW-SERVICE-NAME -c '{"share": "SHARE-URL"}'
+    ```
+
+5. To bind the `nfs` service to the app by using the `uid` or `gid` in the first step, run:
+
+    ```
+    cs bind-service APP-NAME NEW-SERVICE-NAME -c '{"uid": <uid. Cannot be 0>, "gid": <gid. Cannot be 0>[, <other original options>]}'
+    ```
+6. To start the app, run:
+
+    ```
+    cf start <app>
+    ```
 
 ## <a id="restage-windows-apps"></a> Restage Windows Apps
 
