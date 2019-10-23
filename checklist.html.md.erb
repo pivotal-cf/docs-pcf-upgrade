@@ -41,7 +41,11 @@ Review each of the following links to understand the changes in the new release,
 
 ## <a id="rebind-nfs-legacy-volume-services"></a> Migrate NFS Legacy Volume Services
 
-If you are using the `nfs-legacy` volume service and your service instances are configured with `uid=0` or `gid=0` you may need to migrate.
+If you are using the `nfs-legacy` volume service and your service instances are configured with `uid=0` or `gid=0`, you may need to rebind your apps with a non-zero or non-root `uid` or `gid` value.
+
+Follow the procedure in [Get the Apps that Need Migration](#find-apps) to find the apps that need migration.
+
+Follow the procedure in [Rebind Your Apps](#rebind-apps) to migrate your apps to a non-root `uid` or `gid` value.
 
 ### <a name="find-apps"></a> Get the Apps that Need Migration
 
