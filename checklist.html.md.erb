@@ -59,13 +59,13 @@ To get the apps that you need to migrate, do the following:
     for container_id in $(ps aux | grep fuse-nfs |  grep -oE '(nfs:.*uid=0.*|nfs:.*gid=0.*)' |grep -o '/var/vcap/data/volumes/nfs.*' | grep -n '\-\-auto_cache' | awk '{print $1}' | awk -F_ '{print $2}'); do /var/vcap/packages/cfdot/bin/cfdot cell-state `cat /var/vcap/bosh/spec.json | /var/vcap/packages/cfdot/bin/jq -r .id` | jq -r ".LRPs[] | select(.instance_guid == \"${container_id}\") | .process_guid" | cut -c1-36; done
     ```
 
-2. Use `scp` to copy `/tmp/get-affected-apps.sh` to the Diego Cells. If you are running a small footprint PAS, substitute `diego-cell` in the command.
+    2. Use `scp` to copy `/tmp/get-affected-apps.sh` to the Diego Cells. <p class="note"><strong>Note:</strong> If you are running a small footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
 
     ```
     bosh scp /tmp/get-affected-apps.sh diego_cell:/tmp/get-affected-apps.sh
     ```
 
-3. Find if there are apps that need to be manually updated to be compatible with v2.7. If you are running a small footprint PAS, substitute `diego-cell` in the command.
+3. Determine whethere there are apps that need to be manually updated to be compatible with v2.7. <p class="note"><strong>Note:</strong> If you are running a small footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
 
     ```
     bosh ssh diego_cell -c 'mv /tmp/get-affected-apps.sh ~/get-affected-apps.sh && sudo ~/get-affected-apps.sh' | grep 'stdout' | awk '{print $4}'  > /tmp/file_with_guids
