@@ -120,6 +120,13 @@ In the PAS tile **App Containers** pane, if **Docker images disk cleanup schedul
 
 If the scheduling is set to **Never clean up Diego Cell disk space** or **Routinely clean up Diego Cell disk space**, or the reserved disk space value is set to the default of `10240`, no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information, see [Options for Disk Cleanup](../opsguide/config-cell-cleanup.html).
 
+#### <a id="minimum-credhub-instances"></a> Configure CredHub Instances
+
+Starting in <%= vars.product_name %> <%= vars.v_major_version %>, there needs to be at least 1 CredHub instance to deploy PAS. 
+
+For High Availibility, Pivotal recommends using at least one instance per AZ, or at least three instances if only one AZ is present. 
+
+
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
 Before upgrading to <%= vars.product_name %> <%= vars.v_major_version %>, operators who have deployed any <%= vars.product_name %> add-ons such as **IPsec for <%= vars.product_name %>**, **ClamAV for <%= vars.product_name %>**, or **File Integrity Monitoring for <%= vars.product_name %>** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](https://docs.pivotal.io/platform/application-service-windows/index.html).
