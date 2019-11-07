@@ -122,9 +122,9 @@ If the scheduling is set to **Never clean up Diego Cell disk space** or **Routin
 
 #### <a id="minimum-credhub-instances"></a> Configure CredHub Instances
 
-Starting in <%= vars.product_name %> <%= vars.v_major_version %>, there needs to be at least 1 CredHub instance to deploy PAS. 
+In <%= vars.product_name %> <%= vars.v_major_version %> and later, at least one CredHub instance is required to deploy PAS. 
 
-For High Availibility, Pivotal recommends using at least one instance per AZ, or at least three instances if only one AZ is present. 
+For high availability, Pivotal recommends that you use at least one CredHub instance per availability zone (AZ). Or, if you have only one AZ, use at least three CredHub instances. 
 
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
