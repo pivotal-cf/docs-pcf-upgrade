@@ -8,9 +8,9 @@ This topic explains what happens to Pivotal Application Service (PAS) components
 
 ## <a id="bosh-drains"></a> BOSH Drains Diego Cell VMs
 
-During a PAS upgrade, BOSH drains all Diego cell VMs that host app instances. BOSH manages this process by upgrading a batch of cells one at a time.
+During a PAS upgrade, BOSH drains all Diego Cell VMs that host app instances. BOSH manages this process by upgrading a batch of cells one at a time.
 
-When BOSH triggers an upgrade, each upgrading Diego cell enters evacuation mode. In evacuation mode, BOSH stops Diego cells and then schedules replacements for its app instances.
+When BOSH triggers an upgrade, each upgrading Diego Cell enters evacuation mode. In evacuation mode, BOSH stops Diego Cells and then schedules replacements for its app instances.
 
 For more information, see the [Specific Guidance for Diego Cells](./configuring.html#diego-cells) section of the _Configuring PAS for Upgrades_ topic.
 
@@ -106,9 +106,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td></td>
   <td>&#10003;</td>
-  <td>
-    The MySQL Proxy is responsible for managing failover of the MySQL Servers. If the Proxy becomes unavailable, then access to the MySQL Server could be broken.
-  </td>
+  <td>The MySQL Proxy is responsible for managing failover of the MySQL Servers. If the Proxy becomes unavailable, then access to the MySQL Server could be broken.</td>
 </tr>
 <tr>
   <td>MySQL Server</td>
@@ -116,9 +114,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td></td>
   <td>&#10003;</td>
-  <td>
-    The MySQL Server is responsible for persisting internal databases for the platform. If the MySQL Server becomes unavailable, then platform services that rely upon a database (Cloud Controller, UAA) also becomes unavailable.
-  </td>
+  <td>The MySQL Server is responsible for persisting internal databases for the platform. If the MySQL Server becomes unavailable, then platform services that rely upon a database (Cloud Controller, UAA) also becomes unavailable.</td>
 </tr>
 <tr>
   <td>Backup Restore Node</td>
@@ -142,9 +138,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td></td>
   <td>&#10003;</td>
-  <td>
-    If a user has an active authorization token prior to performing an upgrade, they can still log in using either a UI or the CLI.
-  </td>
+  <td>If a user has an active authorization token prior to performing an upgrade, they can still log in using either a UI or the CLI.</td>
 </tr>
 <tr>
   <td>Cloud Controller</td>
@@ -160,9 +154,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td></td>
-  <td>
-    HAProxy is used to load-balance incoming requests to the Router. If HAProxy is unavailable, you may lose the ability to make requests to apps unless there is another routing path from your load balancer to the Router.
-  </td>
+  <td>HAProxy is used to load-balance incoming requests to the Router. If HAProxy is unavailable, you may lose the ability to make requests to apps unless there is another routing path from your load balancer to the Router.</td>
 </tr>
 <tr>
   <td>Router</td>
@@ -170,9 +162,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td></td>
-  <td>
-    The Router is responsible for routing requests to their app containers. If the Router is not available, then apps cannot receive requests.
-  </td>
+  <td>The Router is responsible for routing requests to their app containers. If the Router is not available, then apps cannot receive requests.</td>
 </tr>
 <tr>
   <td>MySQL Monitor</td>
@@ -212,9 +202,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
-  <td>
-    If you only have one Diego Cell, upgrading causes downtime for all apps that run on it. These include apps pushed with <code>cf push</code> and apps automatically installed by PAS, like Apps Manager and the App Usage Service.
-  </td>
+  <td>If you only have one Diego Cell, upgrading causes downtime for all apps that run on it. These include apps pushed with <code>cf push</code> and apps automatically installed by PAS, like Apps Manager and the App Usage Service.</td>
 </tr>
 <tr>
   <td>Loggregator Trafficcontroller</td>
@@ -222,9 +210,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td></td>
   <td></td>
-  <td>
-    Ops Manager operators experience 2-5 minute gaps in logging.
-  </td>
+  <td>Ops Manager operators experience 2-5 minute gaps in logging.</td>
 </tr>
 <tr>
   <td>Doppler Server</td>
@@ -232,9 +218,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td></td>
   <td></td>
-  <td>
-    Ops Manager operators experience 2-5 minute gaps in logging.
-  </td>
+  <td>Ops Manager operators experience 2-5 minute gaps in logging.</td>
 </tr>
 <tr>
   <td>TCP Router (if enabled)</td>
@@ -250,9 +234,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
-  <td>
-      App downtime for apps that use secure credentials. Platform downtime for cf CLI commands such as <code>bind-service</code> and <code>unbind-service</code> applied to services configured with CredHub.
-  </td>
+  <td>App downtime for apps that use secure credentials. Platform downtime for cf CLI commands such as <code>bind-service</code> and <code>unbind-service</code> applied to services configured with CredHub.</td>
 </tr>
 <tr>
   <td>Istio Control</td>
