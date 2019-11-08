@@ -187,7 +187,7 @@ If the currently-deployed version of a tile is not compatible with PCF v2.6, you
 
 Some partner service tiles may be incompatible with PCF v2.6. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of PCF. For more information about which partner service release compatibility, see the **Depends On** section of the partners tile download page, see the [Services](https://docs.pivotal.io/pivotalcf/2-6/services/index.html) documentation, or contact the partner organization that produces the service tile.
 
-The [Product Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
+For an overview of which PCF versions support which versions of the most popular service tiles from Pivotal, see the [Product Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf).
 
 #### <a id="env"></a> Environment Details
 
@@ -240,7 +240,7 @@ To save upgrade time, you can disable unused PAS post-deploy errands. For more i
 
 In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Importing Products](../customizing/add-delete.html#add-import) section of the _Adding and Deleting Products_ topic.
 
-#### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
+#### <a id="groot-gc"></a> Configure Diego Cell Garbage Collection
 
 In the **Application Containers** pane of the PAS tile, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** is different from the default of `10240`, then you must specify a new threshold. 
 
@@ -288,7 +288,7 @@ After removing this job from your runtime configuration, ensure that the **Enabl
 
 Depending on the requirements of your deployment, you may need to rotate your Certificate Authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
 
-<p class="note"><strong>Note:</strong> PCF uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Regenerating and Rotating Non-Configurable TLS/SSL Certificates</a> section of the <em>Managing TLS Certificates</em> topic.</p>
+<p class="note"><strong>Note:</strong> PCF uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Rotate Identity Provider SAML Certificates</a> section of the <em>Managing TLS Certificates</em> topic.</p>
 
 To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the Ops Manager API.
 
@@ -313,9 +313,9 @@ The following sections describe steps for ensuring your deployment has adequate 
 
 ### <a id="check-diego-cell-ram-and-disk"></a> Check Diego Cell RAM and Disk
 
-Check that Diego cells have sufficient available RAM and disk capacity to support app containers.
+Check that Diego Cells have sufficient available RAM and disk capacity to support app containers.
 
-The KPIs that monitor these these resources are are:
+The Key Performance Indicators (KPIs) that monitor these these resources are are:
 
 * `rep.CapacityRemainingMemory`
 * `rep.CapacityRemainingDisk`
@@ -380,7 +380,7 @@ Check that a test app can be pushed and scaled horizontally, manually or through
 
 If you are running PAS MySQL as a cluster, run the `mysql-diag` tool to validate health of the cluster.
 
-For more information, [Running mysql-diag](../pas/mysql-diag.html).
+For more information, see [Running mysql-diag](../pas/mysql-diag.html).
 
 ### <a id="check-health"></a> Review Pending and Recent Changes
 
