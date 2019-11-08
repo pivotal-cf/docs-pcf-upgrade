@@ -9,12 +9,12 @@ This topic contains important preparation steps that you must follow before begi
 
 After completing the steps in this topic, you can continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
 
-<p class="note warning"><b>Warning:</b> Pivotal does not recommend that you skip minor versions when upgrading PCF. Skipping minor versions when upgrading PCF may result in breaking changes. To avoid additional breaking changes, upgrade PCF to the minor version that directly follows your current version of PCF.</p>
+<p class="note warning"><strong>Warning:</strong> Pivotal does not recommend that you skip minor versions when upgrading PCF. Skipping minor versions when upgrading PCF may result in breaking changes. To avoid additional breaking changes, upgrade PCF to the minor version that directly follows your current version of PCF.</p>
 
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your PCF Deployment
 
-Pivotal recommends backing up your PCF deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in the [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html) topic.
+Pivotal recommends backing up your PCF deployment before upgrading, to restore in the case of failure. To do this, see [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
 ## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for Ops Manager
@@ -39,19 +39,20 @@ Review each of the following links to understand the changes in the new release,
 * **Diego Network Communications**:
 	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
+
 ## <a id="rebind-nfs-legacy-volume-services"></a> Migrate NFS Legacy Volume Services
 
 If you are using the `nfs-legacy` volume service and your service instances are configured with `uid=0` or `gid=0`, you may need to rebind your apps with a non-zero or non-root `uid` or `gid` value.
 
-Follow the procedure in [Get the Apps that Need Migration](#find-apps) to find the apps that need migration.
+To find the apps that need migration, see [Get the Apps that Need Migration](#find-apps).
 
-Follow the procedure in [Rebind Your Apps](#rebind-apps) to migrate your apps to a non-root `uid` or `gid` value.
+To migrate your apps to a non-root `uid` or `gid` value, see [Rebind Your Apps](#rebind-apps).
 
 ### <a name="find-apps"></a> Get the Apps that Need Migration
 
-To get the apps that you need to migrate, do the following:
+To get the apps you must migrate:
 
-1. Copy the following bash script to your Ops Manager jumpbox. Put the script in `/tmp/get-affected-apps.sh` and `chmod +x` it.
+1. Copy the following bash script to your Ops Manager jumpbox. 
 
     ```
     #!/bin/bash
@@ -59,21 +60,27 @@ To get the apps that you need to migrate, do the following:
     for container_id in $(ps aux | grep fuse-nfs |  grep -oE '(nfs:.*uid=0.*|nfs:.*gid=0.*)' |grep -o '/var/vcap/data/volumes/nfs.*' | grep -n '\-\-auto_cache' | awk '{print $1}' | awk -F_ '{print $2}'); do /var/vcap/packages/cfdot/bin/cfdot cell-state `cat /var/vcap/bosh/spec.json | /var/vcap/packages/cfdot/bin/jq -r .id` | jq -r ".LRPs[] | select(.instance_guid == \"${container_id}\") | .process_guid" | cut -c1-36; done
     ```
 
-    2. Use `scp` to copy `/tmp/get-affected-apps.sh` to the Diego Cells. <p class="note"><strong>Note:</strong> If you are running a small footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
+1. Put the `bash` script you just copied in `/tmp/get-affected-apps.sh` and run `chmod +x`.
+
+1. Copy `/tmp/get-affected-apps.sh` to the Diego Cells by running:
 
     ```
     bosh scp /tmp/get-affected-apps.sh diego_cell:/tmp/get-affected-apps.sh
     ```
+    <p class="note"><strong>Note:</strong> If you are running Small Footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
 
-3. Determine whethere there are apps that need to be manually updated to be compatible with v2.7. <p class="note"><strong>Note:</strong> If you are running a small footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
+1. Determine whether there are apps that need to be manually updated to be compatible with PCF v2.6 by running:
 
     ```
     bosh ssh diego_cell -c 'mv /tmp/get-affected-apps.sh ~/get-affected-apps.sh && sudo ~/get-affected-apps.sh' | grep 'stdout' | awk '{print $4}'  > /tmp/file_with_guids
     ```
+    <p class="note"><strong>Note:</strong> If you are running Small Footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
 
-4. Using the file generated from the previous step, use `scp` to copy the file `/tmp/file_with_guids` from the Ops Manager jumpbox to a machine with the cf cli installed.
+1. Using the file generated from the previous step, use `scp` to copy the file `/tmp/file_with_guids` from the Ops Manager jumpbox to a machine with the Cloud Foundry Command-Line Interface (cf CLI) installed.
 
-5. From the machine with the cf cli installed, target the correct foundation and copy the following bash script into the `/tmp/print-apps-to-migrate.sh` directory and `chmod +x` it.
+1. From the machine with cf CLI installed, target your foundation.
+
+1. Copy the following `bash` script into the `/tmp/print-apps-to-migrate.sh` directory:
 
     ```
     #!/bin/bash
@@ -90,27 +97,29 @@ To get the apps that you need to migrate, do the following:
       echo service name=$service_name, org name=$org_name, space name=$space_name, app name=$app_name
     done
     ```
-6. Run the `/tmp/print-apps-to-migrate.sh` file. This action gives you the service name, organization, space and app name that you need to migrate. If you receive a list of apps, continue to the procedure in the next section.
 
+1. Run `chmod +x`.
+
+1. Run the `/tmp/print-apps-to-migrate.sh` file. This action gives you the service name, org, space and app name that you need to migrate. If you receive a list of apps, continue to the procedure in the next section.
 
 ### <a name="rebind-apps"></a> Rebind Your Apps
 
-If you get a list of apps from the `print-apps-to-migrate.sh` file in the previous procedure, the apps need to be rebound with a non-zero or non-root `uid` or `gid` value.
+If you get a list of apps from the `print-apps-to-migrate.sh` file in the previous procedure, you must rebind those apps with a non-zero or non-root `uid` or `gid` value.
 
-Do the following to rebind your apps:
+To rebind your apps:
 
-1. Decide on a non-root user that can access the files on the remote share.
+1. Choose a non-root user that can access the files on the remote share.
 
-2. Work with the administrator of the remote NAS server to ensure that the POSIX permissions on the share are compatible with the non-root `uid` or `gid` that is going to be used by the app.
+1. Work with the admin of the remote NAS server to ensure that the POSIX permissions on the share are compatible with the non-root `uid` or `gid` value to be used by the app.
 
-3. To unbind the existing volume services, run:
+1. To unbind the existing volume services, run:
 
     ```
     cf stop APP-NAME
     cf unbind-service APP-NAME SERVICE-NAME
     ```
 
-4. To create a new `nfs` volume service to the remote share, run:
+1. To create a new `nfs` volume service to the remote share, run:
 
 
     ```
@@ -125,7 +134,7 @@ Do the following to rebind your apps:
 6. To start the app, run:
 
     ```
-    cf start <app>
+    cf start APP-NAME
     ```
 
 ## <a id="restage-windows-apps"></a> Restage Windows Apps
@@ -134,18 +143,19 @@ The `windows2016` stack is deprecated in PAS for Windows v2.6.
 
 Before upgrading to PAS for Windows v2.6 from PAS for Windows v2.5, all Windows apps that were pushed with the `windows2016` stack must be restaged to use the `windows` stack.
 
-For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in the PAS for Windows v2.6 Release Notes.
+For more information, see the [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) section in the _PAS for Windows v2.6 Release Notes_.
 
-If you are running PAS for Windows v2.4.4 or later on PCF v2.5, you can also restage your apps before upgrading to PAS for Windows v2.5.
-For more information about upgrading to PAS for Windows v2.5, see [Upgrade to PAS for Windows v2.5](#upgrade-pasw) below.
+If you are running PAS for Windows v2.4.4 or later on PCF v2.5, you can also restage your apps before upgrading to PAS for Windows v2.5. For more information about upgrading to PAS for Windows v2.5, see [Upgrade to PAS for Windows v2.5](#upgrade-pasw).
+
 
 ## <a id='ssh-private-key'></a> (vSphere Only) Add SSH Key to OVF Template for Ops Manager VM
 
-To avoid upgrade failure and errors when authenticating, do the following:
+To avoid upgrade failure and errors when authenticating:
 
-1. Add a public key to the OVF template for the Ops Manager VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see [Deploy Ops Manager](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) in _Deploying Ops Manager on vSphere_. 
+1. Add a public key to the OVF template for the Ops Manager VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see the [Deploy Ops Manager](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) section in the _Deploying Ops Manager on vSphere_ topic. 
 
-For more information about this breaking change, see [Passwords Not Supported for Ops Manager VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key). 
+For more information about this breaking change, see the [Passwords Not Supported for Ops Manager VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key) section in the _PCF v2.6 Breaking Changes_ topic. 
+
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -153,16 +163,13 @@ The following section describes changes you must make to your product tiles and 
 
 ### <a id="upgrade-pasw"></a> Upgrade to PAS for Windows v2.5
 
-If you are running PAS for Windows v2.4.4 or later on PCF v2.5 and want to upgrade to PCF v2.6,
-you must upgrade to PAS for Windows v2.5 before upgrading to PCF v2.6.
-To download PAS for Windows, navigate to [Pivotal Network](https://network.pivotal.io/).
+If you are running PAS for Windows v2.4.4 or later on PCF v2.5 and want to upgrade to PCF v2.6, you must upgrade to PAS for Windows v2.5 before upgrading to PCF v2.6. To download PAS for Windows, go to [Pivotal Network](https://network.pivotal.io/).
 
 ### <a id="upgrade-stemcell"></a> Upgrade Stemcell to v2019.3 or Later for PAS for Windows v2.5
 
-If you are running PAS for Windows v2.5 using Windows stemcell v2019.2,
-you must upgrade your stemcell to v2019.3 or later before you upgrade to Ops Manager v2.6.
+If you are running PAS for Windows v2.5 using Windows stemcell v2019.2, you must upgrade your stemcell to v2019.3 or later before you upgrade to Ops Manager v2.6.
 
-<p class="note warning"><b>Warning:</b> Windows stemcell v2019.2 is not compatible with Ops Manager v2.6.</p>
+<p class="note warning"><strong>Warning:</strong> Windows stemcell v2019.2 is not compatible with Ops Manager v2.6.</p>
 
 ### <a id="compatibility"></a> Review Service Tile Compatibility
 
@@ -170,13 +177,15 @@ Before you upgrade, check whether the service tiles that you currently have are 
 
 To check PCF versions supported by a service tile, either from Pivotal or a Pivotal partner:
 
-* Navigate to the tile's download page on [Pivotal Network](https://network.pivotal.io).
-* Select the tile version in the **Releases** dropdown.
-* See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
+1. Navigate to the tile's download page on [Pivotal Network](https://network.pivotal.io).
+
+1. Select the tile version in the **Releases** dropdown.
+
+1. See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
 
 If the currently-deployed version of a tile is not compatible with PCF v2.6, you must upgrade the tile to a compatible version before you upgrade PCF. You do not need to upgrade tiles that are compatible with both PCF v2.5 and v2.6.
 
-Some partner service tiles may be incompatible with PCF v2.6. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of PCF. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, the partners services release documentation in [Pivotal Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
+Some partner service tiles may be incompatible with PCF v2.6. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of PCF. For more information about which partner service release compatibility, see the **Depends On** section of the partners tile download page, see the [Services](https://docs.pivotal.io/pivotalcf/2-6/services/index.html) documentation, or contact the partner organization that produces the service tile.
 
 The [Product Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
 
@@ -205,11 +214,11 @@ Upgrade all service tiles to versions that are compatible with PCF v2.6. Service
 
 Do not upgrade runtime tiles, such as PAS, PAS for Windows, or Pivotal Container Service (PKS), at this time.
 
-Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and tile documentation to check version compatibility.
+To check version compatibility, see the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and [Developer Guide](https://docs.pivotal.io/pivotalcf/2-6/devguide/index.html).
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
-With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to PCF v2.6:
+With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to PCF v2.6.
 
 #### <a id="check-specs"></a> Check Required Machine Specifications
 
@@ -217,7 +226,7 @@ Check the required machine specifications for Ops Manager v2.6. These specificat
 
 ### <a id='patch'></a> Configure PAS
 
-With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.6:
+With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.6.
 
 #### <a id="ssh-lb"></a> Remove Healthcheck from SSH Load Balancer
 
@@ -227,16 +236,15 @@ For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
-To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-6/tile-errands.html#post-deploy) section of the Errands topic for details.
-Only disable these errands if your environment does not need them.
+To save upgrade time, you can disable unused PAS post-deploy errands. For more information, see the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-6/tile-errands.html#post-deploy) section of the _Errands_ topic for details. Only disable these errands if your environment does not need them.
 
-In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Deleting Products](../customizing/add-delete.html#add-import) topic.
+In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Importing Products](../customizing/add-delete.html#add-import) section of the _Adding and Deleting Products_ topic.
 
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
 
-In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** is different than the default of `10240`, then you must specify a new threshold. 
+In the **Application Containers** pane of the PAS tile, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** is different from the default of `10240`, then you must specify a new threshold. 
 
-If the scheduling is set to **Never clean up...** or **Routinely clean up...**, or the threshold value is set to the default of `10240`, then no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information see [Options for Disk Cleanup](../opsguide/config-cell-cleanup.html).
+If the scheduling is set to **Never clean up...** or **Routinely clean up...**, or the threshold value is set to the default of `10240`, then no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information, see [Configuring Cell Disk Cleanup Scheduling](../opsguide/config-cell-cleanup.html).
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
@@ -246,7 +254,7 @@ For example, **File Integrity Monitor for PCF** (FIM) is not supported on Window
 
 <p class="note"><strong>Note:</strong> To upgrade to a Xenial stemcell, see the documentation for each add-on and follow the instructions.</p>
 
-To update an add-on manifest, do the following:
+To update an add-on manifest:
 
 1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the Ops Manager VM.
 
@@ -260,36 +268,39 @@ To update an add-on manifest, do the following:
 
 1. Upload the modified manifest file to your PCF deployment. For example instructions, see [Create the FIM Manifest](https://docs.pivotal.io/addon-fim/index.html#create-mfest).
 
-If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see the [BOSH documentation](https://bosh.io/docs/runtime-config.html#addons).
+If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see [Addons Bloci](https://bosh.io/docs/runtime-config.html#addons) in the BOSH documentation.
 
 ### <a id="azure-blobstore-addon"></a> Check Backup and Restore External Blobstore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the [Blobstore Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading. If you do not remove this job, upgrading PAS fails with the error:
+If you have enabled external blobstore backups for an Azure Blobstore using the Blobstore Add-On, you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading. For more information, see the [Azure Blobstores](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure) section of the _Enabling External Blobstore Backups_ topic.
 
-<pre>
+If you do not remove this job, upgrading PAS fails with the error:
+
+```
 Preparing deployment: Preparing deployment (00:00:01)
   L Error: Colocated job 'azure-blobstore-backup-restorer' is already added to the instance group 'backup-restore'.
-</pre>
+```
 
-After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the PAS tile > **File Storage** pane.
+After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the **File Storage** pane of the PAS tile.
 
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
 
 Depending on the requirements of your deployment, you may need to rotate your Certificate Authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
 
-<p class="note"><strong>Note:</strong> PCF uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Regenerating and Rotating Non-Configurable TLS/SSL Certificates</a> section of <em>Managing TLS Certificates</em>.</p>
+<p class="note"><strong>Note:</strong> PCF uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Regenerating and Rotating Non-Configurable TLS/SSL Certificates</a> section of the <em>Managing TLS Certificates</em> topic.</p>
 
 To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the Ops Manager API.
 
 In this request, the `expires_within` parameter is optional. Valid values for the parameter are `d` for days, `w` for weeks, `m` for months, and `y` for years. For example, to search for certificates expiring within one month, replace `TIME` with `1m`:
 
-<pre class="terminal">$ curl "https://OPS-MAN-FQDN/api/v0/deployed/certificates?expires_within=1m" \
+<pre class="terminal">
+$ curl "https://OPS-MAN-FQDN/api/v0/deployed/certificates?expires_within=1m" \
  -X GET \
  -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-For information about regenerating and rotating CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
+For information about regenerating and rotating CA certificates, see [Rotating Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
 
 
 ## <a id="capacity"></a> Check the Capacity of Your Deployment
@@ -311,27 +322,27 @@ The KPIs that monitor these these resources are are:
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Limit PCF Component Instances During Restart](./configuring.html#limit-restart).
+If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Diego Cells. For more information, see the [Limit PCF Component Instances During Restart](./configuring.html#limit-restart) section of the _Configuring PAS for Upgrades_ topic.
 
-For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego cell definition. For more information, see the [Prevent Overload](./configuring.html#limitations-considerations) section.
+For PCF v1.10 and later, the maximum number of Diego Cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see the [Prevent Overload](./configuring.html#limitations-considerations) section of the _Configuring PAS for Upgrades_ topic.
 
-Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
+For more information about these KPIs, see the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the _Key Performance Indicators_ topic.
 
 ### <a id="storage"></a> Review File Storage IOPS and Other Upgrade Limiting Factors
 
 During the PCF upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of PCF, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Upgrade Considerations for Selecting Pivotal Cloud Foundry Storage](../upgrading/configuring.html#file-storage).
+To ensure a successful upgrade of PCF, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see the [Configure File Storage](../upgrading/configuring.html#file-storage) section of the _Configuring PAS for Upgrades_ topic.
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
 |**Factor**|**Impact**|
 |----------|----------|
 |**Network latency**| Network latency can contribute to how long it takes to move app instance data to new containers. |
-|**Number of ASGs**| A large number of [Application Security Groups](../concepts/asg.html) in your deployment can contribute to an increase in app instance container startup time. |
-|**Number of app instances and application growth**| A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
+|**Number of ASGs**| A large number of App Security Groups (ASGs) in your deployment can contribute to an increase in app instance container startup time. For more information, see [App Security Groups](../concepts/asg.html). |
+|**Number of app instances and app growth**| A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
 
-To review example upgrade-related performance measurements of an existing production Cloud Foundry deployment, see the [Pivotal Web Services Performance During Upgrade](../opsguide/pws_upgrade_load.html) topic.
+To see example upgrade-related performance measurements of an existing production Cloud Foundry deployment, see [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
 
 ### <a id="bosh-clean-up"></a> Run BOSH Clean-Up
 
@@ -344,19 +355,22 @@ The following sections describe steps for ensuring your deployment is healthy be
 
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
-For collecting foundation health status, Pivotal recommends PCF Healthwatch, which monitors and alerts on the current health, performance, and capacity of PCF. For more information, see the [PCF Healthwatch documentation](https://docs.pivotal.io/pcf-healthwatch/index.html).
+For collecting foundation health status, Pivotal recommends PCF Healthwatch, which monitors and alerts on the current health, performance, and capacity of PCF. For more information, see [PCF Healthwatch](https://docs.pivotal.io/pcf-healthwatch/index.html).
 
 If you are not using PCF Healthwatch, you can do some or all of the following to collect foundation health status:
 
 * If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.
+
 * Run BOSH CLI commands to check system status:
-	* `bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps`. <p>`bosh instances` with the flags `--ps`, `--vitals`, or `--failing` highlights individual job failure.</p>
+	* `bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps`.<br>`bosh instances` with the flags `--ps`, `--vitals`, or `--failing` highlights individual job failure.
 	* `bosh -e ALIAS vms --vitals`. This reveals VMs with high CPU, high memory, high disk utilization, and with `state` != `running`.
 	* `bosh -e ALIAS -d DEPLOYMENT_NAME cck --report`
+
 * Check Ops Manager GUI each PAS/Tiles the status page for CPU/RAM/DISK utilization
+
 * Validate Ops Manager persistent disk usage is below 50%. If not, follow the procedure in [Confirm Adequate Disk Space](#confirm-om-disk).
 
-(Optional) Check the logs for errors before proceeding with the upgrade. For more information, see [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view).
+(Optional) Check the logs for errors before proceeding with the upgrade. For more information, see the [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view) section of the _App Logging in Cloud Foundry_ topic.
 
 ### <a id="push-test-app"></a> Push and Scale a Test App
 
@@ -366,23 +380,26 @@ Check that a test app can be pushed and scaled horizontally, manually or through
 
 If you are running PAS MySQL as a cluster, run the `mysql-diag` tool to validate health of the cluster.
 
-See the BOSH CLI v2 instructions in the [Running mysql-diag](../pas/mysql-diag.html) topic.
+For more information, [Running mysql-diag](../pas/mysql-diag.html).
 
 ### <a id="check-health"></a> Review Pending and Recent Changes
+
+To review pending and recent changes:
 
 1. Confirm there are no outstanding changes in Ops Manager or any other tile. All tiles should be **green**. Click **Review Pending Changes**, then **Apply Changes** if necessary.
 
 1. After applying changes, click **Recent Install Logs** to confirm that the changes completed cleanly:
-    <pre>
+
+    ```
     Cleanup complete
     {"type": "step\_finished", "id": "clean\_up\_bosh.cleaning\_up"}
     Exited with 0.
-    </pre>
+    ```
 
 
 ## <a id="export"></a> Export Your Installation
 
-To export your installation, do the following:
+To export your installation:
 
 1. In your Ops Manager **Installation Dashboard**, click the account dropdown and select **Settings**.
 
@@ -403,7 +420,7 @@ When you export an installation, the export contains the base VM images, necessa
 
 <%= image_tag("./images/compress.png") %>
 
-<p class="note warning"><strong>WARNING:</strong> If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p>
+<p class="note warning"><strong>Warning:</strong> If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p>
 
 
 ## <a id="next-steps"></a> Next Steps
