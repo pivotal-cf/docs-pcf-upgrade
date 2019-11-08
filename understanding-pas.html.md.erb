@@ -44,7 +44,7 @@ The type and duration of downtime and other limitations that you can expect duri
 
 #### <a id= "single-components"></a> How Single-Component Scaling Affects Upgrades
 
-In [<%= vars.product_name %>](https://network.pivotal.io/products/pivotal-cf) Ops Manager, the Pivotal Application Service (PAS) tile > **Resource Config** pane shows the components that the BOSH Director installs:
+In [<%= vars.platform_name %>](https://network.pivotal.io/products/pivotal-cf) Ops Manager, the Pivotal Application Service (PAS) tile > **Resource Config** pane shows the components that the BOSH Director installs:
 
 * **Scalable** component fields let you select the instance count from a range of settings or enter a custom value.
 * **Unscalable** component fields allow a maximum of one instance.
@@ -282,7 +282,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
 
 ### <a id= "tasks"></a> One-Time Tasks
 
-After Ops Manager upgrades components, it performs system checks and launches UI apps and other PAS components as Cloud Foundry apps. These tasks run in the following order:
+After Ops Manager upgrades components, it performs system checks and launches UI apps and other PAS components as <%= vars.platform_name %> apps. These tasks run in the following order:
 
 <table>
 <tr>
@@ -334,4 +334,4 @@ After Ops Manager upgrades components, it performs system checks and launches UI
 
 ## <a id="upgrade-example"></a> Upgrading Installation Example
 
-For sample performance measurements of an upgrading Cloud Foundry installation, see [Upgrade Load Example: Pivotal Web Services](https://docs.pivotal.io/pivotalcf/2-3/opsguide/pws_upgrade_load.html).
+For sample performance measurements of an upgrading <%= vars.platform_name %> installation, see [Upgrade Load Example: Pivotal Web Services](https://docs.pivotal.io/pivotalcf/2-3/opsguide/pws_upgrade_load.html).
