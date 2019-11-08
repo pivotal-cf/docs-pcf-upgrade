@@ -9,12 +9,12 @@ This topic contains important preparation steps that you must follow before begi
 
 After completing the steps in this topic, you can continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
 
-<p class="note warning"><b>Warning:</b> Pivotal does not recommend that you skip minor versions when upgrading PCF. Skipping minor versions when upgrading PCF may result in breaking changes. To avoid additional breaking changes, upgrade PCF to the minor version that directly follows your current version of PCF.</p>
+<p class="note warning"><strong>Warning:</strong> Pivotal does not recommend that you skip minor versions when upgrading PCF. Skipping minor versions when upgrading PCF may result in breaking changes. To avoid additional breaking changes, upgrade PCF to the minor version that directly follows your current version of PCF.</p>
 
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your PCF Deployment
 
-Pivotal recommends backing up your PCF deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in the [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html) topic.
+Pivotal recommends backing up your PCF deployment before upgrading, to restore in the case of failure. To do this, see [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
 ## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for Ops Manager
@@ -44,13 +44,13 @@ Review each of the following links to understand the changes in the new release,
 
 PAS v2.5 patch versions v2.5.10 and later support pre-existing apps that were staged with `cflinuxfs2` buildpacks, but do not support restaging on `cflinuxfs2`. PAS versions v2.5.0 to v2.5.9 do not support apps running on `cflinuxfs2`.
 
-If your PAS v2.4 deployment hosts `cflinuxfs2` apps, Pivotal recommends that you upgrade to the latest v2.5 and encourage developers to migrate all their apps and upgrade any custom buildpacks to `cflinuxfs3`.  If you upgrade PAS to an older v2.5 patch version, apps staged on `cflinuxfs2` stop running.
+If your PAS v2.4 deployment hosts `cflinuxfs2` apps, Pivotal recommends that you upgrade to the latest v2.5 and encourage developers to migrate all their apps and upgrade any custom buildpacks to `cflinuxfs3`. If you upgrade PAS to an older v2.5 patch version, apps staged on `cflinuxfs2` stop running.
 
-To work with developers to migrate all PAS-hosted apps to `cflinuxfs3`, do the following:
+To work with developers to migrate all PAS-hosted apps to `cflinuxfs3`:
 
-1. Install the Stack Auditor plugin for the cf CLI. See [Install Stack Auditor](../adminguide/stack-auditor.html#install) in _Using the Stack Auditor Plugin_.
+1. Install the Stack Auditor plugin for the cf CLI. To download the Stack Auditor plugin, see the [Install Stack Auditor](../adminguide/stack-auditor.html#install) section of the _Using the Stack Auditor Plugin_ topic.
 
-1. Audit stack usage to determine which apps need to be migrated from `cflinuxfs2` to `cflinuxfs3`. You can list apps and their stacks for each org you have access to by running the following command. To see all the apps in your deployment, ensure that you are logged in to the cf CLI as a user who can access all orgs. 
+1. Audit stack usage to determine which apps need to be migrated from `cflinuxfs2` to `cflinuxfs3`. You can list apps and their stacks for each org you have access to by running the following command. To see all the apps in your deployment, ensure that you are logged in to the cf CLI as a user who can access all orgs and run:
 
     ```
     cf audit-stack
@@ -70,17 +70,20 @@ To work with developers to migrate all PAS-hosted apps to `cflinuxfs3`, do the f
     </pre>
 
 1. Communicate to developers that they must migrate their existing apps to `cflinuxfs3` and begin pushing all new apps on `cflinuxfs3`. When changing stacks, developers may see errors related to new or changed libraries. If they do, they must update their app accordingly. Developers can migrate their apps using two methods:
-  * `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_.
-  * `cf change-stack`: See [Change Stacks](../adminguide/stack-auditor.html#change-stacks) in _Using the Stack Auditor Plugin_. This method does not require the source code of the app.
-  <p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable. To avoid the brief downtime, use a blue-green strategy. See <a href="../devguide/deploy-apps/blue-green.html">Using Blue-Green Deployment to Reduce Downtime and Risk</a>.</p>
+  * `cf push`: See the [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) section in the _Changing Stacks_ topic.
+  * `cf change-stack`: See the [Change Stacks](../adminguide/stack-auditor.html#change-stacks) section in the _Using the Stack Auditor Plugin_ topic. This method does not require the source code of the app.
+  <p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. Pivotal recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable. To avoid the brief downtime, use a blue-green strategy. For more informaton, see <a href="../devguide/deploy-apps/blue-green.html">Using Blue-Green Deployment to Reduce Downtime and Risk</a>.</p>
 
-1. Confirm that there are no apps running on `cflinuxfs2 ` using the `cf audit-stack` command.
+1. Confirm that there are no apps running on `cflinuxfs2 ` by running:
+	
+	```
+	cf audit-stack
+	```
 
-1. Delete all buildpacks in your deployment that are associated with `cflinuxfs2`. 
+1. Delete all buildpacks in your deployment that are associated with `cflinuxfs2`.
 
-
-1. Delete the `cflinuxfs2` stack. This action cannot be undone, with the following exception: If you delete <code>cflinuxfs2</code> and update to a later patch release of PAS v2.4, the stack returns and you must delete it again before upgrading to PAS v2.5.</p>
-  1. Run the following command:
+1. Delete the `cflinuxfs2` stack. This action cannot be undone, with the following exception: If you delete `cflinuxfs2` and update to a later patch release of PAS v2.4, the stack returns and you must delete it again before upgrading to PAS v2.5.
+  1. Run:
 
         ```
         cf delete-stack cflinuxfs2
@@ -103,6 +106,7 @@ To work with developers to migrate all PAS-hosted apps to `cflinuxfs3`, do the f
     Failed to delete stack cflinuxfs2 with error: Please delete the app associations for your stack.   
     </pre>
 
+
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
 The following section describes changes you must make to your product tiles and add-ons before upgrading PCF.
@@ -119,9 +123,9 @@ To check PCF versions supported by a service tile, either from Pivotal or a Pivo
 
 If the currently-deployed version of a tile is not compatible with PCF v2.5, you must upgrade the tile to a compatible version before you upgrade PCF. You do not need to upgrade tiles that are compatible with both PCF v2.4 and v2.5.
 
-Some partner service tiles may be incompatible with PCF v2.5. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of PCF. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, the partners services release documentation in [Pivotal Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
+Some partner service tiles may be incompatible with PCF v2.5. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of PCF. For more information about which partner service release compatibility, see the **Depends On** section of the partners tile download page, see the [Services](https://docs.pivotal.io/pivotalcf/2-5/services/index.html) documentation, or contact the partner organization that produces the service tile.
 
-The [Product Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) provides an overview of which PCF versions support which versions of the most popular service tiles from Pivotal.
+For an overview of which PCF versions support which versions of the most popular service tiles from Pivotal, see the [Product Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf).
 
 #### <a id="env"></a> Environment Details
 
@@ -147,7 +151,7 @@ Upgrade all service tiles to versions that are compatible with PCF v2.5. Service
 
 Do not upgrade runtime tiles, such as PAS, PASW, or Pivotal Container Service (PKS), at this time.
 
-Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and tile documentation to check version compatibility.
+To check version compatibility, see the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and [Developer Guide](https://docs.pivotal.io/pivotalcf/2-5/devguide/index.html).
 
 ### <a id='bosh-cli'></a> Install BOSH CLI v5.4.0 or Later
 
@@ -155,7 +159,7 @@ Install [BOSH CLI v5.4.0](https://github.com/cloudfoundry/bosh-cli/releases/tag/
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
-With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to PCF v2.5:
+With each release of a new PCF version, BOSH Director may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.5.
 
 #### <a id="check-specs"></a> Check Required Machine Specifications
 
@@ -169,35 +173,37 @@ If you are upgrading to PAS v2.5 from PAS v2.4.2 or earlier, you can prevent thi
 
 ### <a id='patch'></a> Configure PAS
 
-With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.5:
+With each release of a new PCF version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to PCF v2.5.
 
-#### <a id="deselect-override"></a> Deselect Option to Override Deployment Name to CF
+#### <a id="deselect-override"></a> Disable Option to Override Deployment Name to CF
 
-Ensure that the **Use “cf” as deployment name in emitted metrics instead of unique name** option in the **Advanced Features** pane of the PAS tile is deselected. This is a requirement to upgrade successfully.
+Ensure that the **Use "cf" as deployment name in emitted metrics instead of unique name** option in the **Advanced Features** pane of the PAS tile is disabled. This is a requirement to upgrade successfully.
 
-Additionally, if you have PCF Healthwatch installed and you changed the value of **Use “cf” as deployment name in emitted metrics instead of unique name** in PAS, you must run the **Push Monitoring Components** errand for Healthwatch to detect the change.
+Additionally, if you have PCF Healthwatch installed and you changed the value of **Use "cf" as deployment name in emitted metrics instead of unique name** in PAS, you must run the **Push Monitoring Components** errand for Healthwatch to detect the change.
 
-For more information, see [Removed Option to Override Deployment Name to CF](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html#deployment-name).
+For more information, see the [Removed Option to Override Deployment Name to CF](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html#deployment-name) section of the _PCF v2.5 Breaking Changes_ topic.
 
-#### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
+#### <a id="groot-gc"></a> Configure Diego Cell Garbage Collection
 
-In the PAS tile **Application Container** pane, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** below has been changed from the default of `10240`, then operators need to pick a new threshold. If the scheduling is set to **Never clean up...** or **Routinely clean up...***, or the threshold value is set to the default, then no action is necessary and any threshold migrates to a sensible value. For more information see [Options for Disk Cleanup](https://docs.pivotal.io/pivotalcf/2-4/opsguide/config-cell-cleanup.html).
+In the **Application Containers** pane of the PAS tile, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** is different from the default of `10240`, then you must specify a new threshold. 
+
+If the scheduling is set to **Never clean up...** or **Routinely clean up...**, or the threshold value is set to the default of `10240`, then no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information, see [Configuring Cell Disk Cleanup Scheduling](../opsguide/config-cell-cleanup.html).
 
 #### <a id="route-integrity"></a> Configure Gorouter with TLS
 
 Before upgrading to PAS v2.5, you must secure the Gorouter with TLS or mutual TLS for PAS and Isolation Segment tiles.
 
-The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego cell VM CPU and RAM. If you do not have enough RAM on your Diego cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running.
+The following sections describe how to enable routing with TLS or mutual TLS and scale the Diego Cell VM CPU and RAM. If you do not have enough RAM on your Diego Cell VM after enabling TLS routing, you are unable to stage tasks and app instances. App instances may also stop running.
 
 <p class="note"><strong>Note:</strong> Gorouter with TLS or mutual TLS is not supported in the PASW tile.</p>
 
 <strong><a id="enable-tls"></a> Step 1: Enable TLS or Mutual TLS Routing</strong>
 
-To enable TLS or mutual TLS routing, do the following:
+To enable TLS or mutual TLS routing:
 
 1. From the **Ops Manager Installation Dashboard**, go to the PAS tile.
 
-1. Go to the **Application Containers** pane.
+1. Select **Application Containers**.
 
 1. Under **Router application identity verification**, select either of the following options:
   - **Router uses TLS to verify application identity**
@@ -207,15 +213,12 @@ To enable TLS or mutual TLS routing, do the following:
 
 <strong><a id="ram-size"></a> Step 2: Determine Number of App Instances</strong>
 
-Before you scale your Diego cell VM to handle TLS routing, you must determine the number of app instances running on your deployment.
+Before you scale your Diego Cell VM to handle TLS routing, you must determine the number of app instances running on your deployment.
 
 See the following methods for how you can count your app instances. Choose the method that corresponds to your use case.
 
 * **Deployments without Isolation Segments**
-  	1. Access your platform metrics with your configured monitoring tool or with cf CLI
-  	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
-  	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
-  	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
+  	1. Access your platform metrics with your configured monitoring tool or with cf CLI Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html). For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
   	1. Find the `LRPsDesired` metric of the `bbs` job on the Diego Database VM. See the following example:
 		<pre class="terminal">origin:"bbs" eventType:ValueMetric
 		timestamp:1541543212057232344 deployment:"cf" job:"diego\_database"
@@ -223,47 +226,39 @@ See the following methods for how you can count your app instances. Choose the m
 		tags:&lt; key:"instance\_id" value:"b1f0c6d8-274b-4cfc-bfa1-a6feeb351802" >
 		tags:&lt; key:"source\_id" value:"bbs" > valueMetric:&lt; name:"LRPsDesired"
 		<span style="color: #5FABFF">value:200</span> unit:"Metric" ></pre>
-	1. Record the `value` of the `LRPsDesired` for each instance of the `bbs`
-	job. You need the `value` for the procedure in the next section.
+	1. Record the `value` of the `LRPsDesired` for each instance of the `bbs` job. You need the `value` for the procedure in the next section.
 
 * **Deployments with Isolation Segments**
-  	1. Access your platform metrics with your configured monitoring tool or with cf CLI
-  	Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see
-  	[Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html).
-  	For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
-  	1. Find all `ContainerCount` metrics of the `rep` job of each Diego cell VM. See the following example:
+  	1. Access your platform metrics with your configured monitoring tool or with cf CLI Firehose nozzle plugin. For more information about the CLI Firehose nozzle plugin, see [Installing the Loggregator Firehose Plugin for cf CLI](../loggregator/cli-plugin.html). For more information about configuring a monitoring system, see [Selecting and Configuring a Monitoring System](../monitoring/metrics.html).
+  	1. Find all `ContainerCount` metrics of the `rep` job of each Diego Cell VM. See the following example:
    		<pre class="terminal">origin:"rep" eventType:ValueMetric
 		timestamp:1541543910092859448 deployment:"cf" job:"diego\_cell"
 		index:"8007afda-3bff-4856-857f-a47a43cbf994" <span style="color:#5FABFF">ip:"10.0.4.18"</span>
 		tags:&lt; key:"instance_id" value:"8007afda-3bff-4856-857f-a47a43cbf994" >
 		tags:&lt; key:"source\_id" value:"rep" > valueMetric:&lt; name:
 		"ContainerCount" <span style="color: #5FABFF">value:200</span> unit:"Metric" ></pre>
-	1. For each `ContainerCount` metric, record the `value` of the `ContainerCount`
-	and the `ip` of the `job`.
+	1. For each `ContainerCount` metric, record the `value` of the `ContainerCount` and the `ip` of the `job`.
 
 <strong><a id="scale-diego-cell"></a> Step 3: Scale Diego Cell VM</strong>
 
-To support TLS or mutual TLS routing, you must have enough CPU and RAM for your Diego cell VM. TLS routing requires an additional 32&nbsp;MB of RAM on your Diego cell per app instance.
+To support TLS or mutual TLS routing, you must have enough CPU and RAM for your Diego Cell VM. TLS routing requires an additional 32&nbsp;MB of RAM on your Diego Cell per app instance.
 
-To calculate and configure the amount of RAM you need for your Diego cell, choose one of the following methods for your use case:
+To calculate and configure the amount of RAM you need for your Diego Cell, choose one of the following methods for your use case:
 
 * **Deployments without Isolation Segments**
-<p>For your PAS tile, do the following:</p>
-   1. Go to the **Resource Config** pane.
+<p>For your PAS tile:</p>
+   1. Select **Resource Config**.
    1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
-   1. Multiply the `value` you recorded in the previous section by 32. Add your solution
-   to the amount of RAM you currently have.
+   1. Multiply the `value` you recorded in the previous section by 32. Add your solution to the amount of RAM you currently have.
    1. Select your new **VM Type** based on the amount of RAM you need.
    1. Click **Save**.
+
 * **Deployments with Isolation Segments**
-<p>For each PAS and Isolation Segment tile in your foundation, do the following:</p>
-   1. Go to the **Status** tab and see the IP of your Diego cell. To determine the `value`
-   that corresponds to this tile, match the IP to the `ip`
-   metric you recorded in the previous section.
+<p>For each PAS and Isolation Segment tile in your foundation:</p>
+   1. Go to the **Status** tab and see the IP of your Diego Cell. To determine the `value` that corresponds to this tile, match the IP to the `ip` metric you recorded in the previous section.
    1. Go to the **Resource Config** pane of the the tile.
    1. In the **Diego Cell** row, see your current **VM Type** with the amount of RAM you currently have.
-   1. Multiply the `value` for this tile by 32. Add your solution
-   to the amount of RAM you currently have.
+   1. Multiply the `value` for this tile by 32. Add your solution to the amount of RAM you currently have.
    1. Select your new **VM Type** based on the amount of RAM you need.
    1. Click **Save**.
 
@@ -273,22 +268,21 @@ The Metric Registrar allows app developers to export custom app metrics to Loggr
 
 Metrics Forwarder for PCF is not supported in PAS v2.5. If you use Metrics Forwarder for PCF to emit custom app metrics to Loggregator, Pivotal recommends enabling and configuring the Metric Registrar before upgrading to PAS v2.5. The PAS tile does not deploy the Metric Registrar by default. 
 
-To enable the Metric Registrar, do the following:
+To enable the Metric Registrar:
 
-1. In the PAS tile, click **Metric Registrar**.
+1. In the PAS tile, select **Metric Registrar**.
 
 1. Select the **Enable Metric Registrar** checkbox.
 
-For more information about enabling the Metric Registrar in PAS, see [(Optional) Configure Metric Registrar](https://docs.pivotal.io/pivotalcf/2-5/customizing/configure-pas.html#metric-registrar) in _Configuring PAS_.
+For more information about enabling the Metric Registrar in PAS, see the [(Optional) Configure Metric Registrar](https://docs.pivotal.io/pivotalcf/2-5/customizing/configure-pas.html#metric-registrar) section in the _Configuring PAS_ topic.
 
-For more information about the Metric Registrar, see [Registering Custom App Metrics](../metric-registrar/using.html).
+For more information about the Metric Registrar, see [Registering and Emitting Custom App Metrics](../metric-registrar/using.html).
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
-To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-4/tile-errands.html#post-deploy) section of the Errands topic for details.
-Only disable these errands if your environment does not need them.
+To save upgrade time, you can disable unused PAS post-deploy errands. For more information, see the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-5/tile-errands.html#post-deploy) section of the _Errands_ topic for details. Only disable these errands if your environment does not need them.
 
-In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Deleting Products](../customizing/add-delete.html#add-import) topic.
+In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Importing Products](../customizing/add-delete.html#add-import) section of the _Adding and Deleting Products_ topic.
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
@@ -298,7 +292,7 @@ For example, **File Integrity Monitor for PCF** (FIM) is not supported on Window
 
 <p class="note"><strong>Note:</strong> To upgrade to a Xenial stemcell, see the documentation for each add-on and follow the instructions.</p>
 
-To update an add-on manifest, do the following:
+To update an add-on manifest:
 
 1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the Ops Manager VM.
 
@@ -312,35 +306,39 @@ To update an add-on manifest, do the following:
 
 1. Upload the modified manifest file to your PCF deployment. For example instructions, see [Create the FIM Manifest](https://docs.pivotal.io/addon-fim/index.html#create-mfest).
 
-If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see the [BOSH documentation](https://bosh.io/docs/runtime-config.html#addons).
+If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see [Addons Bloci](https://bosh.io/docs/runtime-config.html#addons) in the BOSH documentation.
 
 ### <a id="azure-blobstore-addon"></a> Check Backup and Restore External Blobstore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the [Blobstore Add-On](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure), you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading to PCF v2.5. If you do not remove this job, upgrading PAS fails with the error:
+If you have enabled external blobstore backups for an Azure Blobstore using the Blobstore Add-On, you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading. For more information, see the [Azure Blobstores](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure) section of the _Enabling External Blobstore Backups_ topic.
 
-<pre>
+If you do not remove this job, upgrading PAS fails with the error:
+
+```
 Preparing deployment: Preparing deployment (00:00:01)
   L Error: Colocated job 'azure-blobstore-backup-restorer' is already added to the instance group 'backup-restore'.
-</pre>
+```
 
-After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the PAS tile > **File Storage** pane.
+After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the **File Storage** pane of the PAS tile.
+
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
 
 Depending on the requirements of your deployment, you may need to rotate your Certificate Authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
 
-<p class="note"><strong>Note:</strong> PCF uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Regenerating and Rotating Non-Configurable TLS/SSL Certificates</a> section of <em>Managing TLS Certificates</em>.</p>
+<p class="note"><strong>Note:</strong> PCF uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Rotate Identity Provider SAML Certificates</a> section of the <em>Managing TLS Certificates</em> topic.</p>
 
 To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the Ops Manager API.
 
 In this request, the `expires_within` parameter is optional. Valid values for the parameter are `d` for days, `w` for weeks, `m` for months, and `y` for years. For example, to search for certificates expiring within one month, replace `TIME` with `1m`:
 
-<pre class="terminal">$ curl "https://OPS-MAN-FQDN/api/v0/deployed/certificates?expires_within=1m" \
+<pre class="terminal">
+$ curl "https://OPS-MAN-FQDN/api/v0/deployed/certificates?expires_within=1m" \
  -X GET \
  -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-For information about regenerating and rotating CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
+For information about regenerating and rotating CA certificates, see [Rotating Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
 
 
 ## <a id="capacity"></a> Check the Capacity of Your Deployment
@@ -353,36 +351,36 @@ The following sections describe steps for ensuring your deployment has adequate 
 
 ### <a id="check-diego-cell-ram-and-disk"></a> Check Diego Cell RAM and Disk
 
-Check that Diego cells have sufficient available RAM and disk capacity to support app containers.
+Check that Diego Cells have sufficient available RAM and disk capacity to support app containers.
 
-The KPIs that monitor these these resources are are:
+The Key Performance Indicators (KPIs) that monitor these these resources are are:
 
 * `rep.CapacityRemainingMemory`
 * `rep.CapacityRemainingDisk`
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego cells that the platform can upgrade simultaneously, to avoid overloading the other cells. See [Limit PCF Component Instances During Restart](./configuring.html#limit-restart).
+If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Diego Cells. For more information, see the [Limit PCF Component Instances During Restart](./configuring.html#limit-restart) section of the _Configuring PAS for Upgrades_ topic.
 
-For PCF v1.10 and later, the maximum number of cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego cell definition. For more information, see the [Prevent Overload](./configuring.html#limitations-considerations) section.
+For PCF v1.10 and later, the maximum number of Diego Cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see the [Prevent Overload](./configuring.html#limitations-considerations) section of the _Configuring PAS for Upgrades_ topic.
 
-Review the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the KPI topic for more information about these KPIs.
+For more information about these KPIs, see the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the _Key Performance Indicators_ topic.
 
 ### <a id="storage"></a> Review File Storage IOPS and Other Upgrade Limiting Factors
 
 During the PCF upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of PCF, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Upgrade Considerations for Selecting Pivotal Cloud Foundry Storage](../upgrading/configuring.html#file-storage).
+To ensure a successful upgrade of PCF, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see the [Configure File Storage](../upgrading/configuring.html#file-storage) section of the _Configuring PAS for Upgrades_ topic.
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
 |**Factor**|**Impact**|
 |----------|----------|
 |**Network latency**| Network latency can contribute to how long it takes to move app instance data to new containers. |
-|**Number of ASGs**| A large number of [Application Security Groups](../concepts/asg.html) in your deployment can contribute to an increase in app instance container startup time. |
-|**Number of app instances and application growth**| A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
+|**Number of ASGs**| A large number of App Security Groups (ASGs) in your deployment can contribute to an increase in app instance container startup time. For more information, see [App Security Groups](../concepts/asg.html). |
+|**Number of app instances and app growth**| A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
 
-To review example upgrade-related performance measurements of an existing production Cloud Foundry deployment, see the [Pivotal Web Services Performance During Upgrade](../opsguide/pws_upgrade_load.html) topic.
+To see example upgrade-related performance measurements of an existing production Cloud Foundry deployment, see [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
 
 ### <a id="bosh-clean-up"></a> Run BOSH Clean-Up
 
@@ -395,19 +393,22 @@ The following sections describe steps for ensuring your deployment is healthy be
 
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
-For collecting foundation health status, Pivotal recommends PCF Healthwatch, which monitors and alerts on the current health, performance, and capacity of PCF. For more information, see the [PCF Healthwatch documentation](https://docs.pivotal.io/pcf-healthwatch/index.html).
+For collecting foundation health status, Pivotal recommends PCF Healthwatch, which monitors and alerts on the current health, performance, and capacity of PCF. For more information, see [PCF Healthwatch](https://docs.pivotal.io/pcf-healthwatch/index.html).
 
 If you are not using PCF Healthwatch, you can do some or all of the following to collect foundation health status:
 
 * If your PCF deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.
+
 * Run BOSH CLI commands to check system status:
-	* `bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps`. <p>`bosh instances` with the flags `--ps`, `--vitals`, or `--failing` highlights individual job failure.</p>
+	* `bosh -e ALIAS -d DEPLOYMENT_NAME instances --ps`.<br>`bosh instances` with the flags `--ps`, `--vitals`, or `--failing` highlights individual job failure.
 	* `bosh -e ALIAS vms --vitals`. This reveals VMs with high CPU, high memory, high disk utilization, and with `state` != `running`.
 	* `bosh -e ALIAS -d DEPLOYMENT_NAME cck --report`
+
 * Check Ops Manager GUI each PAS/Tiles the status page for CPU/RAM/DISK utilization
+
 * Validate Ops Manager persistent disk usage is below 50%. If not, follow the procedure in [Confirm Adequate Disk Space](#confirm-om-disk).
 
-(Optional) Check the logs for errors before proceeding with the upgrade. For more information, see [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view).
+(Optional) Check the logs for errors before proceeding with the upgrade. For more information, see the [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view) section of the _App Logging in Cloud Foundry_ topic.
 
 ### <a id="push-test-app"></a> Push and Scale a Test App
 
@@ -417,23 +418,26 @@ Check that a test app can be pushed and scaled horizontally, manually or through
 
 If you are running PAS MySQL as a cluster, run the `mysql-diag` tool to validate health of the cluster.
 
-See the BOSH CLI v2 instructions in the [Running mysql-diag](https://docs.pivotal.io/pivotalcf/2-4/pas/mysql-diag.html) topic.
+For more information, see [Running mysql-diag](../pas/mysql-diag.html).
 
 ### <a id="check-health"></a> Review Pending and Recent Changes
+
+To review pending and recent changes:
 
 1. Confirm there are no outstanding changes in Ops Manager or any other tile. All tiles should be **green**. Click **Review Pending Changes**, then **Apply Changes** if necessary.
 
 1. After applying changes, click **Recent Install Logs** to confirm that the changes completed cleanly:
-    <pre>
+
+    ```
     Cleanup complete
     {"type": "step\_finished", "id": "clean\_up\_bosh.cleaning\_up"}
     Exited with 0.
-    </pre>
+    ```
 
 
 ## <a id="export"></a> Export Your Installation
 
-To export your installation, do the following:
+To export your installation:
 
 1. In your Ops Manager v2.4 **Installation Dashboard**, click the account dropdown and select **Settings**.
 
@@ -454,7 +458,7 @@ When you export an installation, the export contains the base VM images, necessa
 
 <%= image_tag("./images/compress.png") %>
 
-<p class="note warning"><strong>WARNING:</strong> If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p>
+<p class="note warning"><strong>Warning:</strong> If you fail to perform the remedial steps for this issue, this upgrade process may corrupt your existing usage data.</p>
 
 
 ## <a id="next-steps"></a> Next Steps
