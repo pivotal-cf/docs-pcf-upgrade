@@ -12,11 +12,11 @@ The `max_in_flight` variable limits how many instances of a component can restar
 
 Values for `max_in_flight` can be any integer between 1 and 100, or a percentage of the total number of instances. For example, a `max_in_flight` value of `20%` in a deployment with 10 Diego Cell instances would make no more than two Diego Cell instances restart at once.
 
-### <a id="setting"></a> Set max\_in\_flight
+### <a id="setting"></a> Set max_in_flight
 
 The `max_in_flight` variable is a system-wide value with optional component-specific overrides. You can override the default value for individual jobs using an API endpoint.
 
-#### <a id="endpoint"></a> Use the max\_in\_flight API Endpoint
+#### <a id="endpoint"></a> Use the max_in_flight API Endpoint
 
 Use the `max_in_flight` API endpoint to configure the maximum value for component instances that can start at a given time. This endpoint overrides product defaults. You can specify values as a percentage or an integer.
 
