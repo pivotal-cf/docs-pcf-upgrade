@@ -1,5 +1,5 @@
 ---
-title: Upgrade Preparation Checklist for Pivotal Platform v2.7
+title: Upgrade Preparation Checklist for Pivotal Platform v2.8
 owner: Ops Manager
 ---
 
@@ -29,25 +29,17 @@ To complete the Ops Manager upgrade, you must have your Ops Manager decryption p
 Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
 * **Release Notes**
-	* [Pivotal Operations Manager Release <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/2-7/pcf-release-notes/opsmanager-rn.html)
-	* [PAS <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/2-7/pcf-release-notes/runtime-rn.html)
+	* [Pivotal Operations Manager Release <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html)
+	* [PAS <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/runtime-rn.html)
 * **Known Issues**
-	* [Ops Manager <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/2-7/pcf-release-notes/opsmanager-rn.html#known-issues)
-	* [PAS <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/2-7/pcf-release-notes/runtime-rn.html)
+	* [Ops Manager <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html#known-issues)
+	* [PAS <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/runtime-rn.html)
 * **Breaking Changes**
-	* [<%= vars.product_name %> <%= vars.v_major_version %> Breaking Changes](https://docs.pivotal.io/platform/2-7/pcf-release-notes/breaking-changes.html)
+	* [<%= vars.product_name %> <%= vars.v_major_version %> Breaking Changes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/breaking-changes.html)
 * **KPI Changes**
 	* [KPI Changes](../monitoring/index.html#new)
 * **Diego Network Communications**:
-	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
-
-## <a id="reset-certificates"></a> Reset All Manually Set Certificates
-
-Reset all manually set certificates in CredHub. This prevents the rotation of manually set certificates during a bulk certificate rotation in Ops Manager v2.8. 
-
-For more information, see [Operators Must Reset Manually Set Certificates in CredHub Before Ops Manager v2.8 Upgrade](https://docs.pivotal.io/platform/2-8/pcf-release-notes/breaking-changes.html#credhub-generated-field) in _Pivotal Platform v2.8 Breaking Changes_.
-
-To reset a certificate in CredHub, see [Reviewing and Resetting Manually Set Certificates in CredHub](https://docs.pivotal.io/platform/2-8/security/pcf-infrastructure/manual-credhub-certificate.html).	
+	* [Diego Network Communications](../../security/networking/diego-network-paths.html)	
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -98,7 +90,7 @@ Review the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compa
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
-With each release of a new <%= vars.platform_name %> version, BOSH Director may require specific updates before upgrading to the new version. See the following for what action to take before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>:
+With each release of a new <%= vars.platform_name %> version, BOSH Director may require specific updates before upgrading to the new version. See the following sections for actions to take before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>:
 
 #### <a id="check-specs"></a> Check Required Machine Specifications
 
@@ -110,7 +102,7 @@ With each release of a new <%= vars.platform_name %> version, PAS may require sp
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
-To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-7/tile-errands.html#post-deploy) section of the Errands topic for details. Only disable these errands if your environment does not need them.
+To save upgrade time, you can disable unused PAS post-deploy errands. See the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/<%= product_info['local_product_version'].to_s.sub('.','-') %>/tile-errands.html#post-deploy) section of the Errands topic for details. Only disable these errands if your environment does not need them.
 
 In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see [Adding and Deleting Products](../customizing/add-delete.html#add-import).
 
@@ -122,10 +114,9 @@ If the scheduling is set to **Never clean up Diego Cell disk space** or **Routin
 
 #### <a id="minimum-credhub-instances"></a> Configure CredHub Instances
 
-In <%= vars.platform_name %> <%= vars.v_major_version %> and later, at least one CredHub instance is required to deploy PAS. 
+In <%= vars.platform_name %> <%= vars.v_major_version %> and later, at least one CredHub instance is required to deploy PAS. In PAS v2.8, the default number of CredHub instances is increased from `0` to `2`.
 
-For high availability, Pivotal recommends that you use at least one CredHub instance per availability zone (AZ). Or, if you have only one AZ, use at least three CredHub instances. 
-
+For high availability, Pivotal recommends that you use at least one CredHub instance per availability zone (AZ). Or, if you have only one AZ, use at least three CredHub instances.
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
