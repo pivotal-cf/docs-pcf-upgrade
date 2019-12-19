@@ -118,6 +118,21 @@ In <%= vars.platform_name %> <%= vars.v_major_version %> and later, at least one
 
 For high availability, Pivotal recommends that you use at least one CredHub instance per availability zone (AZ). Or, if you have only one AZ, use at least three CredHub instances.
 
+#### <a id="disable-hostname-verificaiton"></a> Disable Hostname Verification for External CredHub Databases on GCP and Azure
+
+This pre-upgrade step only applies to deployments 
+where PAS is configured to use an external GCP or 
+Azure database and the operator has previously 
+set the number of CredHub instances to 0.
+
+Before you upgrade to PAS v2.8, you must select 
+*Disable hostname verification* under 
+*Other external database* in the *CredHub* pane of PAS v2.7.
+
+For more information on CredHub database configuration in PAS v2.7, see [Configure CredHub](https://docs.pivotal.io/platform/application-service/2-7/operating/configure-pas.html#credhub).
+
+Failure to disable hostname verification can cause the upgrade to PAS v2.8 to fail on deployments that use GCP and Azure external databases.
+
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
 Before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>, operators who have deployed any <%= vars.platform_name %> add-ons such as **IPsec for <%= vars.platform_name %>**, **ClamAV for <%= vars.platform_name %>**, or **File Integrity Monitoring for <%= vars.platform_name %>** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](https://docs.pivotal.io/platform/application-service-windows/index.html).
