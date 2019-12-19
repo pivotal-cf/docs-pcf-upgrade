@@ -120,18 +120,22 @@ For high availability, Pivotal recommends that you use at least one CredHub inst
 
 #### <a id="disable-hostname-verification"></a> Disable Hostname Verification for External CredHub Databases on GCP and Azure
 
-This pre-upgrade step only applies to deployments 
-where PAS is configured to use an external GCP or 
-Azure database and the operator has previously 
-set the number of CredHub instances to 0.
+This pre-upgrade step applies only to PAS v2.7 deployments where all of the following conditions are met:
 
-Before you upgrade to PAS v2.8, you must select 
-*Disable hostname verification* under 
-*Other external database* in the *CredHub* pane of PAS v2.7.
+* In the *Databases* pane, PAS is configured to use an external GCP or Azure database.
+* In the *Resource Config* pane, the number of CredHub instances in PAS is set to 0.
+* You want CredHub to use the same external GCP or Azure database configured in the *Databases* pane.
 
-For more information on CredHub database configuration in PAS v2.7, see [Configure CredHub](https://docs.pivotal.io/platform/application-service/2-7/operating/configure-pas.html#credhub).
+If you meet these conditions,  
+you must select *Disable hostname verification* under 
+*Other external database* in the *CredHub* pane of PAS v2.7 
+before you upgrade to PAS v2.8.
 
-Failure to disable hostname verification can cause the upgrade to PAS v2.8 to fail on deployments that use GCP and Azure external databases.
+For more information on CredHub database configuration in PAS v2.7, 
+see [Configure CredHub](https://docs.pivotal.io/platform/application-service/2-7/operating/configure-pas.html#credhub).
+
+Failure to disable hostname verification can cause the upgrade 
+to PAS v2.8 to fail for deployments that use external databases on GCP or Azure.
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
