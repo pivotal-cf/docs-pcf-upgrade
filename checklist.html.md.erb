@@ -106,12 +106,13 @@ To save upgrade time, you can disable unused PAS post-deploy errands. See the [P
 
 In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see [Adding and Deleting Products](../customizing/add-delete.html#add-import).
 
-#### <a id="run-nfs-broker-errand"></a> Configure NFS Broker Errand
-If you are using NFS Volume Services, it is critical to run the `NFS Broker Errand` errand before upgrading to PAS 2.9.
-In PAS 2.8, running this errand migrates service instances for nfs volume services from MySQL to Credhub.
-PAS 2.9 removes the ability to migrate data from MySQL to Credhub.
+#### <a id="run-nfs-broker-errand"></a> Run the NFS Broker Errand
 
-#### <a id="groot-gc"></a> Configure Diego Cell Garbage collection
+If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to PAS v2.9. Running this errand in PAS v2.8 migrates service instances for NFS Volume Services from MySQL to CredHub.
+
+PAS v2.9 removes the ability to migrate data from MySQL to CredHub. If you do not run the errand in PAS v2.8, you may experience cf push downtime after upgrading to PAS v2.9.
+
+#### <a id="groot-gc"></a> Configure Diego Cell Garbage Collection
 
 In the PAS tile **App Containers** pane, if **Docker images disk cleanup scheduling on Diego Cell VMs** is set to **Clean up disk space once usage fills disk** and the value of **Reserved disk space for other jobs** is different from the default of `10240`, you must specify a new threshold.
 
