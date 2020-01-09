@@ -108,9 +108,10 @@ In some cases, if you have previously disabled lifecycle errands for any install
 
 #### <a id="run-nfs-broker-errand"></a> Run the NFS Broker Errand
 
-If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to PAS v2.9. Running this errand in PAS v2.8 migrates service instances for NFS Volume Services from MySQL to CredHub.
+If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to PAS v2.9. Running this errand in PAS v2.8 migrates existing service instances for NFS Volume Services from MySQL to CredHub.
 
-PAS v2.9 removes the ability to migrate data from MySQL to CredHub. If you do not run the errand in PAS v2.8, you may experience cf push downtime after upgrading to PAS v2.9.
+PAS v2.9 removes the ability to migrate data from MySQL to CredHub. If you do not run the errand in PAS v2.8, you may be unable to bind apps to 
+existing NFS Volume Service service instances after upgrading to PAS v2.9.
 
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage Collection
 
