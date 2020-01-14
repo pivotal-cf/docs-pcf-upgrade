@@ -44,7 +44,7 @@ The type and duration of downtime and other limitations that you can expect duri
 
 #### <a id= "single-components"></a> How Single-Component Scaling Affects Upgrades
 
-In <%= vars.product_name_full %> (<%= vars.product_name %>) Ops Manager, the **Resource Config** pane in the PAS tile shows the components that the BOSH Director installs:
+In <%= vars.product_name_full %> (<%= vars.product_name %>) Ops Manager, the **Resource Config** pane of the PAS tile shows the components that the BOSH Director installs:
 
 * **Scalable** component fields let you select the instance count from a range of settings or enter a custom value.
 * **Unscalable** component fields allow a maximum of one instance.
@@ -60,7 +60,7 @@ For more information about how the scale of each component affects upgrade behav
 The table below lists components in the order that Ops Manager upgrades each. It also lists which components are scalable and explains how component downtime affects PAS app and control availability. The table includes the following columns:
 
 * **Scalable**: Indicates whether the component is scalable above a single instance.
-    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, we recommend that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see [High Availability in PAS](../concepts/high-availability.html).</p>
+    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, <%= vars.recommended_by %> recommends that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see <a href="../concepts/high-availability.html">High Availability in PAS</a>.</p>
 
 * **Extended Downtime**: Indicates that if there is only one instance of the component, that component is unavailable for up to five minutes during an Ops Manager upgrade.
 
