@@ -24,7 +24,7 @@ For more information, see [cf push Availability During Pivotal Application Servi
 
 ## <a id="upgrade-limitations"></a> PAS Components Upgrade
 
-This section describes the order in which Ops Manager upgrades components and runs tasks during a full platform upgrade. It also explains how the scale of different Pivotal Application Service (PAS) components affects uptime during upgrades, and which components are scalable.
+This section describes the order in which Ops Manager upgrades components and runs tasks during a full platform upgrade. It also explains how the scale of different PAS components affects uptime during upgrades, and which components are scalable.
 
 When performing an upgrade, Ops Manager first upgrades individual components, and then runs one-time tasks.
 
@@ -44,14 +44,14 @@ The type and duration of downtime and other limitations that you can expect duri
 
 #### <a id= "single-components"></a> How Single-Component Scaling Affects Upgrades
 
-In <%= vars.platform_name %> Ops Manager, the Pivotal Application Service (PAS) tile > **Resource Config** pane shows the components that the BOSH Director installs:
+In <%= vars.platform_name %> Ops Manager, the **Resource Config** pane of the PAS tile shows the components that the BOSH Director installs:
 
 * **Scalable** component fields let you select the instance count from a range of settings or enter a custom value.
 * **Unscalable** component fields allow a maximum of one instance.
 
-When a component is scaled at a single instance, it can experience downtime and other limitations while the single VM restarts. This behavior might be acceptable for a test environment. To avoid downtime in a production environment, you should scale any scalable components, such as HAProxy, Router, and Diego cells, to more than one instance.
+When a component is scaled at a single instance, it can experience downtime and other limitations while the single VM restarts. This behavior might be acceptable for a test environment. To avoid downtime in a production environment, you should scale any scalable components, such as HAProxy, Router, and Diego Cells, to more than one instance.
 
-For more information about how the scale of each component affects upgrade behavior, see the [Component Upgrade Order and Behavior](#order-behavior) table below.
+For more information about how the scale of each component affects upgrade behavior, see [Component Upgrade Order and Behavior](#order-behavior).
 
 <p class="note"><strong>Note:</strong> A full Ops Manager upgrade may take close to two hours, and you will have limited ability to deploy an app during this time.</p>
 
@@ -60,7 +60,7 @@ For more information about how the scale of each component affects upgrade behav
 The table below lists components in the order that Ops Manager upgrades each. It also lists which components are scalable and explains how component downtime affects PAS app and control availability. The table includes the following columns:
 
 * **Scalable**: Indicates whether the component is scalable above a single instance.
-    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, we recommend that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see [High Availability in PAS](../concepts/high-availability.html).</p>
+    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, <%= vars.recommended_by %> recommends that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see <a href="../concepts/high-availability.html">High Availability in PAS</a>.</p>
 
 * **Extended Downtime**: Indicates that if there is only one instance of the component, that component is unavailable for up to five minutes during an Ops Manager upgrade.
 
