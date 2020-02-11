@@ -3,7 +3,7 @@ title: Configuring PAS for Upgrades
 owner:
 ---
 
-This topic describes several configuration options for Pivotal Application Service (PAS) that can help ensure successful upgrades. In addition to following the [Upgrade Preparation Checklist](./checklist.html), review the sections in this document to better understand how to prepare for PAS Upgrades.
+This topic describes several configuration options for <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) that can help ensure successful upgrades. In addition to following the [Upgrade Preparation Checklist](./checklist.html), review this topic to better understand how to prepare for <%= vars.app_runtime_abbr %> upgrades.
 
 
 ## <a id="limit-restart"></a> Limit <%= vars.platform_name %> Component Instance Restarts
@@ -22,7 +22,7 @@ Use the `max_in_flight` API endpoint to configure the maximum value for componen
 
 Use the string `default` as the `max_in_flight` value to force the component to use the deployment's default value.
 
-<p class="note"><strong>Note:</strong> The example below lists three JOB_GUIDs. These three GUIDs are examples of the three different types of values you can use to configure <code>max_in_flight</code>. The endpoint only requires one GUID.</p>
+<p class="note"><strong>Note:</strong> The example below lists three <code>JOB_GUID</code>s. These three GUIDs are examples of the three different types of values you can use to configure <code>max_in_flight</code>. The endpoint only requires one GUID.</p>
 
 <pre class="terminal">
 	curl "https://EXAMPLE.com/api/v0/staged/products/PRODUCT-TYPE1-GUID/max_in_flight" \
@@ -54,7 +54,7 @@ If Diego Cell evacuation exceeds this timeout, then the Diego Cell stops its app
 
 A potential issue arises if too many app instance replacements are slow to start or do not start successfully at all.
 
-If too many app instances are starting concurrently, then the load of these starts on the rest of the system can cause other applications that are already running to crash and be rescheduled. These events can result in a cascading failure.
+If too many app instances are starting concurrently, then the load of these starts on the rest of the system can cause other apps that are already running to crash and be rescheduled. These events can result in a cascading failure.
 
 To prevent this issue, <%= vars.platform_name %> provides two throttle configurations: the maximum number of in-flight Diego Cell instances and the maximum number of starting containers.
 
@@ -152,17 +152,17 @@ Some more precise guidelines include:
 
 ## <a id="container-starts"></a> Set a Maximum Number of Starting Containers
 
-This section describes how to use the auctioneer job to configure the maximum number of app instances starting at a given time. This prevents Diego from scheduling too much new work for your platform to handle concurrently. A lower default can prevent server overload during cold start, which may be important if your infrastructure is not sized for a large number of concurrent cold starts.
+This section describes how to use the Diego Auctioneer job to configure the maximum number of app instances starting at a given time. This prevents Diego from scheduling too much new work for your platform to handle concurrently. A lower default can prevent server overload during cold start, which may be important if your infrastructure is not sized for a large number of concurrent cold starts.
 
-The auctioneer only schedules a fixed number of app instances to start concurrently. This limit applies to both single and multiple Diego Cells. For example, if you set the limit to five starting instances, it does not matter if you have one Diego Cell with ten instances or five Diego Cells with two instances each. The auctioneer does not allow more than five instances to start at the same time.
+The Diego Auctioneer only schedules a fixed number of app instances to start concurrently. This limit applies to both single and multiple Diego Cells. For example, if you set the limit to five starting instances, it does not matter if you have one Diego Cell with ten instances or five Diego Cells with two instances each. The auctioneer does not allow more than five instances to start at the same time.
 
-If you are using a cloud-based IaaS, rather than a smaller on-premise solution, Pivotal recommends setting a larger default. By default, the maximum number of started instances is 200.
+If you are using a cloud-based IaaS, rather than a smaller on-premise solution, <%= vars.recommended_by %> recommends setting a larger default. By default, the maximum number of started instances is 200.
 
-To configure the maximum number of started instances in the **Settings** tab of the PAS tile:
+To configure the maximum number of started instances in the **Settings** tab of the <%= vars.app_runtime_abbr %> tile:
 
-1. Log in to Ops Manager.
+1. Log in to <%= vars.ops_manager %>.
 
-1. Click the PAS tile.
+1. Click the <%= vars.app_runtime_abbr %> tile.
 
 1. Select **App Containers**.
 
@@ -173,7 +173,7 @@ To configure the maximum number of started instances in the **Settings** tab of 
 
 ## <a id="file-storage"></a> Configure File Storage
 
-This section describes critical factors to consider when evaluating the type of file storage to use in your <%= vars.platform_name %> deployment. The PAS blobstore relies on the file storage system to read and write resources, app packages, and droplets. For more information, see the [Blobstore](../concepts/architecture/cloud-controller.html#blob-store) section of the _Cloud Controller_ topic.
+This section describes critical factors to consider when evaluating the type of file storage to use in your <%= vars.platform_name %> deployment. The <%= vars.app_runtime_abbr %> blobstore relies on the file storage system to read and write resources, app packages, and droplets. For more information, see [Blobstore](../concepts/architecture/cloud-controller.html#blob-store) in _Cloud Controller_.
 
 During an upgrade of <%= vars.platform_name %>, file storage with insufficient IOPS numbers can negatively impact the performance and stability of your <%= vars.platform_name %> deployment.
 
@@ -185,7 +185,7 @@ For an example of system performance and IOPS load during an upgrade, see [Upgra
 
 ### <a id="types"></a> Select Internal or External File Storage
 
-When you deploy <%= vars.platform_name %>, you can select internal file storage or external file storage, either network-accessible or IaaS-provided, as an option in the PAS tile.
+When you deploy <%= vars.platform_name %>, you can select internal file storage or external file storage, either network-accessible or IaaS-provided, as an option in the <%= vars.app_runtime_abbr %> tile.
 
 Selecting internal storage causes <%= vars.platform_name %> to deploy a dedicated VM that uses either NFS or WebDAV for file storage. Selecting external storage allows you to configure file storage provided in network-accessible location or by an IaaS, such as Amazon S3, Google Cloud Storage, or Azure Storage.
 
@@ -195,8 +195,7 @@ Whenever possible, Pivotal recommends using external file storage.
 
 As a best-effort calculation, estimate the total number of bits needed to move during a system upgrade to determine how IOPS-performant your file storage needs to be.
 
-* **Number of Diego Cells**
-	* As a first calculation, determine the number of Diego Cells that your deployment currently uses. To view the number of Diego Cell instances currently running in your deployment, see the **Resource Config** section of your PAS tile. If you expect to scale up the number of instances, use the anticipated scaled number.
+* **Number of Diego Cells**: As a first calculation, determine the number of Diego Cells that your deployment currently uses. To view the number of Diego Cell instances currently running in your deployment, see the **Resource Config** pane of the <%= vars.app_runtime_abbr %> tile. If you expect to scale up the number of instances, use the anticipated scaled number.
 	<p class="note"><strong>Note:</strong> If your deployment uses more than 20 Diego Cells, you should avoid using internal file storage. Instead, you should always select external or IaaS-provided file storage.</p>
-* **Maximum In-Flight Load and Container Starts for Diego Cells**
-	* Operators can limit the number of containers and Diego Cell instances that Diego starts concurrently. If operators impose no limits, your file storage may experience exceptionally heavy load during an upgrade.
+
+* **Maximum In-Flight Load and Container Starts for Diego Cells**: Operators can limit the number of containers and Diego Cell instances that Diego starts concurrently. If operators impose no limits, your file storage may experience exceptionally heavy load during an upgrade.
