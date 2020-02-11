@@ -7,19 +7,19 @@ This topic serves as a checklist for preparing to upgrade <%= vars.product_name_
 
 This topic contains important preparation steps that you must follow before beginning your upgrade. Failure to follow these instructions may jeopardize your existing deployment data and cause the upgrade to fail.
 
-After completing the steps in this topic, you can continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
+After completing the steps in this topic, you can continue to [Upgrading <%= vars.product_name %>](../customizing/upgrading-pcf.html).
 
-<p class="note warning"><strong>Warning:</strong> Pivotal does not recommend that you skip minor versions when upgrading <%= vars.product_name %>. Skipping minor versions when upgrading <%= vars.product_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.product_name %> to the minor version that directly follows your current version of <%= vars.product_name %>.</p>
+<p class="note warning"><strong>Warning:</strong> <%= vars.recommended_by %> does not recommend that you skip minor versions when upgrading <%= vars.product_name %>. Skipping minor versions when upgrading <%= vars.product_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.product_name %> to the minor version that directly follows your current version of <%= vars.product_name %>.</p>
 
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your <%= vars.product_name %> Deployment
 
-Pivotal recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, see [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+<%= vars.recommended_by %> recommends backing up your <%= vars.product_name %> deployment before upgrading, to restore in the case of failure. To do this, see [Backing Up <%= vars.product_name %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
-## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for Ops Manager
+## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for <%= vars.ops_manager_full %>
 
-To complete the Ops Manager upgrade, you must have your Ops Manager decryption passphrase. You defined this decryption passphrase during the initial installation of Ops Manager.
+To complete the <%= vars.ops_manager %> upgrade, you must have your <%= vars.ops_manager %> decryption passphrase. You defined this decryption passphrase during the initial installation of <%= vars.ops_manager %>.
 
 
 ## <a id="review-pas-release-notes"></a> Review Changes in <%= vars.product_name %> v2.6
@@ -27,15 +27,19 @@ To complete the Ops Manager upgrade, you must have your Ops Manager decryption p
 Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
 * **Release Notes**
-	* [Ops Manager Release v2.6 Release Notes](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/opsmanager-rn.html)
-	* [PAS v2.6 Release Notes](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/runtime-rn.html)
+	* [<%= vars.ops_manager_full %> <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html)
+	* [<%= vars.product_runtime %> <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/runtime-rn.html)
+
 * **Known Issues**
-	* [Ops Manager v2.6 Known Issues](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/opsmanager-rn.html#known-issues)
-	* [PAS v2.6 Known Issues](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/runtime-rn.html)
+	* [<%= vars.ops_manager %> <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html#known-issues)
+	* [<%= vars.product_runtime %> <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/runtime-rn.html#known-issues)
+
 * **Breaking Changes**
-	* [<%= vars.product_name %> v2.6 Breaking Changes](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html)
+	* [<%= vars.product_name %> <%= vars.v_major_version %> Breaking Changes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/breaking-changes.html)
+
 * **KPI Changes**
 	* [KPI Changes](../monitoring/index.html#new)
+
 * **Diego Network Communications**:
 	* [Diego Network Communications](../security/networking/diego-network-paths.html)
 
@@ -52,7 +56,7 @@ To migrate your apps to a non-root `uid` or `gid` value, see [Rebind Your Apps](
 
 To get the apps you must migrate:
 
-1. Copy the following bash script to your Ops Manager jumpbox. 
+1. Copy the following bash script to your <%= vars.ops_manager %> jumpbox.
 
     ```
     #!/bin/bash
@@ -67,16 +71,16 @@ To get the apps you must migrate:
     ```
     bosh scp /tmp/get-affected-apps.sh diego_cell:/tmp/get-affected-apps.sh
     ```
-    <p class="note"><strong>Note:</strong> If you are running Small Footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
+    <p class="note"><strong>Note:</strong> If you are running Small Footprint <%= vars.product_short %>, substitute `diego-cell` with `compute` in the command.</p>
 
 1. Determine whether there are apps that need to be manually updated to be compatible with <%= vars.product_name %> v2.6 by running:
 
     ```
     bosh ssh diego_cell -c 'mv /tmp/get-affected-apps.sh ~/get-affected-apps.sh && sudo ~/get-affected-apps.sh' | grep 'stdout' | awk '{print $4}'  > /tmp/file_with_guids
     ```
-    <p class="note"><strong>Note:</strong> If you are running Small Footprint PAS, substitute `diego-cell` with `compute` in the command.</p>
+    <p class="note"><strong>Note:</strong> If you are running Small Footprint <%= vars.product_short %>, substitute `diego-cell` with `compute` in the command.</p>
 
-1. Using the file generated from the previous step, use `scp` to copy the file `/tmp/file_with_guids` from the Ops Manager jumpbox to a machine with the Cloud Foundry Command-Line Interface (cf CLI) installed.
+1. Using the file generated from the previous step, use `scp` to copy the file `/tmp/file_with_guids` from the <%= vars.ops_manager %> jumpbox to a machine with the Cloud Foundry Command-Line Interface (cf CLI) installed.
 
 1. From the machine with cf CLI installed, target your foundation.
 
@@ -139,37 +143,37 @@ To rebind your apps:
 
 ## <a id="restage-windows-apps"></a> Restage Windows Apps
 
-The `windows2016` stack is deprecated in PAS for Windows v2.6.
+The `windows2016` stack is deprecated in <%= vars.product_windows_full %> (<%= vars.product_windows %>) v2.6.
 
-Before upgrading to PAS for Windows v2.6 from PAS for Windows v2.5, Pivotal recommends that you restage all Windows apps that were pushed with the `windows2016` stack to use the `windows` stack.
+Before upgrading to <%= vars.product_windows %> <%= vars.v_major_version %> from <%= vars.product_windows %> v2.5, <%= vars.recommended_by %> recommends that you restage all Windows apps that were pushed with the `windows2016` stack to use the `windows` stack.
 
-For more information, see the [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) section in the _PAS for Windows v2.6 Release Notes_.
+For more information, see [Deprecation of the windows2016 Stack](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/windows-rn.html#windows2016) in _<%= vars.windows_runtime_full %> v2.6 Release Notes_.
 
-If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.5, you can also restage your apps before upgrading to PAS for Windows v2.5. For more information about upgrading to PAS for Windows v2.5, see [Upgrade to PAS for Windows v2.5](#upgrade-pasw).
+If you are running <%= vars.product_windows %> v2.4.4 or later on <%= vars.product_name %> v2.5, you can also restage your apps before upgrading to <%= vars.product_windows %> v2.5. For more information about upgrading to <%= vars.product_windows %> v2.5, see [Upgrade to <%= vars.product_windows %> v2.5](#upgrade-pasw).
 
 
-## <a id='ssh-private-key'></a> (vSphere Only) Add SSH Key to OVF Template for Ops Manager VM
+## <a id='ssh-private-key'></a> (vSphere Only) Add SSH Key to OVF Template for <%= vars.ops_manager %> VM
 
 To avoid upgrade failure and errors when authenticating:
 
-1. Add a public key to the OVF template for the Ops Manager VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see the [Deploy Ops Manager](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) section in the _Deploying Ops Manager on vSphere_ topic. 
+1. Add a public key to the OVF template for the <%= vars.ops_manager %> VM using the **Public SSH Key** field of the **Customize template** screen. For more information, see [Deploy <%= vars.ops_manager %>](https://docs.pivotal.io/pivotalcf/2-6/om/vsphere/deploy.html#deploy) in _Deploying <%= vars.ops_manager %> on vSphere_.
 
-For more information about this breaking change, see the [Passwords Not Supported for Ops Manager VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key) section in the _<%= vars.product_name %> v2.6 Breaking Changes_ topic. 
+For more information about this breaking change, see [Passwords Not Supported for <%= vars.ops_manager %> VM on vSphere](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#ssh-private-key) in _<%= vars.product_name %> v2.6 Breaking Changes_.
 
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
 The following section describes changes you must make to your product tiles and add-ons before upgrading <%= vars.product_name %>.
 
-### <a id="upgrade-pasw"></a> Upgrade to PAS for Windows v2.5
+### <a id="upgrade-pasw"></a> Upgrade to <%= vars.product_windows %> v2.5
 
-If you are running PAS for Windows v2.4.4 or later on <%= vars.product_name %> v2.5 and want to upgrade to <%= vars.product_name %> v2.6, you must upgrade to PAS for Windows v2.5 before upgrading to <%= vars.product_name %> v2.6. To download PAS for Windows, go to [Pivotal Network](https://network.pivotal.io/).
+If you are running <%= vars.product_windows %> v2.4.4 or later on <%= vars.product_name %> v2.5 and want to upgrade to <%= vars.product_name %> v2.6, you must upgrade to <%= vars.product_windows %> v2.5 before upgrading to <%= vars.product_name %> v2.6. To download <%= vars.product_windows %>, go to [Pivotal Network](https://network.pivotal.io/).
 
-### <a id="upgrade-stemcell"></a> Upgrade Stemcell to v2019.3 or Later for PAS for Windows v2.5
+### <a id="upgrade-stemcell"></a> Upgrade Stemcell to v2019.3 or Later for <%= vars.product_windows %> v2.5
 
-If you are running PAS for Windows v2.5 using Windows stemcell v2019.2, you must upgrade your stemcell to v2019.3 or later before you upgrade to Ops Manager v2.6.
+If you are running <%= vars.product_windows %> v2.5 using Windows stemcell v2019.2, you must upgrade your stemcell to v2019.3 or later before you upgrade to <%= vars.ops_manager %> v2.6.
 
-<p class="note warning"><strong>Warning:</strong> Windows stemcell v2019.2 is not compatible with Ops Manager v2.6.</p>
+<p class="note warning"><strong>Warning:</strong> Windows stemcell v2019.2 is not compatible with <%= vars.ops_manager %> v2.6.</p>
 
 ### <a id="compatibility"></a> Review Service Tile Compatibility
 
@@ -181,7 +185,7 @@ To check <%= vars.product_name %> versions supported by a service tile, either f
 
 1. Select the tile version in the **Releases** dropdown.
 
-1. See the **Depends On** section under **Release Details**. For more information, refer to the tile's release notes.
+1. See the **Depends On** section under **Release Details**. For more information, see the tile's release notes.
 
 If the currently-deployed version of a tile is not compatible with <%= vars.product_name %> v2.6, you must upgrade the tile to a compatible version before you upgrade <%= vars.product_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.product_name %> v2.5 and v2.6.
 
@@ -193,28 +197,27 @@ For an overview of which <%= vars.product_name %> versions support which version
 
 Pivotal provides the empty table below as a model to print out or adapt for recording and tracking the tile versions that you have deployed in all of your environments.
 
-|                                                                         |                                                                  | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
-| ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------------ | ------------- | -------- | ------------ |
-| **Pivotal Cloud Foundry**                                                   | [Ops Manager](https://network.pivotal.io/products/ops-manager) |              |               |          |              |
-|                                                                         | [Pivotal Application Service](https://network.pivotal.io/products/elastic-runtime) (PAS)     |              |               |          |              |
-| **Pivotal Cloud Foundry Services**         | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql)                                                            |              |               |          |              |
-|                                                                         | [Redis](https://network.pivotal.io/products/p-redis)                                                            |              |               |          |              |
-|                                                                         | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq)                                                         |              |               |          |              |
-|                                                                         | [Single Sign On](https://network.pivotal.io/products/p-identity) (SSO)                                                              |              |               |          |              |
-|                                                                         | [Spring Cloud Services](https://network.pivotal.io/products/p-spring-cloud-services)                                            |              |               |          |              |
-|                                                                         | [Concourse](https://network.pivotal.io/products/p-concourse)                                                        |              |               |          |              |
-|                                                                         | ...                                                              |              |               |          |              |
-| **Pivotal Cloud Foundry Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic)                                                        |              |               |          |              |
-|                                                                         | ...                                                           |              |               |          |              |
-
+|        |        | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
+| ------ | ------ | ----------- | ------------ | -------- | ------------ |
+| **<%= vars.product_name %>** | [<%= vars.ops_manager %>](https://network.pivotal.io/products/ops-manager) |        |        |        |        |
+|        | [<%= vars.product_runtime %>](https://network.pivotal.io/products/elastic-runtime) (<%= vars.product_short %>) |        |        |        |        |
+| **<%= vars.product_name %> Services** | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql) |        |        |        |        |
+|        | [Redis](https://network.pivotal.io/products/p-redis) |        |        |        |        |
+|        | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq) |        |        |        |        |
+|        | [Single Sign On](https://network.pivotal.io/products/p-identity) (SSO) |        |        |        |        |
+|        | [Spring Cloud Services](https://network.pivotal.io/products/p-spring-cloud-services) |        |        |          |        |
+|        | [Concourse](https://network.pivotal.io/products/p-concourse) |        |        |        |        |
+|        | ... |        |        |        |        |
+| **<%= vars.product_name %> Partner Services** | [New Relic](https://network.pivotal.io/products/p-new-relic) |        |        |        |        |
+|        | ... |        |        |        |        |
 
 ### <a id="upgrade-service-tiles"></a> Upgrade Services Tiles
 
 Upgrade all service tiles to versions that are compatible with <%= vars.product_name %> v2.6. Service tiles are add-on products you install alongside your runtime. For example, MySQL for <%= vars.product_name %>, <%= vars.product_name %> Healthwatch, and RabbitMQ are service tiles.
 
-Do not upgrade runtime tiles, such as PAS, PAS for Windows, or Pivotal Container Service (PKS), at this time.
+Do not upgrade runtime tiles, such as <%= vars.product_short %>, <%= vars.product_windows %>, or <%= vars.pks_product_full %> (<%= vars.pks_product_short %>) at this time.
 
-To check version compatibility, see the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and [Developer Guide](https://docs.pivotal.io/pivotalcf/2-6/devguide/index.html).
+To check version compatibility, see the [Compatibility Matrix](http://docs.pivotal.io/resources/product-compatibility-matrix.pdf) and [<%= vars.product_name %> Tile Developer Guide](https://docs.pivotal.io/pivotalcf/2-6/devguide/index.html).
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
@@ -222,33 +225,33 @@ With each release of a new <%= vars.product_name %> version, BOSH Director may r
 
 #### <a id="check-specs"></a> Check Required Machine Specifications
 
-Check the required machine specifications for Ops Manager v2.6. These specifications are specific to your IaaS. If these specifications do not match your existing Ops Manager, modify the values of your Ops Manager VM instance. For example, if the boot disk of your existing Ops Manager is 50&nbsp;GB and the new Ops Manager requires 100&nbsp;GB, then increase the size of your Ops Manager boot disk to 100&nbsp;GB.
+Check the required machine specifications for <%= vars.ops_manager %> <%= vars.v_major_version %>. These specifications are specific to your IaaS. If these specifications do not match your existing <%= vars.ops_manager %> deployment, modify the values of your <%= vars.ops_manager %> VM instance. For example, if the boot disk of your existing <%= vars.ops_manager %> deployment is 50&nbsp;GB and the new <%= vars.ops_manager %> deployment requires 100&nbsp;GB, increase the size of your <%= vars.ops_manager %> boot disk to 100&nbsp;GB.
 
-### <a id='patch'></a> Configure PAS
+### <a id='patch'></a> Configure <%= vars.product_short %>
 
-With each release of a new <%= vars.product_name %> version, PAS may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to <%= vars.product_name %> v2.6.
+With each release of a new <%= vars.product_name %> version, <%= vars.product_short %> may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to <%= vars.product_name %> v2.6.
 
 #### <a id="ssh-lb"></a> Remove Healthcheck from SSH Load Balancer
 
-If your SSH load balancer is configured with an HTTP healthcheck, remove the healthcheck before upgrading. This is the load balancer specified in the **Diego Brain** row of the **Resource Config** pane. 
+If your SSH load balancer is configured with an HTTP healthcheck, remove the healthcheck before upgrading. This is the load balancer specified in the **Diego Brain** row of the **Resource Config** pane.
 
-For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#http-healtcheck). 
+For more information, see [HTTP Healthcheck Server Disabled for SSH Proxy](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html#http-healtcheck).
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
-To save upgrade time, you can disable unused PAS post-deploy errands. For more information, see the [Post-Deploy Errands](https://docs.pivotal.io/tiledev/2-6/tile-errands.html#post-deploy) section of the _Errands_ topic for details. Only disable these errands if your environment does not need them.
+To save upgrade time, you can disable unused <%= vars.product_short %> post-deploy errands. For more information, see [Post-Deploy Errands](https://docs.pivotal.io/tiledev/<%= product_info['local_product_version'].to_s.sub('.','-') %>/tile-errands.html#post-deploy) in _Errands_. Only disable these errands if your environment does not need them.
 
-In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see the [Adding and Importing Products](../customizing/add-delete.html#add-import) section of the _Adding and Deleting Products_ topic.
+In some cases, if you have previously disabled lifecycle errands for any installed product to reduce deployment time, you may want to re-enable these errands before upgrading. For more information, see [Adding and Deleting Products](../customizing/add-delete.html#add-import) in _Adding and Deleting Products_.
 
 #### <a id="groot-gc"></a> Configure Diego Cell Garbage Collection
 
-In the **Application Containers** pane of the PAS tile, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** is different from the default of `10240`, then you must specify a new threshold. 
+In the **Application Containers** pane of the <%= vars.product_short %> tile, if **Docker Images Disk-Cleanup Scheduling on Cell VMs** is set to **Clean up disk-space once threshold is reached** and the value of **Threshold of Disk-Used (MB)** is different from the default of `10240`, then you must specify a new threshold.
 
-If the scheduling is set to **Never clean up...** or **Routinely clean up...**, or the threshold value is set to the default of `10240`, then no action is necessary. All thresholds will migrate to a sensible value when you upgrade PAS. For more information, see [Configuring Cell Disk Cleanup Scheduling](../opsguide/config-cell-cleanup.html).
+If the scheduling is set to **Never clean up...** or **Routinely clean up...**, or the threshold value is set to the default of `10240`, then no action is necessary. All thresholds will migrate to a sensible value when you upgrade <%= vars.product_short %>. For more information, see [Configuring Cell Disk Cleanup Scheduling](../opsguide/config-cell-cleanup.html).
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
-Before upgrading to <%= vars.product_name %> v2.6, operators who have deployed any <%= vars.product_name %> add-ons such as **IPsec for <%= vars.product_name %>**, **ClamAV for <%= vars.product_name %>**, or **File Integrity Monitoring for <%= vars.product_name %>** and who have deployed or are planning to deploy PAS for Windows must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [Pivotal Application Service for Windows](../windows/index.html).
+Before upgrading to <%= vars.product_name %> v2.6, operators who have deployed any <%= vars.product_name %> add-ons such as **IPsec for <%= vars.product_name %>**, **ClamAV for <%= vars.product_name %>**, or **File Integrity Monitoring for <%= vars.product_name %>** and who have deployed or are planning to deploy <%= vars.product_windows %> must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [<%= vars.product_windows %>](../windows/index.html).
 
 For example, **File Integrity Monitor for <%= vars.product_name %>** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty` and `ubuntu-xenial`.
 
@@ -256,56 +259,56 @@ For example, **File Integrity Monitor for <%= vars.product_name %>** (FIM) is no
 
 To update an add-on manifest:
 
-1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the Ops Manager VM.
+1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the <%= vars.ops_manager %> VM.
 
 1. Modify the manifest to include following `include` directive to your manifest:
 
-    ```yml
-      include:
-        stemcell:
-          - os: ubuntu-xenial
+    ```
+    include:
+      stemcell:
+        - os: ubuntu-xenial
     ```
 
 1. Upload the modified manifest file to your <%= vars.product_name %> deployment. For example instructions, see [Create the FIM Manifest](https://docs.pivotal.io/addon-fim/index.html#create-mfest).
 
-If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see [Addons Block](https://bosh.io/docs/runtime-config.html#addons) in the BOSH documentation.
+If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see [Addons Block](https://bosh.io/docs/runtime-config.html#addons) in _Director Runtime Config_ in the BOSH documentation.
 
 ### <a id="azure-blobstore-addon"></a> Check Backup and Restore External Blobstore Add-On
 
-If you have enabled external blobstore backups for an Azure Blobstore using the Blobstore Add-On, you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading. For more information, see the [Azure Blobstores](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure) section of the _Enabling External Blobstore Backups_ topic.
+If you have enabled external blobstore backups for an Azure Blobstore using the Blobstore Add-On, you must update your runtime configuration to remove the `sdk-preview` add-on before upgrading. For more information, see [Azure Blobstores](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure) in _Enabling External Blobstore Backups_.
 
-If you do not remove this job, upgrading PAS fails with the error:
+If you do not remove this job, upgrading <%= vars.product_short %> fails with the error:
 
 ```
 Preparing deployment: Preparing deployment (00:00:01)
   L Error: Colocated job 'azure-blobstore-backup-restorer' is already added to the instance group 'backup-restore'.
 ```
 
-After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the **File Storage** pane of the PAS tile.
+After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the **File Storage** pane of the <%= vars.product_short %> tile.
 
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
 
 Depending on the requirements of your deployment, you may need to rotate your Certificate Authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
 
-<p class="note"><strong>Note:</strong> <%= vars.product_name %> uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Rotate Identity Provider SAML Certificates</a> section of the <em>Managing TLS Certificates</em> topic.</p>
+<p class="note"><strong>Note:</strong> <%= vars.product_name %> uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your <%= vars.ops_manager %> certificates using the procedure described in <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Rotate Identity Provider SAML Certificates</a> in <em>Managing TLS Certificates</em>.</p>
 
-To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the Ops Manager API.
+To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the <%= vars.ops_manager %> API.
 
 In this request, the `expires_within` parameter is optional. Valid values for the parameter are `d` for days, `w` for weeks, `m` for months, and `y` for years. For example, to search for certificates expiring within one month, replace `TIME` with `1m`:
 
-<pre class="terminal">
+```
 $ curl "https://OPS-MAN-FQDN/api/v0/deployed/certificates?expires_within=1m" \
  -X GET \
  -H "Authorization: Bearer UAA_ACCESS_TOKEN"
-</pre>
+```
 
 For information about regenerating and rotating CA certificates, see [Rotating Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
 
 
 ## <a id="capacity"></a> Check the Capacity of Your Deployment
 
-The following sections describe steps for ensuring your deployment has adequate capacity to perform the upgrade.
+These sections describe steps for ensuring your deployment has adequate capacity to perform the upgrade.
 
 ### <a id="confirm-om-disk"></a> Confirm Adequate Disk Space
 
@@ -322,25 +325,25 @@ The Key Performance Indicators (KPIs) that monitor these these resources are are
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Diego Cells. For more information, see the [Limit <%= vars.product_name %> Component Instances During Restart](./configuring.html#limit-restart) section of the _Configuring PAS for Upgrades_ topic.
+If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Cells. For more information, see [Limit <%= vars.product_name %> Component Instances During Restart](./configuring.html#limit-restart) in _Configuring <%= vars.product_short %> for Upgrades_.
 
-For <%= vars.product_name %> v1.10 and later, the maximum number of Diego Cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see the [Prevent Overload](./configuring.html#limitations-considerations) section of the _Configuring PAS for Upgrades_ topic.
+For <%= vars.product_name %> v1.10 and later, the maximum number of Diego Cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see [Prevent Overload](./configuring.html#limitations-considerations) in _Configuring <%= vars.product_short %> for Upgrades_.
 
-For more information about these KPIs, see the [Diego Cell Metrics](../monitoring/kpi.html#cell) section of the _Key Performance Indicators_ topic.
+For more information about these KPIs, see [Diego Cell Metrics](../monitoring/kpi.html#cell) in _Key Performance Indicators_.
 
 ### <a id="storage"></a> Review File Storage IOPS and Other Upgrade Limiting Factors
 
 During the <%= vars.product_name %> upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of <%= vars.product_name %>, verify that your underlying PAS file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see the [Configure File Storage](../upgrading/configuring.html#file-storage) section of the _Configuring PAS for Upgrades_ topic.
+To ensure a successful upgrade of <%= vars.product_name %>, verify that your underlying <%= vars.product_short %> file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Configure File Storage](../upgrading/configuring.html#file-storage) in _Configuring <%= vars.product_short %> for Upgrades_.
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
-|**Factor**|**Impact**|
-|----------|----------|
-|**Network latency**| Network latency can contribute to how long it takes to move app instance data to new containers. |
-|**Number of ASGs**| A large number of App Security Groups (ASGs) in your deployment can contribute to an increase in app instance container startup time. For more information, see [App Security Groups](../concepts/asg.html). |
-|**Number of app instances and app growth**| A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
+| **Factor** | **Impact** |
+| ---------- | ---------- |
+| **Network latency** | Network latency can contribute to how long it takes to move app instance data to new containers. |
+| **Number of ASGs** | A large number of App Security Groups (ASGs) in your deployment can contribute to an increase in app instance container startup time. For more information, see [App Security Groups](../concepts/asg.html). |
+| **Number of app instances and app growth** | A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
 
 To see example upgrade-related performance measurements of an existing production <%= vars.product_name %> deployment, see [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
 
@@ -351,11 +354,11 @@ Run `bosh -e ALIAS clean-up --all` to clean up old stemcells, releases, orphaned
 
 ## <a id="health"></a> Check the Health of Your Deployment
 
-The following sections describe steps for ensuring your deployment is healthy before you perform the upgrade.
+These sections describe steps for ensuring your deployment is healthy before you perform the upgrade.
 
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
-For collecting foundation health status, Pivotal recommends <%= vars.product_name %> Healthwatch, which monitors and alerts on the current health, performance, and capacity of <%= vars.product_name %>. For more information, see [<%= vars.product_name %> Healthwatch](https://docs.pivotal.io/pcf-healthwatch/index.html).
+For collecting foundation health status, <%= vars.recommended_by %> recommends <%= vars.product_name %> Healthwatch, which monitors and alerts on the current health, performance, and capacity of <%= vars.product_name %>. For more information, see [<%= vars.product_name %> Healthwatch](https://docs.pivotal.io/pcf-healthwatch/index.html).
 
 If you are not using <%= vars.product_name %> Healthwatch, you can do some or all of the following to collect foundation health status:
 
@@ -366,11 +369,9 @@ If you are not using <%= vars.product_name %> Healthwatch, you can do some or al
 	* `bosh -e ALIAS vms --vitals`. This reveals VMs with high CPU, high memory, high disk utilization, and with `state` != `running`.
 	* `bosh -e ALIAS -d DEPLOYMENT_NAME cck --report`
 
-* Check Ops Manager GUI each PAS/Tiles the status page for CPU/RAM/DISK utilization
+* Check that <%= vars.ops_manager %> persistent disk usage is below 50%. If not, follow the procedure in [Confirm Adequate Disk Space](#confirm-om-disk).
 
-* Validate Ops Manager persistent disk usage is below 50%. If not, follow the procedure in [Confirm Adequate Disk Space](#confirm-om-disk).
-
-(Optional) Check the logs for errors before proceeding with the upgrade. For more information, see the [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view) section of the _App Logging in Cloud Foundry_ topic.
+* (Optional) Check the logs for errors before proceeding with the upgrade. For more information, see [Viewing Logs in the Command Line Interface](../devguide/deploy-apps/streaming-logs.html#view) in _App Logging in <%= vars.product_short %>_.
 
 ### <a id="push-test-app"></a> Push and Scale a Test App
 
@@ -378,7 +379,7 @@ Check that a test app can be pushed and scaled horizontally, manually or through
 
 ### <a id="validate-mysql-cluster-health"></a> Validate MySQL Cluster Health
 
-If you are running PAS MySQL as a cluster, run the `mysql-diag` tool to validate health of the cluster.
+If you are running <%= vars.product_short %> MySQL as a cluster, run the `mysql-diag` tool to validate health of the cluster.
 
 For more information, see [Running mysql-diag](../pas/mysql-diag.html).
 
@@ -386,7 +387,7 @@ For more information, see [Running mysql-diag](../pas/mysql-diag.html).
 
 To review pending and recent changes:
 
-1. Confirm there are no outstanding changes in Ops Manager or any other tile. All tiles should be **green**. Click **Review Pending Changes**, then **Apply Changes** if necessary.
+1. Confirm there are no outstanding changes in <%= vars.ops_manager %> or any other tile. All tiles should be **green**. Click **Review Pending Changes**, then **Apply Changes** if necessary.
 
 1. After applying changes, click **Recent Install Logs** to confirm that the changes completed cleanly:
 
@@ -401,19 +402,20 @@ To review pending and recent changes:
 
 To export your installation:
 
-1. In your Ops Manager **Installation Dashboard**, click the account dropdown and select **Settings**.
+1. In the <%= vars.ops_manager %> Installation Dashboard, click the account dropdown and select **Settings**.
 
     <%= image_tag("./images/upgrade_to_1.9.png") %>
 
-1. On the **Settings** screen, select **Export Installation Settings** from the left menu, then click **Export Installation Settings**.
+1. On the **Settings** page, select **Export Installation Settings** from the left menu, then click **Export Installation Settings**.
 
     <%= image_tag("./images/export_install_settings.png") %>
 
 This exports the current <%= vars.product_name %> installation with all of its assets.
 
-When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.product_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up Pivotal Cloud Foundry with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if <%= vars.ops_manager %> has already uploaded them to BOSH. When backing up <%= vars.product_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up <%= vars.product_name %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 * The export time depends on the size of the exported file.
+
 * Some browsers do not provide feedback on the status of the export process and might appear to hang.
 
 <p class="note"><strong>Note:</strong> Some operating systems automatically unzip the exported installation. If this occurs, create a ZIP file of the unzipped export. Do not start compressing at the "installation" folder level. Instead, start compressing at the level containing the <code>config.yml</code> file:</p>
@@ -425,9 +427,9 @@ When you export an installation, the export contains the base VM images, necessa
 
 ## <a id="next-steps"></a> Next Steps
 
-Now that you have completed the Upgrade Preparation Checklist, continue to [Upgrading Pivotal Cloud Foundry](../customizing/upgrading-pcf.html).
+Now that you have completed the Upgrade Preparation Checklist, continue to [Upgrading <%= vars.product_name %>](../customizing/upgrading-pcf.html).
 
 
 ## <a id="survey"></a> Complete Survey
 
-Please take some time to help us improve this document by completing the [Upgrade Checklist Survey](https://docs.google.com/forms/d/e/1FAIpQLScf9KuTbF3B9CjldMGqQxF-GA72xMR0DGzaGmhX4uWMrD8pOA/viewform?c=0&w=1).
+Please take some time to help improve this topic by completing the [Upgrade Checklist Survey](https://docs.google.com/forms/d/e/1FAIpQLScf9KuTbF3B9CjldMGqQxF-GA72xMR0DGzaGmhX4uWMrD8pOA/viewform?c=0&w=1).

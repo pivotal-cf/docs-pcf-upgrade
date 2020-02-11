@@ -3,40 +3,40 @@ title: What Happens During PAS Upgrades
 owner: Ops Manager
 ---
 
-This topic explains what happens to Pivotal Application Service (PAS) components and apps during a PAS upgrade. 
+This topic explains what happens to <%= vars.product_runtime %> (<%= vars.product_short %>) components and apps during a <%= vars.product_short %> upgrade.
 
 
 ## <a id="bosh-drains"></a> BOSH Drains Diego Cell VMs
 
-During a PAS upgrade, BOSH drains all Diego Cell VMs that host app instances. BOSH manages this process by upgrading a batch of cells one at a time.
+During a <%= vars.product_short %> upgrade, BOSH drains all Diego Cell VMs that host app instances. BOSH manages this process by upgrading a batch of cells one at a time.
 
 When BOSH triggers an upgrade, each upgrading Diego Cell enters evacuation mode. In evacuation mode, BOSH stops Diego cells and then schedules replacements for its app instances.
 
-For more information, see the [Specific Guidance for Diego Cells](./configuring.html#diego-cells) section of the _Configuring PAS for Upgrades_ topic.
+For more information, see [Specific Guidance for Diego Cells](./configuring.html#diego-cells) in _Configuring <%= vars.product_short %> for Upgrades_.
 
 
 ## <a id="cf-push"></a> cf push Can Become Unavailable
 
-`cf push` is mostly available for the duration of a PAS upgrade. However, `cf push` can become unavailable when a single VM is in use or during BOSH Backup and Restore (BBR).
+`cf push` is mostly available for the duration of a <%= vars.product_short %> upgrade. However, `cf push` can become unavailable when a single VM is in use or during BOSH Backup and Restore (BBR).
 
-For more information, see [cf push Availability During Pivotal Application Service Upgrades](https://docs.pivotal.io/pivotalcf/2-3/customizing/cfpush-availability-during-upgrade.html).
+For more information, see [cf push Availability During <%= vars.product_short %> Upgrades](https://docs.pivotal.io/platform/application-service/operating/cfpush-availability-during-upgrade.html).
 
 
-## <a id="upgrade-limitations"></a> PAS Components Upgrade
+## <a id="upgrade-limitations"></a> <%= vars.product_short %> Components Upgrade
 
-This section describes the order in which Ops Manager upgrades components and runs tasks during a full platform upgrade. It also explains how the scale of different PAS components affects uptime during upgrades, and which components are scalable.
+This section describes the order in which <%= vars.ops_manager_full %> upgrades components and runs tasks during a full platform upgrade. It also explains how the scale of different <%= vars.product_short %> components affects uptime during upgrades, and which components are scalable.
 
-When performing an upgrade, Ops Manager first upgrades individual components, and then runs one-time tasks.
+When performing an upgrade, <%= vars.ops_manager %> first upgrades individual components, and then runs one-time tasks.
 
-1. The [Components](#components) section describes how Ops Manager upgrades PAS components and explains how individual component upgrades affect broader PAS capabilities.
+1. [Components](#components) describes how <%= vars.ops_manager %> upgrades <%= vars.product_short %> components and explains how individual component upgrades affect broader <%= vars.product_short %> capabilities.
 
-2. The [One-Time Tasks](#tasks) section lists the tasks that Ops Manager runs after it upgrades the PAS components.
+1. [One-Time Tasks](#tasks) lists the tasks that <%= vars.ops_manager %> runs after it upgrades the <%= vars.product_short %> components.
 
 ### <a id= "components"></a> Components
 
-Ops Manager upgrades PAS components in a fixed order that honors component dependencies and minimizes downtime and other system limitations during the upgrade process.
+<%= vars.ops_manager %> upgrades <%= vars.product_short %> components in a fixed order that honors component dependencies and minimizes downtime and other system limitations during the upgrade process.
 
-The type and duration of downtime and other limitations that you can expect during a PAS upgrade reflect the following:
+The type and duration of downtime and other limitations that you can expect during a <%= vars.product_short %> upgrade reflect:
 
 * Component instance scaling. See [How Single-Component Scaling Affects Upgrades](#single-components).
 
@@ -44,33 +44,34 @@ The type and duration of downtime and other limitations that you can expect duri
 
 #### <a id= "single-components"></a> How Single-Component Scaling Affects Upgrades
 
-In <%= vars.product_name_full %> (<%= vars.product_name %>) Ops Manager, the **Resource Config** pane of the PAS tile shows the components that the BOSH Director installs:
+In <%= vars.ops_manager %>, the **Resource Config** pane of the <%= vars.product_short %> tile shows the components that the BOSH Director installs:
 
 * **Scalable** component fields let you select the instance count from a range of settings or enter a custom value.
+
 * **Unscalable** component fields allow a maximum of one instance.
 
 When a component is scaled at a single instance, it can experience downtime and other limitations while the single VM restarts. This behavior might be acceptable for a test environment. To avoid downtime in a production environment, you should scale any scalable components, such as HAProxy, Router, and Diego Cells, to more than one instance.
 
 For more information about how the scale of each component affects upgrade behavior, see [Component Upgrade Order and Behavior](#order-behavior).
 
-<p class="note"><strong>Note:</strong> A full Ops Manager upgrade may take close to two hours, and you will have limited ability to deploy an app during this time.</p>
+<p class="note"><strong>Note:</strong> A full <%= vars.ops_manager %> upgrade may take close to two hours. You have limited ability to deploy an app during this time.</p>
 
 #### <a id= "order-behavior"></a> Component Upgrade Order and Behavior
 
-The table below lists components in the order that Ops Manager upgrades each. It also lists which components are scalable and explains how component downtime affects PAS app and control availability. The table includes the following columns:
+The table below lists components in the order that <%= vars.ops_manager %> upgrades each. It also lists which components are scalable and explains how component downtime affects <%= vars.product_short %> app and control availability. The table includes these columns:
 
-* **Scalable**: Indicates whether the component is scalable above a single instance.
-    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, <%= vars.recommended_by %> recommends that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see <a href="../concepts/high-availability.html">High Availability in PAS</a>.</p>
+* **Scalable:** Indicates whether the component is scalable above a single instance.
+    <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, <%= vars.recommended_by %> recommends that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see <a href="../concepts/high-availability.html">High Availability in <%= vars.product_short %></a>.</p>
 
-* **Extended Downtime**: Indicates that if there is only one instance of the component, that component is unavailable for up to five minutes during an Ops Manager upgrade.
+* **Extended Downtime:** Indicates that if there is only one instance of the component, that component is unavailable for up to five minutes during an <%= vars.ops_manager %> upgrade.
 
-* **Downtime Affects...**: Indicates the plane of the PAS platform that component downtime affects, if the component is scaled at single instance:
-  - **Apps**: Downtime can affect app availability.
-  - **Platform**: Apps remain available during component downtime, but you cannot push, stage, or restart apps, or run other Cloud Foundry command-line interface (cf CLI) commands.
+* **Downtime Affects...:** Indicates the plane of the <%= vars.product_short %> platform that component downtime affects, if the component is scaled at single instance:
+  * **Apps**: Downtime can affect app availability.
+  * **Platform**: Apps remain available during component downtime, but you cannot push, stage, or restart apps, or run other Cloud Foundry command-line interface (cf CLI) commands.
 
-* **Other Limitations and Information**: Provides the following information:
-    * Component availability, behavior, and usage during an upgrade
-    * Guidance on disabling the component before an upgrade
+* **Other Limitations and Information:** Provides:
+  * Component availability, behavior, and usage during an upgrade
+  * Guidance on disabling the component before an upgrade
 
 <table border="1" class="nice" >
 <tr>
@@ -114,7 +115,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td></td>
   <td>&#10003;</td>
-  <td>The MySQL Server is responsible for persisting internal databases for the platform. If the MySQL Server becomes unavailable, then platform services that rely upon a database (Cloud Controller, UAA) will also become unavailable.</td>
+  <td>The MySQL Server is responsible for persisting internal databases for the platform. If the MySQL Server becomes unavailable, then platform services that rely upon a database, such as Cloud Controller and UAA, also become unavailable.</td>
 </tr>
 <tr>
   <td>Backup Restore Node</td>
@@ -154,15 +155,15 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td></td>
-  <td>HAProxy is used to load-balance incoming requests to the Router. If HAProxy is unavailable, you may lose the ability to make requests to apps unless there is another routing path from your load balancer to the Router.</td>
+  <td>HAProxy is used to load-balance incoming requests to the Router. If HAProxy is unavailable, you may lose the ability to make requests to apps unless there is another routing path from your load balancer to the Gorouter.</td>
 </tr>
 <tr>
-  <td>Router</td>
+  <td>Gorouter</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td></td>
-  <td>The Router is responsible for routing requests to their app containers. If the Router is not available, then apps cannot receive requests.</td>
+  <td>The Gorouter is responsible for routing requests to their app containers. If the Gorouter is not available, then apps cannot receive requests.</td>
 </tr>
 <tr>
   <td>MySQL Monitor</td>
@@ -202,7 +203,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td>&#10003;</td>
   <td>&#10003;</td>
   <td>&#10003;</td>
-  <td>If you only have one Diego Cell, upgrading causes downtime for all apps that run on it. These include apps pushed with <code>cf push</code> and apps automatically installed by PAS, like Apps Manager and the App Usage Service.</td>
+  <td>If you only have one Diego Cell, upgrading causes downtime for all apps that run on it. These include apps pushed with <code>cf push</code> and apps automatically installed by <%= vars.product_short %>, such as Apps Manager and the App Usage Service.</td>
 </tr>
 <tr>
   <td>Loggregator Trafficcontroller</td>
@@ -210,7 +211,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td></td>
   <td></td>
-  <td>Ops Manager operators experience 2-5 minute gaps in logging.</td>
+  <td><%= vars.ops_manager %> operators experience 2-5 minute gaps in logging.</td>
 </tr>
 <tr>
   <td>Syslog Adapter</td>
@@ -236,7 +237,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
   <td></td>
   <td></td>
   <td></td>
-  <td>Ops Manager operators experience 2-5 minute gaps in logging.</td>
+  <td><%= vars.ops_manager %> operators experience 2-5 minute gaps in logging.</td>
 </tr>
 <tr>
   <td>TCP Router (if enabled)</td>
@@ -282,7 +283,7 @@ The table below lists components in the order that Ops Manager upgrades each. It
 
 ### <a id= "tasks"></a> One-Time Tasks
 
-After Ops Manager upgrades components, it performs system checks and launches UI apps and other PAS components as <%= vars.product_name %> apps. These tasks run in the following order:
+After <%= vars.ops_manager %> upgrades components, it performs system checks and launches UI apps and other <%= vars.product_short %> components as <%= vars.product_name %> apps. These tasks run in this order:
 
 <table>
 <tr>
