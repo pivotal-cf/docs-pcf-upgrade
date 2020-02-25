@@ -106,23 +106,6 @@ Check the required machine specifications for <%= vars.ops_manager %> <%= vars.v
 
 With each release of a new <%= vars.platform_name %> version, <%= vars.app_runtime_abbr %> may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>:
 
-#### <a id="remove-v1-firehose-dependencies"></a> Remove V1 Firehose Dependencies
-
-The Loggregator V1 Firehose is disabled by default. When the V1 Firehose is disabled, all Traffic Controller VMs are scaled down to zero instances.
-
-Any automation, tooling, or integrations that rely on the V1 Firehose break on upgrade to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
-
-To address this breaking change, do one of the following:
-
-* To use the V2 Firehose, remove any dependencies to the V1 Firehose. To do this, upgrade any tiles that are dependent on the V1 Firehose. You must also update any automation, tooling, or integrations to use the V2 Firehose. To determine what automation, tooling, or integrations depend on the V1 Firehose, you can look for references to Traffic Controllers. Also, anything that references Dopplers may depend on the V1 Firehose. 
-* To continue using automation, tooling, or integrations that reference the V1 Firehose, you can enable the V1 Firehose after you stage and before you deploy <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
-
-(Insert information about what are the earliest versions of internal tiles and partner tiles that are not dependent on the v1 Firehose)
-
-Reach out to Support with questions. 
-
-
-
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
 To save upgrade time, you can disable unused <%= vars.app_runtime_abbr %> post-deploy errands. For more information, see [Post-Deploy Errands](https://docs.pivotal.io/tiledev/<%= product_info['local_product_version'].to_s.sub('.','-') %>/tile-errands.html#post-deploy) in _Errands_. Only disable these errands if your environment does not need them.
