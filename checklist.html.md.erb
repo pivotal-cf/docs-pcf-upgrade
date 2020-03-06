@@ -1,5 +1,5 @@
 ---
-title: Upgrade Preparation Checklist for Pivotal Platform v2.9
+title: Upgrade Preparation Checklist for Ops Manager v2.9
 owner: Ops Manager
 ---
 
@@ -54,7 +54,7 @@ These sections describe changes you must make to your product tiles and add-ons 
 
 Before you upgrade, check whether the service tiles that you currently have are compatible with the new version of <%= vars.platform_name %>.
 
-To check <%= vars.platform_name %> versions supported by a service tile, either from Pivotal or a Pivotal partner:
+To check <%= vars.platform_name %> versions supported by a service tile:
 
 1. Navigate to the tile's download page on [Pivotal Network](https://network.pivotal.io).
 
@@ -64,13 +64,13 @@ To check <%= vars.platform_name %> versions supported by a service tile, either 
 
 If the currently-deployed version of a tile is not compatible with <%= vars.platform_name %> <%= vars.v_major_version %>, you must upgrade the tile to a compatible version before you upgrade <%= vars.platform_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.platform_name %> v2.8 and <%= vars.v_major_version %>.
 
-Some partner service tiles may be incompatible with <%= vars.platform_name %> <%= vars.v_major_version %>. Pivotal works with partners to ensure their tiles are updated to work with the latest versions of <%= vars.platform_name %>. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, see the partners services release documentation in [Pivotal Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
+Some partner service tiles may be incompatible with <%= vars.platform_name %> <%= vars.v_major_version %>. We work with partners to ensure their tiles are updated to work with the latest versions of <%= vars.platform_name %>. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, see the partners services release documentation in [VMware Tanzu Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
 
-For the latest compatibility information, see [Pivotal Upgrade Planner](https://upgrade-planner.pivotal.io/).
+For the latest compatibility information, see [Upgrade Planner](https://upgrade-planner.pivotal.io/).
 
 #### <a id="env"></a> Environment Details
 
-Pivotal provides the empty table below as a model to print out or adapt for recording and tracking the tile versions that you have deployed in all of your environments.
+You can use the empty table below as a template for recording and tracking the tile versions that you have deployed in all of your environments.
 
 |        |        | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
 | ------ | ------ | ----------- | ------------ | -------- | ------------ |
@@ -92,7 +92,7 @@ Upgrade all service tiles to versions that are compatible with <%= vars.platform
 
 Do not upgrade runtime tiles, such as <%= vars.app_runtime_abbr %>, <%= vars.windows_runtime_full %> (<%= vars.windows_runtime_abbr %>), or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) at this time.
 
-To verify version compatibility, see [Pivotal Upgrade Planner](https://upgrade-planner.pivotal.io/) and the service tile documentation.
+To verify version compatibility, see [Upgrade Planner](https://upgrade-planner.pivotal.io/) and the service tile documentation.
 
 ### <a id='bosh-director'></a> Configure BOSH Director
 
@@ -168,7 +168,7 @@ To update an add-on manifest:
           - os: ubuntu-xenial
     ```
 
-1. Upload the modified manifest file to your <%= vars.platform_name %> deployment. For example instructions, see [Installing File Integrity Monitoring on BOSH Director](https://docs.pivotal.io/addon-fim/2-0/installing-bosh.html) in the Pivotal File Integrity Monitoring documentation.
+1. Upload the modified manifest file to your <%= vars.platform_name %> deployment. For example instructions, see [Installing File Integrity Monitoring on BOSH Director](https://docs.pivotal.io/addon-fim/2-0/installing-bosh.html) in the File Integrity Monitoring documentation.
 
 If you use any other BOSH-managed add-ons in your deployment, you should verify OS compatibility for those component as well. For more information about configuring BOSH add-on manifests, see [Addons Block](https://bosh.io/docs/runtime-config.html#addons) in _Director Runtime Config_ in the BOSH documentation.
 
