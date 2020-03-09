@@ -64,7 +64,7 @@ To check <%= vars.platform_name %> versions supported by a service tile:
 
 If the currently-deployed version of a tile is not compatible with <%= vars.platform_name %> <%= vars.v_major_version %>, you must upgrade the tile to a compatible version before you upgrade <%= vars.platform_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.platform_name %> v2.8 and <%= vars.v_major_version %>.
 
-Some partner service tiles may be incompatible with <%= vars.platform_name %> <%= vars.v_major_version %>. We work with partners to ensure their tiles are updated to work with the latest versions of <%= vars.platform_name %>. For more information about which partner service release compatibility, review the **Depends On** section of the partners tile download page, see the partners services release documentation in [VMware Tanzu Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
+Some partner service tiles may be incompatible with <%= vars.platform_name %> <%= vars.v_major_version %>. For more information about partner service release compatibility, review the **Depends On** section of the partners tile download page, see the partners services release documentation in [VMware Tanzu Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
 
 For the latest compatibility information, see [Upgrade Planner](https://upgrade-planner.pivotal.io/).
 
@@ -88,7 +88,7 @@ You can use the empty table below as a template for recording and tracking the t
 
 ### <a id="upgrade-service-tiles"></a> Upgrade Services Tiles
 
-Upgrade all service tiles to versions that are compatible with <%= vars.platform_name %> <%= vars.v_major_version %>. Service tiles are add-on products you install alongside your runtime. For example, MySQL for <%= vars.platform_name %>, <%= vars.platform_name %> Healthwatch, and RabbitMQ are service tiles.
+Upgrade all service tiles to versions that are compatible with <%= vars.platform_name %> <%= vars.v_major_version %>. Service tiles are add-on products you install alongside your runtime. For example, MySQL for VMware Tanzu, Healthwatch, and RabbitMQ are service tiles.
 
 Do not upgrade runtime tiles, such as <%= vars.app_runtime_abbr %>, <%= vars.windows_runtime_full %> (<%= vars.windows_runtime_abbr %>), or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) at this time.
 
@@ -150,9 +150,9 @@ For high availability, <%= vars.recommended_by %> recommends that you use at lea
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
-Before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>, operators who have deployed any <%= vars.platform_name %> add-ons such as **IPsec for <%= vars.platform_name %>**, **ClamAV for <%= vars.platform_name %>**, or **File Integrity Monitoring for <%= vars.platform_name %>** and who have deployed or are planning to deploy <%= vars.windows_runtime_abbr %> must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [<%= vars.windows_runtime_full %>](https://docs.pivotal.io/platform/application-service-windows/<%= product_info['local_product_version'].to_s.sub('.','-') %>/index.html).
+Before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>, operators who have deployed any <%= vars.platform_name %> add-ons such as **IPsec**, **Anti-Virus**, or **File Integrity Monitoring** and who have deployed or are planning to deploy <%= vars.windows_runtime_abbr %> must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [<%= vars.windows_runtime_full %>](https://docs.pivotal.io/platform/application-service-windows/<%= product_info['local_product_version'].to_s.sub('.','-') %>/index.html).
 
-For example, **File Integrity Monitor for <%= vars.platform_name %>** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty` and `ubuntu-xenial`.
+For example, **File Integrity Monitor** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty` and `ubuntu-xenial`.
 
 <p class="note"><strong>Note:</strong> To upgrade to a Xenial stemcell, see the documentation for each add-on and follow the instructions.</p>
 
@@ -266,9 +266,9 @@ These sections describe steps for ensuring your deployment is healthy before you
 
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
-For collecting foundation health status, <%= vars.recommended_by %> recommends <%= vars.platform_name %> Healthwatch, which monitors and alerts on the current health, performance, and capacity of <%= vars.platform_name %>. For more information, see the [<%= vars.platform_name %> Healthwatch documentation](https://docs.pivotal.io/pcf-healthwatch/index.html).
+For collecting foundation health status, <%= vars.recommended_by %> recommends Healthwatch, which monitors and alerts on the current health, performance, and capacity of <%= vars.platform_name %>. For more information, see the [Healthwatch documentation](https://docs.pivotal.io/pcf-healthwatch/index.html).
 
-If you are not using <%= vars.platform_name %> Healthwatch, you can do some or all of the following to collect foundation health status:
+If you are not using Healthwatch, you can do some or all of the following to collect foundation health status:
 
 * If your <%= vars.platform_name %> deployment has external metrics monitoring set up, verify that VM CPU, RAM, and disk use levels are within reasonable levels.
 
