@@ -16,7 +16,7 @@ After completing the steps in this topic, you can continue to [Upgrading <%= var
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your <%= vars.platform_name %> Deployment
 
-<%= vars.recommended_by %> recommends backing up your <%= vars.platform_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up <%= vars.platform_name %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+<%= vars.recommended_by %> recommends backing up your <%= vars.platform_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
 ## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for <%= vars.ops_manager_full %>
@@ -345,7 +345,7 @@ To export your installation:
 
 This exports the current <%= vars.platform_name %> installation with all of its assets.
 
-When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.platform_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up <%= vars.platform_name %> with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.platform_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 * The export time depends on the size of the exported file.
 
