@@ -45,6 +45,14 @@ Review each of the following links to understand the changes in the new release,
 * **Diego Network Communications**:
 	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
+## <a id="nsx-t"></a> Check VMware NSX-T Data Center Version
+
+For vSphere deployments, the vSphere BOSH CPI that is included in <%= vars.ops_manager %> v2.9 no longer supports NSX-T v2.2 and earlier. If you are using NSX-T v2.2 or earlier, you must upgrade NSX-T to a supported version.
+
+The specific version of NSX-T required for your deployment depends on which runtime you plan to deploy and integrate with NSX-T. 
+
+* For <%= vars.k8s_runtime_full %> deployments, see the [VMware Product Interoperability Matrices](https://www.vmware.com/resources/compatibility/sim/interop_matrix.php#interop&549=&175=).
+* For <%= vars.app_runtime_abbr %> deployments, see the [Support Matrix: Pivotal PAS, VMware NSX-T, and VMware NSX-T Container Plug-in for PCF](http://pas-nsx-t.cfapps.io/).
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
