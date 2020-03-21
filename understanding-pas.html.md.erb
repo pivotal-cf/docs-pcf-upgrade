@@ -63,7 +63,7 @@ The table below lists components in the order that <%= vars.ops_manager %> upgra
 * **Scalable:** Indicates whether the component is scalable above a single instance.
     <p class="note"><strong>Note:</strong> For components marked with a checkmark in this column, <%= vars.recommended_by %> recommends that you change the preconfigured instance value of <code>1</code> to a value that best supports your production environment. For more information about scaling a deployment, see <a href="../concepts/high-availability.html">High Availability in <%= vars.app_runtime_abbr %></a>.</p>
 
-* **Extended Downtime:** Indicates that if there is only one instance of the component, that component is unavailable for up to five minutes during an <%= vars.ops_manager %> upgrade.
+* **Extended Downtime:** Indicates that if there is only one instance of the component, that component is unavailable for up to five minutes during an upgrade.
 
 * **Downtime Affects...:** Indicates the plane of the <%= vars.app_runtime_abbr %> platform that component downtime affects, if the component is scaled at single instance:
   * **Apps**: Downtime can affect app availability.
@@ -211,7 +211,7 @@ The table below lists components in the order that <%= vars.ops_manager %> upgra
   <td></td>
   <td></td>
   <td></td>
-  <td><%= vars.ops_manager %> operators experience 2-5 minute gaps in logging.</td>
+  <td>Operators experience 2-5 minute gaps in logging.</td>
 </tr>
 <tr>
   <td>Doppler Server</td>
@@ -219,7 +219,7 @@ The table below lists components in the order that <%= vars.ops_manager %> upgra
   <td></td>
   <td></td>
   <td></td>
-  <td><%= vars.ops_manager %> operators experience 2-5 minute gaps in logging.</td>
+  <td>Operators experience 2-5 minute gaps in logging.</td>
 </tr>
 <tr>
   <td>TCP Router (if enabled)</td>
@@ -265,7 +265,7 @@ The table below lists components in the order that <%= vars.ops_manager %> upgra
 
 ### <a id= "tasks"></a> One-Time Tasks
 
-After <%= vars.ops_manager %> upgrades components, it performs system checks and launches UI apps and other <%= vars.app_runtime_abbr %> components as <%= vars.platform_name %> apps. These tasks run in this order:
+After <%= vars.ops_manager %> upgrades components, it performs system checks and launches several apps. These tasks run in this order:
 
 <table>
 <tr>
@@ -317,4 +317,4 @@ After <%= vars.ops_manager %> upgrades components, it performs system checks and
 
 ## <a id="upgrade-example"></a> Upgrading Installation Example
 
-For sample performance measurements of an upgrading <%= vars.platform_name %> installation, see [Upgrade Load Example: Pivotal Web Services](https://docs.pivotal.io/platform/application-service/operating/pws_upgrade_load.html).
+For sample performance measurements of an upgrading installation, see [Upgrade Load Example: Pivotal Web Services](https://docs.pivotal.io/platform/application-service/operating/pws_upgrade_load.html).

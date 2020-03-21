@@ -24,7 +24,7 @@ After completing the steps in this topic, you can continue to [Upgrading <%= var
 To complete the <%= vars.ops_manager %> upgrade, you must have your <%= vars.ops_manager %> decryption passphrase. You defined this decryption passphrase during the initial installation of <%= vars.ops_manager %>.
 
 
-## <a id="review-pas-release-notes"></a> Review Changes in <%= vars.platform_name %> <%= vars.v_major_version %>
+## <a id="review-runtime-release-notes"></a> Review Changes in <%= vars.platform_name %> <%= vars.v_major_version %>
 
 Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
@@ -52,7 +52,7 @@ For vSphere deployments, the vSphere BOSH CPI that is included in <%= vars.ops_m
 The specific version of NSX-T required for your deployment depends on which runtime you plan to deploy and integrate with NSX-T. 
 
 * For <%= vars.k8s_runtime_full %> deployments, see the [VMware Product Interoperability Matrices](https://www.vmware.com/resources/compatibility/sim/interop_matrix.php#interop&549=&175=).
-* For <%= vars.app_runtime_abbr %> deployments, see the [Support Matrix: Pivotal PAS, VMware NSX-T, and VMware NSX-T Container Plug-in for PCF](http://pas-nsx-t.cfapps.io/).
+* For <%= vars.app_runtime_abbr %> deployments, see the [Support Matrix: vars.app_runtime_abbr %>, VMware NSX-T, and VMware NSX-T Container Plug-in for PCF](http://pas-nsx-t.cfapps.io/).
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -68,7 +68,7 @@ For information on how to use Upgrade Planner, see [Upgrade Planner](https://upg
 
 Alternatively, you can do the following:
 
-1. Navigate to the tile's download page on [Pivotal Network](https://network.pivotal.io).
+1. Navigate to the tile's download page on [VMware Tanzu Network](https://network.pivotal.io).
 
 1. Select the tile version in the **Releases** dropdown.
 
@@ -148,7 +148,7 @@ Failure to disable hostname verification can cause the upgrade to fail for deplo
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
-Before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>, operators who have deployed any <%= vars.platform_name %> add-ons such as **IPsec**, **Anti-Virus**, or **File Integrity Monitoring** and who have deployed or are planning to deploy <%= vars.windows_runtime_abbr %> must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [<%= vars.windows_runtime_full %>](https://docs.pivotal.io/platform/application-service-windows/<%= product_info['local_product_version'].to_s.sub('.','-') %>/index.html).
+Before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>, operators who have deployed any BOSH-managed add-ons such as **IPsec**, **Anti-Virus**, or **File Integrity Monitoring** and who have deployed or are planning to deploy <%= vars.windows_runtime_abbr %> must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [<%= vars.windows_runtime_full %>](https://docs.pivotal.io/platform/application-service-windows/<%= product_info['local_product_version'].to_s.sub('.','-') %>/index.html).
 
 For example, **File Integrity Monitor** (FIM) is not supported on Windows. Therefore, the manifest must use an `include` directive to specify the target OS stemcell of `ubuntu-trusty` and `ubuntu-xenial`.
 
@@ -242,7 +242,7 @@ In addition to file storage IOPS, consider additional existing deployment factor
 | **Number of ASGs** | A large number of App Security Groups (ASGs) in your deployment can contribute to an increase in app instance container startup time. For more information, see [App Security Groups](../concepts/asg.html). |
 | **Number of app instances and app growth** | A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
 
-For example upgrade-related performance measurements of an existing production <%= vars.platform_name %> deployment, see [Pivotal Web Services Performance During Upgrade](../opsguide/pws_upgrade_load.html).
+For example upgrade-related performance measurements of an existing production deployment, see [Pivotal Web Services Performance During Upgrade](../opsguide/pws_upgrade_load.html).
 
 ### <a id="bosh-clean-up"></a> Run BOSH Clean-Up
 
@@ -343,7 +343,7 @@ To export your installation:
 
 This exports the current <%= vars.platform_name %> installation with all of its assets.
 
-When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up <%= vars.platform_name %>, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up your deployment, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 * The export time depends on the size of the exported file.
 
