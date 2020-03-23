@@ -6,7 +6,7 @@ owner:
 This topic describes several configuration options for <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) that can help ensure successful upgrades. In addition to following the [Upgrade Preparation Checklist](./checklist.html), review this topic to better understand how to prepare for <%= vars.app_runtime_abbr %> upgrades.
 
 
-## <a id="limit-restart"></a> Limit <%= vars.platform_name %> Component Instance Restarts
+## <a id="limit-restart"></a> Limit Component Instance Restarts
 
 The `max_in_flight` variable limits how many instances of a component can restart simultaneously during updates or upgrades. Increasing the value of `max_in_flight` can make updates run faster, but setting it too high risks overloading VMs and causing failure. For guidance on setting `max_in_flight` values, see [Best Practices](#best-practices).
 
@@ -40,7 +40,7 @@ Use the string `default` as the `max_in_flight` value to force the component to 
 
 ### <a id="diego-cells"></a> Specific Guidance for Diego Cells
 
-To upgrade <%= vars.platform_name %>, BOSH must drain all Diego Cell VMs that host app instances. BOSH manages this process by upgrading a batch of Diego Cells at a time.
+To upgrade <%= vars.app_runtime_abbr %>, BOSH must drain all Diego Cell VMs that host app instances. BOSH manages this process by upgrading a batch of Diego Cells at a time.
 
 The number of Diego Cells that undergo upgrade simultaneously (either in a state of shutting down or coming back online) is controlled by the `max_in_flight` value of the Diego Cell job. For example, if `max_in_flight` is set to `10%` and your deployment has 20 Diego Cell job instances, then the maximum number of Diego Cells that BOSH can upgrade at a single time is `2`.
 
@@ -56,78 +56,78 @@ A potential issue arises if too many app instance replacements are slow to start
 
 If too many app instances are starting concurrently, then the load of these starts on the rest of the system can cause other apps that are already running to crash and be rescheduled. These events can result in a cascading failure.
 
-To prevent this issue, <%= vars.platform_name %> provides two throttle configurations: the maximum number of in-flight Diego Cell instances and the maximum number of starting containers.
+To prevent this issue, <%= vars.app_runtime_abbr %> provides two throttle configurations: the maximum number of in-flight Diego Cell instances and the maximum number of starting containers.
 
-The values of the above throttle configurations depend on the version of <%= vars.platform_name %> that you have deployed and whether you have overridden the default values.
+The values of the above throttle configurations depend on the version of <%= vars.app_runtime_abbr %> that you have deployed and whether you have overridden the default values.
 
 See the following table for existing defaults and, if necessary, determine the override values in your deployment.
 
 <table class="nice">
   <tr>
-    <th><%= vars.platform_name %> Version</th>
+    <th><%= vars.app_runtime_abbr %> Version</th>
     <th>Starting Container Count Maximum</th>
     <th>Starting Container Count Overridable?</th>
     <th>Maximum In-Flight Diego Cell Instances</th>
     <th>Maximum In-Flight Diego Cell Instances Overridable?</th>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.7.43 and earlier</td>
+    <td><%= vars.app_runtime_abbr %> v1.7.43 and earlier</td>
     <td>No limit set</td>
     <td>No</td>
     <td>1 instance</td>
     <td>No</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.7.44 to v1.7.49</td>
+    <td><%= vars.app_runtime_abbr %> v1.7.44 to v1.7.49</td>
     <td>200</td>
     <td>No</td>
     <td>1 instance</td>
     <td>No</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.7.50 +</td>
+    <td><%= vars.app_runtime_abbr %> v1.7.50 +</td>
     <td>200</td>
     <td>No</td>
     <td>1 instance</td>
     <td>No</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.8.0 to v1.8.29</td>
+    <td><%= vars.app_runtime_abbr %> v1.8.0 to v1.8.29</td>
     <td>No limit set</td>
     <td>No</td>
     <td>10% of total instances</td>
     <td>No</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.8.30 +</td>
+    <td><%= vars.app_runtime_abbr %> v1.8.30 +</td>
     <td>200</td>
     <td>Yes</td>
     <td>10% of total instances</td>
     <td>No</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.9.0 to v1.9.7</td>
+    <td><%= vars.app_runtime_abbr %> v1.9.0 to v1.9.7</td>
     <td>No limit set</td>
     <td>No</td>
     <td>4% of total instances</td>
     <td>Yes</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.9.8 +</td>
+    <td><%= vars.app_runtime_abbr %> v1.9.8 +</td>
     <td>200</td>
     <td>Yes</td>
     <td>4% of total instances</td>
     <td>Yes</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.10.0 and later</td>
+    <td><%= vars.app_runtime_abbr %> v1.10.0 and later</td>
     <td>200</td>
     <td>Yes</td>
     <td>4% of total instances</td>
     <td>Yes</td>
   </tr>
   <tr>
-    <td><%= vars.platform_name %> v1.12.0 and later</td>
+    <td><%= vars.app_runtime_abbr %> v1.12.0 and later</td>
     <td>200</td>
     <td>Yes</td>
     <td>4% of total instances</td>
@@ -173,9 +173,9 @@ To configure the maximum number of started instances in the **Settings** tab of 
 
 ## <a id="file-storage"></a> Configure File Storage
 
-This section describes critical factors to consider when evaluating the type of file storage to use in your <%= vars.platform_name %> deployment. The <%= vars.app_runtime_abbr %> blobstore relies on the file storage system to read and write resources, app packages, and droplets. For more information, see [Blobstore](../concepts/architecture/cloud-controller.html#blob-store) in _Cloud Controller_.
+This section describes critical factors to consider when evaluating the type of file storage to use in your <%= vars.app_runtime_abbr %> deployment. The <%= vars.app_runtime_abbr %> blobstore relies on the file storage system to read and write resources, app packages, and droplets. For more information, see [Blobstore](../concepts/architecture/cloud-controller.html#blob-store) in _Cloud Controller_.
 
-During an upgrade of <%= vars.platform_name %>, file storage with insufficient IOPS numbers can negatively impact the performance and stability of your <%= vars.platform_name %> deployment.
+During an upgrade, file storage with insufficient IOPS numbers can negatively impact the performance and stability of your <%= vars.app_runtime_abbr %> deployment.
 
 If disk processing time takes longer than the evacuation timeout for Diego Cells, then Diego Cells and app instances may take too long to start up, resulting in a cascading failure.
 
@@ -185,9 +185,9 @@ For an example of system performance and IOPS load during an upgrade, see [Upgra
 
 ### <a id="types"></a> Select Internal or External File Storage
 
-When you deploy <%= vars.platform_name %>, you can select internal file storage or external file storage, either network-accessible or IaaS-provided, as an option in the <%= vars.app_runtime_abbr %> tile.
+When you deploy <%= vars.app_runtime_abbr %>, you can select internal file storage or external file storage, either network-accessible or IaaS-provided, as an option in the <%= vars.app_runtime_abbr %> tile.
 
-Selecting internal storage causes <%= vars.platform_name %> to deploy a dedicated VM that uses either NFS or WebDAV for file storage. Selecting external storage allows you to configure file storage provided in network-accessible location or by an IaaS, such as Amazon S3, Google Cloud Storage, or Azure Storage.
+Selecting internal storage causes <%= vars.app_runtime_abbr %> to deploy a dedicated VM that uses either NFS or WebDAV for file storage. Selecting external storage allows you to configure file storage provided in network-accessible location or by an IaaS, such as Amazon S3, Google Cloud Storage, or Azure Storage.
 
 Whenever possible, <%= vars.recommended_by %> recommends using external file storage.
 

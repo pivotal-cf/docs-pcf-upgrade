@@ -222,7 +222,7 @@ The KPIs that monitor these these resources are are:
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Cells. For more information, see [Limit <%= vars.platform_name %> Component Instances During Restart](./configuring.html#limit-restart) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
+If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Cells. For more information, see [Limit Component Instance Restarts](./configuring.html#limit-restart) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
 For <%= vars.platform_name %> v1.10 and later, the maximum number of Diego Cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see [Prevent Overload](./configuring.html#limitations-considerations) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
