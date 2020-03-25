@@ -116,6 +116,32 @@ Check the required machine specifications for <%= vars.ops_manager %> <%= vars.v
 
 With each release of a new <%= vars.platform_name %> version, <%= vars.app_runtime_abbr %> may require specific updates before upgrading to the new version. See the following sections for what action to take before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>:
 
+#### <a id='disable-hostname-validation'></a> Disable Hostname Validation for External Databases on GCP and Azure
+
+This pre-upgrade step applies only to existing PAS v2.8 deployments
+where both of these conditions are met:
+
+* In the **Databases** pane, PAS v2.8 is configured to use an
+external GCP or Azure database.
+
+* In <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>,
+you want to use the same external GCP or Azure database configured
+in the **Databases** pane.
+
+If you meet these conditions, you must disable hostname validation
+before you upgrade to <%= vars.v_major_version %>.
+Failure to disable hostname validation can cause the upgrade to fail
+for deployments that use external databases on GCP or Azure.
+
+To disable hostname validation:
+
+1. After you stage <%= vars.app_runtime_abbr %> <%= vars.v_major_version %> for upgrade, go to the <%= vars.app_runtime_abbr %> **Databases** pane.
+
+1. Deselect the **Enable hostname verification** checkbox. This checkbox is selected by default. 
+
+For more information about database configuration in <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>,
+see [Configure Databases](https://docs.pivotal.io/platform/application-service/2-9/operating/configure-pas.html#sys-db) in _Configuring <%= vars.app_runtime_abbr %>_.
+
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
 To save upgrade time, you can disable unused <%= vars.app_runtime_abbr %> post-deploy errands. For more information, see [Post-Deploy Errands](https://docs.pivotal.io/tiledev/<%= product_info['local_product_version'].to_s.sub('.','-') %>/tile-errands.html#post-deploy) in _Errands_. Only disable these errands if your environment does not need them.
