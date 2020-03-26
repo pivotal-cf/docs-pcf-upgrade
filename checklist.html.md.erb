@@ -51,8 +51,8 @@ For vSphere deployments, the vSphere BOSH CPI that is included in <%= vars.ops_m
 
 The specific version of NSX-T required for your deployment depends on which runtime you plan to deploy and integrate with NSX-T. 
 
-* For <%= vars.k8s_runtime_full %> deployments, see the [VMware Product Interoperability Matrices](https://www.vmware.com/resources/compatibility/sim/interop_matrix.php#interop&549=&175=).
-* For <%= vars.app_runtime_abbr %> deployments, see the [Support Matrix: <%= vars.app_runtime_abbr %>, VMware NSX-T, and VMware NSX-T Container Plug-in for PCF](http://pas-nsx-t.cfapps.io/).
+* For <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) deployments, see the [VMware Product Interoperability Matrices](https://www.vmware.com/resources/compatibility/sim/interop_matrix.php#interop&549=&175=).
+* For <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) deployments, see the [Support Matrix: <%= vars.app_runtime_abbr %>, VMware NSX-T, and VMware NSX-T Container Plug-in for PCF](http://pas-nsx-t.cfapps.io/).
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -76,7 +76,9 @@ Alternatively, you can do the following:
 
 If the currently-deployed version of a tile is not compatible with <%= vars.platform_name %> <%= vars.v_major_version %>, you must upgrade the tile to a compatible version before you upgrade <%= vars.platform_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.platform_name %> v2.8 and <%= vars.v_major_version %>.
 
-Some partner service tiles may be incompatible with <%= vars.platform_name %> <%= vars.v_major_version %>. For more information about partner service release compatibility, review the **Depends On** section of the partners tile download page, see the partners services release documentation in [VMware Tanzu Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
+Some partner service tiles may be incompatible with <%= vars.platform_name %> <%= vars.v_major_version %>.
+For information about partner service tile compatibility,
+review the **Depends On** section on your partner tile download page, see the tile release documentation in [VMware Tanzu Documentation](https://docs.pivotal.io), or contact the partner organization that produces the service tile.
 
 #### <a id="env"></a> Environment Details
 
@@ -85,7 +87,7 @@ You can use the empty table below as a template for recording and tracking the t
 |        |        | **Sandbox** | **Non-Prod** | **Prod** | **Other...** |
 | ------ | ------ | ----------- | ------------ | -------- | ------------ |
 | **<%= vars.platform_name %>** | [<%= vars.ops_manager %>](https://network.pivotal.io/products/ops-manager) |        |        |        |        |
-|        | [<%= vars.app_runtime_full %>](https://network.pivotal.io/products/elastic-runtime) (<%= vars.app_runtime_abbr %>) |        |        |        |        |
+|        | [<%= vars.app_runtime_full %>](https://network.pivotal.io/products/elastic-runtime) |        |        |        |        |
 | **<%= vars.platform_name %> Services** | [MySQL v2](https://network.pivotal.io/products/pivotal-mysql) |        |        |        |        |
 |        | [Redis](https://network.pivotal.io/products/p-redis) |        |        |        |        |
 |        | [RabbitMQ](https://network.pivotal.io/products/p-rabbitmq) |        |        |        |        |
@@ -100,7 +102,7 @@ You can use the empty table below as a template for recording and tracking the t
 
 Upgrade all service tiles to versions that are compatible with <%= vars.platform_name %> <%= vars.v_major_version %>. Service tiles are add-on products you install alongside your runtime. For example, MySQL for VMware Tanzu, Healthwatch, and RabbitMQ are service tiles.
 
-Do not upgrade runtime tiles, such as <%= vars.app_runtime_abbr %>, <%= vars.windows_runtime_full %> (<%= vars.windows_runtime_abbr %>), or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) at this time.
+Do not upgrade runtime tiles, such as <%= vars.app_runtime_abbr %>, <%= vars.windows_runtime_full %> (<%= vars.windows_runtime_abbr %>), or <%= vars.k8s_runtime_abbr %> at this time.
 
 To verify version compatibility, see [Upgrade Planner](https://upgrade-planner.pivotal.io/) and the service tile documentation.
 
@@ -242,7 +244,7 @@ For more information about these KPIs, see [Diego Cell Metrics](../monitoring/kp
 
 During the <%= vars.platform_name %> upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of <%= vars.platform_name %>, verify that your underlying <%= vars.app_runtime_abbr %> file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Configure File Storage](../upgrading/configuring.html#file-storage) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
+To ensure a successful upgrade of your deployment, verify that your underlying <%= vars.app_runtime_abbr %> file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Configure File Storage](../upgrading/configuring.html#file-storage) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
@@ -274,7 +276,7 @@ These sections describe steps for ensuring your deployment is healthy before you
 
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
-For collecting foundation health status, <%= vars.recommended_by %> recommends Healthwatch, which monitors and alerts on the current health, performance, and capacity of <%= vars.platform_name %>. For more information, see the [Healthwatch documentation](https://docs.pivotal.io/pcf-healthwatch/index.html).
+For collecting foundation health status, <%= vars.recommended_by %> recommends Healthwatch, which monitors and alerts on the current health, performance, and capacity of your <%= vars.platform_name %> deployment. For more information, see the [Healthwatch documentation](https://docs.pivotal.io/pcf-healthwatch/index.html).
 
 If you are not using Healthwatch, you can do some or all of the following to collect foundation health status:
 
