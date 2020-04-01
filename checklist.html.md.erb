@@ -19,7 +19,7 @@ After completing the steps in this topic, you can continue to [Upgrading <%= var
 <%= vars.recommended_by %> recommends backing up your <%= vars.platform_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
-## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for <%= vars.ops_manager_full %>
+## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for <%= vars.ops_manager %>
 
 To complete the <%= vars.ops_manager %> upgrade, you must have your <%= vars.ops_manager %> decryption passphrase. You defined this decryption passphrase during the initial installation of <%= vars.ops_manager %>.
 
@@ -29,7 +29,7 @@ To complete the <%= vars.ops_manager %> upgrade, you must have your <%= vars.ops
 Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
 * **Release Notes**
-	* [<%= vars.ops_manager_full %> <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html)
+	* [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html)
 	* [<%= vars.app_runtime_full %> <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/runtime-rn.html)
 
 * **Known Issues**
@@ -102,7 +102,7 @@ You can use the empty table below as a template for recording and tracking the t
 
 Upgrade all service tiles to versions that are compatible with <%= vars.platform_name %> <%= vars.v_major_version %>. Service tiles are add-on products you install alongside your runtime. For example, MySQL for VMware Tanzu, Healthwatch, and RabbitMQ are service tiles.
 
-Do not upgrade runtime tiles, such as <%= vars.app_runtime_abbr %>, <%= vars.windows_runtime_full %> (<%= vars.windows_runtime_abbr %>), or <%= vars.k8s_runtime_abbr %> at this time.
+Do not upgrade runtime tiles, such as <%= vars.app_runtime_abbr %>, <%= vars.windows_runtime_abbr %>, or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) at this time.
 
 To verify version compatibility, see [Upgrade Planner](https://upgrade-planner.pivotal.io/) and the service tile documentation.
 
@@ -120,26 +120,19 @@ With each release of a new <%= vars.platform_name %> version, <%= vars.app_runti
 
 #### <a id='disable-hostname-validation'></a> Disable Hostname Validation for External Databases on GCP and Azure
 
-This pre-upgrade step applies only to existing PAS v2.8 deployments
-where both of these conditions are met:
+This pre-upgrade step applies only to existing <%= vars.app_runtime_full_pivotal %> (<%= vars.app_runtime_abbr_pivotal %>) v2.8 deployments where both of these conditions are met:
 
-* In the **Databases** pane, PAS v2.8 is configured to use an
-external GCP or Azure database.
+* In the **Databases** pane, <%= vars.app_runtime_abbr_pivotal %> v2.8 is configured to use an external GCP or Azure database.
 
-* In <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>,
-you want to use the same external GCP or Azure database configured
-in the **Databases** pane.
+* In <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>, you want to use the same external GCP or Azure database configured in the **Databases** pane.
 
-* You enabled TLS communication for the GCP or Azure external database by adding a Certificate Authority (CA) certificate to the **Database CA certificate** field in the **Databases** pane. 
+* You enabled TLS communication for the GCP or Azure external database by adding a certificate authority (CA) certificate to the **Database CA certificate** field in the **Databases** pane. 
 
-If you meet these conditions, you must disable hostname validation
-before you upgrade to <%= vars.v_major_version %>.
-Failure to disable hostname validation can cause the upgrade to fail
-for deployments that use external databases on GCP or Azure.
+If you meet these conditions, you must disable hostname validation before you upgrade to <%= vars.v_major_version %>. Failure to disable hostname validation can cause the upgrade to fail for deployments that use external databases on GCP or Azure.
 
 To disable hostname validation:
 
-1. After you stage <%= vars.app_runtime_abbr %> <%= vars.v_major_version %> for upgrade, go to the <%= vars.app_runtime_abbr %> **Databases** pane.
+1. After you stage <%= vars.app_runtime_abbr %> <%= vars.v_major_version %> for upgrade, go to the **Databases** pane in the <%= vars.app_runtime_abbr %> tile.
 
 1. Deselect the **Enable hostname verification** checkbox. This checkbox is selected by default. 
 
@@ -154,9 +147,9 @@ In some cases, if you have previously disabled lifecycle errands for any install
 
 #### <a id="run-nfs-broker-errand"></a> Run the NFS Broker Errand
 
-If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>. Running this errand in <%= vars.app_runtime_abbr %> v2.8 migrates existing service instances for NFS Volume Services from MySQL to CredHub.
+If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>. Running this errand in <%= vars.app_runtime_abbr_pivotal %> v2.8 migrates existing service instances for NFS Volume Services from MySQL to CredHub.
 
-<%= vars.app_runtime_abbr %> <%= vars.v_major_version %> removes the ability to migrate data from MySQL to CredHub. If you do not run the errand in <%= vars.app_runtime_abbr %> v2.8, you may be unable to bind apps to existing NFS Volume Service service instances after upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
+<%= vars.app_runtime_abbr %> <%= vars.v_major_version %> removes the ability to migrate data from MySQL to CredHub. If you do not run the errand in <%= vars.app_runtime_abbr_pivotal %> v2.8, you may be unable to bind apps to existing NFS Volume Service service instances after upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
 
 For more information, see [Configure Errands](https://docs.pivotal.io/platform/application-service/operating/configure-pas.html#errands) in _Configuring <%= vars.app_runtime_abbr %>_.
 
