@@ -346,6 +346,14 @@ In addition to file storage IOPS, consider additional existing deployment factor
 | **Number of app instances and app growth** | A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
 
 To see example upgrade-related performance measurements of an existing production <%= vars.product_name %> deployment, see [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
+	    
+### <a id="check-mysql-ram"></a> Check Internal MySQL RAM
+
+The MySQL Buffer Pool size has changed from 2&nbsp;GB to 50% of available memory.
+
+You may need to choose a VM type with a larger amount of RAM to avoid Out of Memory (OOM) errors.
+
+For example, if the internal MySQL VM is configured with 8&nbsp;GB of RAM and 6&nbsp;GB is currently being used, then 2&nbsp;GB is consumed by the buffer pool while 4&nbsp;GB is consumed by everything else. Upgrading <%= vars.app_runtime_abbr %> will cause OOM errors since the buffer pool will now consume 4&nbsp;GB, leaving 0&nbsp;GB of available RAM.
 
 ### <a id="bosh-clean-up"></a> Run BOSH Clean-Up
 
