@@ -347,13 +347,18 @@ In addition to file storage IOPS, consider additional existing deployment factor
 
 To see example upgrade-related performance measurements of an existing production <%= vars.product_name %> deployment, see [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
 	    
-### <a id="check-mysql-ram"></a> Check Internal MySQL RAM
+### <a id="verify-mysql-ram"></a> Verify Internal MySQL RAM
 
-The MySQL Buffer Pool size has changed from 2&nbsp;GB to 50% of available memory.
+The MySQL buffer pool size is changed from 2&nbsp;GB to 50% of available memory.
 
 You may need to choose a VM type with a larger amount of RAM to avoid Out of Memory (OOM) errors.
 
-For example, if the internal MySQL VM is configured with 8&nbsp;GB of RAM and 6&nbsp;GB is currently being used, then 2&nbsp;GB is consumed by the buffer pool while 4&nbsp;GB is consumed by everything else. Upgrading <%= vars.app_runtime_abbr %> will cause OOM errors since the buffer pool will now consume 4&nbsp;GB, leaving 0&nbsp;GB of available RAM.
+For example, in <%= vars.app_runtime_abbr %> v2.5, if the internal MySQL VM is
+configured with 8&nbsp;GB of RAM and 6&nbsp;GB is currently used,
+then 2&nbsp;GB is consumed by the buffer pool and 4&nbsp;GB is consumed by everything else.
+
+Upgrading to <%= vars.app_runtime_abbr %> v2.6 causes OOM errors because the
+buffer pool consumes 4&nbsp;GB, which leaves 0&nbsp;GB of available RAM.
 
 ### <a id="bosh-clean-up"></a> Run BOSH Clean-Up
 
