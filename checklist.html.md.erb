@@ -43,6 +43,65 @@ Review each of the following links to understand the changes in the new release,
 * **Diego Network Communications**:
 	* [Diego Network Communications](../security/networking/diego-network-paths.html)
 
+## <a id='cflinuxfs3'></a> Migrate Apps to cflinuxfs3
+
+<%= vars.product_short %> v2.5 patch versions v2.5.10 and later support pre-existing apps that were staged with `cflinuxfs2` buildpacks, but do not support restaging on `cflinuxfs2`. <%= vars.product_short %> versions v2.6.0 and later do not support apps running on `cflinuxfs2`.
+
+If your <%= vars.product_short %> v2.5 deployment hosts `cflinuxfs2` apps, upgrade to the latest v2.5 and encourage developers to migrate all their apps and upgrade any custom buildpacks to `cflinuxfs3`.
+
+To work with developers to migrate all <%= vars.product_short %>-hosted apps to `cflinuxfs3`:
+
+1. Install the Stack Auditor plugin for the cf CLI. To download the Stack Auditor plugin, see the [Install Stack Auditor](../adminguide/stack-auditor.html#install) section of the _Using the Stack Auditor Plugin_ topic.
+
+1. Audit stack usage to determine which apps need to be migrated from `cflinuxfs2` to `cflinuxfs3`. You can list apps and their stacks for each org you have access to by running the following command. To see all the apps in your deployment, ensure that you are logged in to the cf CLI as a user who can access all orgs and run:
+
+		cf audit-stack
+
+	  See the following example output:
+<pre class="terminal">
+$ cf audit-stack
+first-org/development/first-app cflinuxfs2
+first-org/staging/first-app cflinuxfs2
+first-org/production/first-app cflinuxfs2
+second-org/development/second-app cflinuxfs3
+second-org/staging/second-app cflinuxfs3
+second-org/production/second-app cflinuxfs3
+...
+</pre>
+
+1. Communicate to developers that they must migrate their existing apps to `cflinuxfs3` and begin pushing all new apps on `cflinuxfs3`. When changing stacks, developers may see errors related to new or changed libraries. If they do, they must update their app accordingly. Developers can migrate their apps using two methods:
+	* `cf push`: See [Restaging Apps on a New Stack](../devguide/deploy-apps/stacks.html#cli-commands) in _Changing Stacks_.
+	* `cf change-stack`: See [Change Stacks](../adminguide/stack-auditor.html#change-stacks) in _Using the Stack Auditor Plugin_. This method does not require the source code of the app.
+	<p class="note"><strong>Note:</strong> When changing the stack, the app experiences downtime. <%= vars.recommended_by %> recommends changing the stack using a zero-downtime strategy or at a time when you feel downtime is acceptable. To avoid the brief downtime, use a blue-green strategy. For more informaton, see <a href="../devguide/deploy-apps/blue-green.html">Using Blue-Green Deployment to Reduce Downtime and Risk</a>.</p>
+
+1. Confirm that there are no apps running on `cflinuxfs2 ` by running:
+
+		cf audit-stack
+
+1. Delete all buildpacks in your deployment that are associated with `cflinuxfs2`.
+
+1. Delete the `cflinuxfs2` stack. This action cannot be undone.
+	1. Run:
+
+		```
+		cf delete-stack cflinuxfs2
+		```
+	1. When prompted, type `cflinuxfs2` and press enter.<br><br>
+		See the following example:
+
+		<pre class="terminal">
+		$ cf delete-stack cflinuxfs2
+		Are you sure you want to remove the cflinuxfs2 stack? If so, type the name of the stack [cflinuxfs2]
+		>cflinuxfs2
+		Deleting stack cflinuxfs2...
+		Stack cflinuxfs2 has been deleted.
+		</pre>
+
+		If you have any apps still running on `cflinuxfs2`, the command returns the following error:
+
+		<pre class="terminal">
+		Failed to delete stack cflinuxfs2 with error: Please delete the app associations for your stack.
+		</pre>
 
 ## <a id="rebind-nfs-legacy-volume-services"></a> Migrate NFS Legacy Volume Services
 
@@ -346,7 +405,7 @@ In addition to file storage IOPS, consider additional existing deployment factor
 | **Number of app instances and app growth** | A large increase in the number of app instances and average droplet size since the initial deployment can increase the upgrade impact on your system. |
 
 To see example upgrade-related performance measurements of an existing production <%= vars.product_name %> deployment, see [Upgrade Load Example: Pivotal Web Services](../opsguide/pws_upgrade_load.html).
-	    
+
 ### <a id="verify-mysql-ram"></a> Verify Internal MySQL RAM In PAS v2.6.8 and Later
 
 In PAS v2.6.8 and later, the MySQL buffer pool size is changed from 2&nbsp;GB to 50% of available memory.
