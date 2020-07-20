@@ -1,23 +1,23 @@
 ---
-title: Upgrade Preparation Checklist for Ops Manager v2.9
+title: Upgrade Preparation Checklist for Ops Manager v2.10
 owner: Ops Manager
 ---
 
 <% current_page.data.title = "Upgrade Preparation Checklist for " + vars.platform_name + " " + vars.v_major_version %>
 
 This topic serves as a checklist for preparing to upgrade <%= vars.ops_manager %> and
-<%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) from v2.8 to <%= vars.v_major_version %>.
+<%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) from v2.9 to <%= vars.v_major_version %>.
 
 This topic contains important preparation steps that you must follow before beginning your upgrade. Failure to follow these instructions may jeopardize your existing deployment data and cause the upgrade to fail.
 
 After completing the steps in this topic, you can continue to [Upgrading <%= vars.platform_name %>](../customizing/upgrading-pcf.html).
 
-<p class="note warning"><strong>Warning:</strong> <%= vars.recommended_by %> does not recommend that you skip minor versions when upgrading <%= vars.platform_name %>. Skipping minor versions when upgrading <%= vars.platform_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.platform_name %> to the minor version that directly follows your current version of <%= vars.platform_name %>.</p>
+<p class="note warning"><strong>Warning:</strong> <%= vars.company_name %> does not recommend that you skip minor versions when upgrading <%= vars.platform_name %>. Skipping minor versions when upgrading <%= vars.platform_name %> may result in breaking changes. To avoid additional breaking changes, upgrade <%= vars.platform_name %> to the minor version that directly follows your current version of <%= vars.platform_name %>.</p>
 
 
 ## <a id="back-up-your-pcf-deployment"></a> Back Up Your <%= vars.platform_name %> Deployment
 
-<%= vars.recommended_by %> recommends backing up your <%= vars.platform_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+<%= vars.company_name %> recommends backing up your <%= vars.platform_name %> deployment before upgrading, to restore in the case of failure. To do this, follow the instructions in [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 
 ## <a id='decryption-passphrase'></a> Find Your Decryption Passphrase for <%= vars.ops_manager %>
@@ -46,6 +46,7 @@ Review each of the following links to understand the changes in the new release,
 * **Diego Network Communications**:
 	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
 
+
 ## <a id="nsx-t"></a> Check VMware NSX-T Data Center Version
 
 For vSphere deployments, the vSphere BOSH CPI that is included in <%= vars.ops_manager %> v2.9 no longer supports NSX-T v2.2 and earlier. If you are using NSX-T v2.2 or earlier, you must upgrade NSX-T to a supported version.
@@ -53,8 +54,10 @@ For vSphere deployments, the vSphere BOSH CPI that is included in <%= vars.ops_m
 The specific version of NSX-T required for your deployment depends on which runtime you plan to deploy and integrate with NSX-T.
 
 * For <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) deployments, see the [VMware Product Interoperability Matrices](https://www.vmware.com/resources/compatibility/sim/interop_matrix.php#interop&549=&175=).
+
 * For <%= vars.app_runtime_abbr %> deployments, see the [Support Matrix: <%= vars.app_runtime_abbr %>,
   VMware NSX-T, and VMware NSX-T Container Plug-in for PCF](http://pas-nsx-t.cfapps.io/).
+
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
 
@@ -76,7 +79,7 @@ Alternatively, you can do the following:
 
 1. See the **Depends On** section under **Release Details**. For more information, see the tile's release notes.
 
-If the currently-deployed version of a tile is not compatible with <%= vars.platform_name %> <%= vars.v_major_version %>, you must upgrade the tile to a compatible version before you upgrade <%= vars.platform_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.platform_name %> v2.8 and <%= vars.v_major_version %>.
+If the currently-deployed version of a tile is not compatible with <%= vars.platform_name %> <%= vars.v_major_version %>, you must upgrade the tile to a compatible version before you upgrade <%= vars.platform_name %>. You do not need to upgrade tiles that are compatible with both <%= vars.platform_name %> v2.9 and <%= vars.v_major_version %>.
 
 Some partner service tiles may be incompatible with <%= vars.platform_name %> <%= vars.v_major_version %>.
 For information about partner service tile compatibility,
@@ -168,7 +171,7 @@ For example, **File Integrity Monitor** (FIM) is not supported on Windows. There
 
 To update an add-on manifest:
 
-1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the Ops Manager VM.
+1. Locate your existing add-on manifest file. For example, for FIM, locate the `fim.yml` you uploaded to the <%= vars.ops_manager %> VM.
 
 1. Modify the manifest to include following `include` directive to your manifest:
 
@@ -204,13 +207,17 @@ Depending on the requirements of your deployment, you may need to rotate your Ce
 
 To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the <%= vars.ops_manager %> API.
 
-In this request, the `expires_within` parameter is optional. Valid values for the parameter are `d` for days, `w` for weeks, `m` for months, and `y` for years. For example, to search for certificates expiring within one month, replace `TIME` with `1m`:
+In this request, the `expires_within` parameter is optional. Valid values for the parameter are `d` for days, `w` for weeks, `m` for months, and `y` for years. For example, to search for certificates expiring within one month, run:
 
 ```
-$ curl "https://OPS-MAN-FQDN/api/v0/deployed/certificates?expires_within=1m" \
+$ curl "https://OPS-MANAGER-FQDN/api/v0/deployed/certificates?expires_within=1m" \
  -X GET \
- -H "Authorization: Bearer UAA_ACCESS_TOKEN"
+ -H "Authorization: Bearer UAA-ACCESS-TOKEN"
 ```
+
+Where:
+* `OPS-MANAGER-FQDN` is the fully-qualified domain name (FQDN) of your <%= vars.ops_manager %> deployment.
+* `UAA-ACCESS-TOKEN` is your UAA access token.
 
 For information about regenerating and rotating CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
 
@@ -236,7 +243,7 @@ The KPIs that monitor these these resources are are:
 
 If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Cells. For more information, see [Limit Component Instance Restarts](./configuring.html#limit-restart) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
-For <%= vars.platform_name %> v1.10 and later, the maximum number of Diego Cells that can update at once, `max_in_flight` is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see [Prevent Overload](./configuring.html#limitations-considerations) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
+The maximum number of Diego Cells that can update at once, `max_in_flight`, is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see [Prevent Overload](./configuring.html#limitations-considerations) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
 For more information about these KPIs, see [Diego Cell Metrics](../monitoring/kpi.html#Cell) in _Key Performance Indicators_.
 
@@ -277,7 +284,7 @@ These sections describe steps for ensuring your deployment is healthy before you
 
 ### <a id="collect-foundation-health-status"></a> Collect Foundation Health Status
 
-For collecting foundation health status, <%= vars.recommended_by %> recommends Healthwatch,
+For collecting foundation health status, <%= vars.company_name %> recommends Healthwatch,
 which monitors and alerts on the current health, performance,
 and capacity of your <%= vars.platform_name %> deployment.
 For more information, see [Healthwatch](https://docs.pivotal.io/platform/healthwatch/index.html).
@@ -336,9 +343,11 @@ For BOSH CLI v2 instructions, see [Running mysql-diag](../mysql/mysql-diag.html)
 
 To review pending and recent changes:
 
-1. Confirm there are no outstanding changes in Ops Manager or any other tile. All tiles should be green. If necessary, click **Review Pending Changes**, then **Apply Changes**.
+1. Confirm there are no outstanding changes in <%= vars.ops_manager %> or any other tile. All tiles should be green. If all tiles are not green:
+		1. Click **Review Pending Changes**.
+		1. Click **Apply Changes**.
 
-1. After applying changes, click **Recent Install Logs** to confirm that the changes completed cleanly:
+1. After applying changes, click **Recent Install Logs** to confirm that the changes completed cleanly. You should see the following output:
 
     ```
     Cleanup complete
@@ -351,7 +360,7 @@ To review pending and recent changes:
 
 To export your installation:
 
-1. In the Installation Dashboard, click the account dropdown and select **Settings**.
+1. In the <%= vars.ops_manager %> Installation Dashboard, click the account dropdown and select **Settings**.
 
     <%= image_tag("./images/upgrade_to_1.9.png") %>
 
@@ -359,7 +368,7 @@ To export your installation:
 
 This exports the current <%= vars.platform_name %> installation with all of its assets.
 
-When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if Ops Manager has already uploaded them to BOSH. When backing up your deployment, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
+When you export an installation, the export contains the base VM images, necessary packages, and configuration settings, but does not include releases between upgrades if <%= vars.platform_name %> has already uploaded them to BOSH. When backing up your deployment, you must take this into account by backing up the BOSH blobstore that contains the uploaded releases. BOSH Backup and Restore (BBR) backs up the BOSH blobstore. For more information, see [Backing Up Deployments with BBR](../customizing/backup-restore/backup-pcf-bbr.html).
 
 * The export time depends on the size of the exported file.
 
