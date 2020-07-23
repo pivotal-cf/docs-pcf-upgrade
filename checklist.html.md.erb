@@ -30,21 +30,21 @@ To complete the <%= vars.ops_manager %> upgrade, you must have your <%= vars.ops
 Review each of the following links to understand the changes in the new release, such as new features, known issues, and breaking changes.
 
 * **Release Notes**
-	* [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html)
-	* [<%= vars.app_runtime_full %> <%= vars.v_major_version %> Release Notes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/runtime-rn.html)
+	* [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](../release-notes/opsmanager-rn.html)
+	* [<%= vars.app_runtime_full %> <%= vars.v_major_version %> Release Notes](../release-notes/runtime-rn.html)
 
 * **Known Issues**
-	* [<%= vars.ops_manager %> <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/opsmanager-rn.html#known-issues)
-	* [<%= vars.app_runtime_full %> <%= vars.v_major_version %> Known Issues](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/runtime-rn.html#known-issues)
+	* [<%= vars.ops_manager %> <%= vars.v_major_version %> Known Issues](../release-notes/opsmanager-rn.html#known-issues)
+	* [<%= vars.app_runtime_full %> <%= vars.v_major_version %> Known Issues](../release-notes/runtime-rn.html#known-issues)
 
 * **Breaking Changes**
-	* [<%= vars.ops_manager %> and Runtime Breaking Changes](https://docs.pivotal.io/platform/<%= product_info['local_product_version'].to_s.sub('.','-') %>/release-notes/breaking-changes.html)
+	* [<%= vars.ops_manager %> and Runtime Breaking Changes](../release-notes/breaking-changes.html)
 
 * **KPI Changes**
 	* [KPI Changes](../monitoring/index.html#new)
 
 * **Diego Network Communications**:
-	* [Diego Network Communications](../../security/networking/diego-network-paths.html)
+	* [Diego Network Communications](../security/networking/diego-network-paths.html)
 
 
 ## <a id="nsx-t"></a> Check VMware NSX-T Data Center Version
@@ -56,7 +56,7 @@ The specific version of NSX-T required for your deployment depends on which runt
 * For <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) deployments, see the [VMware Product Interoperability Matrices](https://www.vmware.com/resources/compatibility/sim/interop_matrix.php#interop&549=&175=).
 
 * For <%= vars.app_runtime_abbr %> deployments, see the [Support Matrix: <%= vars.app_runtime_abbr %>,
-  VMware NSX-T, and VMware NSX-T Container Plug-in for PCF](http://pas-nsx-t.cfapps.io/).
+  VMware NSX-T, and VMware NSX-T Container Plug-in](http://pas-nsx-t.cfapps.io/).
 
 
 ## <a id="tiles-addons"></a> Update Tiles and Add-Ons
@@ -69,7 +69,7 @@ Before you upgrade, check whether the service tiles that you currently have are 
 
 To check all the service tiles in your current <%= vars.platform_name %> deployment, use [Upgrade Planner](https://upgrade-planner.pivotal.io/).
 
-For information on how to use Upgrade Planner, see [Upgrade Planner](https://upgrade-planner.pivotal.io/docs).
+For information about how to use Upgrade Planner, see [Upgrade Planner](https://upgrade-planner.pivotal.io/docs).
 
 Alternatively, you can do the following:
 
@@ -105,7 +105,7 @@ You can use the empty table below as a template for recording and tracking the t
 
 ### <a id="upgrade-service-tiles"></a> Upgrade Services Tiles
 
-Upgrade all service tiles to versions that are compatible with <%= vars.platform_name %> <%= vars.v_major_version %>. Service tiles are add-on products you install alongside your runtime. For example, VMware Tanzu SQL [MySQL], Healthwatch, and RabbitMQ are service tiles.
+Upgrade all service tiles to versions that are compatible with <%= vars.platform_name %> <%= vars.v_major_version %>. Service tiles are add-on products you install alongside your runtime. For example, VMware Tanzu SQL [MySQL for VMs], Healthwatch, and RabbitMQ for VMware Tanzu [VMs] are service tiles.
 
 Do not upgrade runtime tiles, such as <%= vars.app_runtime_abbr %>, <%= vars.windows_runtime_abbr %>, or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>) at this time.
 
@@ -125,9 +125,9 @@ With each release of a new <%= vars.platform_name %> version, <%= vars.app_runti
 
 #### <a id='disable-hostname-validation'></a> Disable Hostname Validation for External Databases on GCP and Azure
 
-This pre-upgrade step applies only to existing <%= vars.app_runtime_full_pivotal %> (<%= vars.app_runtime_abbr_pivotal %>) v2.8 deployments where both of these conditions are met:
+This pre-upgrade step applies only to existing <%= vars.app_runtime_abbr %> v2.9 deployments where both of these conditions are met:
 
-* In the **Databases** pane, <%= vars.app_runtime_abbr_pivotal %> v2.8 is configured to use an external GCP or Azure database.
+* In the **Databases** pane, <%= vars.app_runtime_abbr %> v2.9 is configured to use an external GCP or Azure database.
 
 * In <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>, you want to use the same external GCP or Azure database configured in the **Databases** pane.
 
@@ -142,7 +142,7 @@ To disable hostname validation:
 1. Deselect the **Enable hostname verification** checkbox. This checkbox is selected by default.
 
 For more information about database configuration in <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>,
-see [Configure Databases](https://docs.pivotal.io/platform/application-service/2-9/operating/configure-pas.html#sys-db) in _Configuring <%= vars.app_runtime_abbr %>_.
+see [Configure Databases](../operating/configure-pas.html#sys-db) in _Configuring <%= vars.app_runtime_abbr %>_.
 
 #### <a id="disable-unused-errands"></a> (Optional) Disable Unused Errands
 
@@ -155,11 +155,11 @@ in _Adding and Deleting Products_.
 
 #### <a id="run-nfs-broker-errand"></a> Run the NFS Broker Errand
 
-If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>. Running this errand in <%= vars.app_runtime_abbr_pivotal %> v2.8 migrates existing service instances for NFS Volume Services from MySQL to CredHub.
+If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
 
-<%= vars.app_runtime_abbr %> <%= vars.v_major_version %> removes the ability to migrate data from MySQL to CredHub. If you do not run the errand in <%= vars.app_runtime_abbr_pivotal %> v2.8, you may be unable to bind apps to existing NFS Volume Service service instances after upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
+If you do not run the errand in <%= vars.app_runtime_abbr %> v2.9, you may be unable to bind apps to existing NFS Volume Service service instances after upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
 
-For more information, see [Configure Errands](https://docs.pivotal.io/platform/application-service/operating/configure-pas.html#errands) in _Configuring <%= vars.app_runtime_abbr %>_.
+For more information, see [Configure Errands](../operating/configure-pas.html#errands) in _Configuring <%= vars.app_runtime_abbr %>_.
 
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
@@ -196,7 +196,7 @@ Preparing deployment: Preparing deployment (00:00:01)
 
 After removing this job from your runtime configuration, ensure that the **Enable backup and restore** checkbox is enabled in the **File Storage** pane of the <%= vars.app_runtime_abbr %> tile.
 
-For more information, see [Azure Blobstores](../../customizing/backup-restore/enabling-external-blobstore-backups.html#azure) in _Enabling External Blobstore Backups_.
+For more information, see [Azure Blobstores](../customizing/backup-restore/enabling-external-blobstore-backups.html#azure) in _Enabling External Blobstore Backups_.
 
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
@@ -241,9 +241,9 @@ The KPIs that monitor these these resources are are:
 
 ### <a id="adjust-diego-cell-limits"></a> Adjust Diego Cell Limits
 
-If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Cells. For more information, see [Limit Component Instance Restarts](./configuring.html#limit-restart) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
+If needed, adjust the maximum number of Diego Cells that the platform can upgrade simultaneously, to avoid overloading the other Diego Cells. For more information, see [Limit Component Instance Restarts](configuring.html#limit-restart) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
-The maximum number of Diego Cells that can update at once, `max_in_flight`, is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see [Prevent Overload](./configuring.html#limitations-considerations) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
+The maximum number of Diego Cells that can update at once, `max_in_flight`, is 4%. This setting is configured in the BOSH manifest's Diego Cell definition. For more information, see [Prevent Overload](configuring.html#limitations-considerations) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
 For more information about these KPIs, see [Diego Cell Metrics](../monitoring/kpi.html#Cell) in _Key Performance Indicators_.
 
@@ -251,7 +251,7 @@ For more information about these KPIs, see [Diego Cell Metrics](../monitoring/kp
 
 During the <%= vars.platform_name %> upgrade process, a large quantity of data is moved around on disk.
 
-To ensure a successful upgrade of your deployment, verify that your underlying <%= vars.app_runtime_abbr %> file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Configure File Storage](../upgrading/configuring.html#file-storage) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
+To ensure a successful upgrade of your deployment, verify that your underlying <%= vars.app_runtime_abbr %> file storage is performant enough to handle the upgrade. For more information about the configurations to evaluate, see [Configure File Storage](configuring.html#file-storage) in _Configuring <%= vars.app_runtime_abbr %> for Upgrades_.
 
 In addition to file storage IOPS, consider additional existing deployment factors that can impact overall upgrade duration and performance:
 
@@ -287,7 +287,7 @@ These sections describe steps for ensuring your deployment is healthy before you
 For collecting foundation health status, <%= vars.company_name %> recommends Healthwatch,
 which monitors and alerts on the current health, performance,
 and capacity of your <%= vars.platform_name %> deployment.
-For more information, see [Healthwatch](https://docs.pivotal.io/platform/healthwatch/index.html).
+For more information, see the [Healthwatch](https://docs.pivotal.io/platform/healthwatch/index.html) documentation.
 
 If you are not using Healthwatch, you can do some or all of the following to collect foundation health status:
 
