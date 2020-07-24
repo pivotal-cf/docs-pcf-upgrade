@@ -153,14 +153,6 @@ to reduce deployment time, you may want to re-enable these errands before upgrad
 For more information, see [Add and Import Products](../customizing/add-delete.html#add-import)
 in _Adding and Deleting Products_.
 
-#### <a id="run-nfs-broker-errand"></a> Run the NFS Broker Errand
-
-If you are using NFS Volume Services, you must run the **NFS Broker Errand** errand before upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
-
-If you do not run the errand in <%= vars.app_runtime_abbr %> v2.9, you may be unable to bind apps to existing NFS Volume Service service instances after upgrading to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>.
-
-For more information, see [Configure Errands](../../operating/configure-pas.html#errands) in _Configuring <%= vars.app_runtime_abbr %>_.
-
 ### <a id="stemcell-compat"></a> Check OS Compatibility of BOSH-Managed Add-Ons and Tiles
 
 Before upgrading to <%= vars.platform_name %> <%= vars.v_major_version %>, operators who have deployed any BOSH-managed add-ons such as **IPsec**, **Anti-Virus**, or **File Integrity Monitoring** and who have deployed or are planning to deploy <%= vars.windows_runtime_abbr %> must modify the add-on manifest to specify a compatible OS stemcell. For more information, see [<%= vars.windows_runtime_full %>](https://docs.pivotal.io/platform/application-service-windows/<%= product_info['local_product_version'].to_s.sub('.','-') %>/index.html).
