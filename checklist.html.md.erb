@@ -133,7 +133,7 @@ This pre-upgrade step applies only to existing <%= vars.app_runtime_abbr %> v2.9
 
 * You enabled TLS communication for the GCP or Azure external database by adding a certificate authority (CA) certificate to the **Database CA certificate** field in the **Databases** pane.
 
-If you meet these conditions, you must disable hostname validation before you upgrade to <%= vars.v_major_version %>. Failure to disable hostname validation can cause the upgrade to fail for deployments that use external databases on GCP or Azure.
+If you meet these conditions, you must disable hostname validation before you upgrade to <%= vars.app_runtime_abbr %> <%= vars.v_major_version %>. Failure to disable hostname validation can cause the upgrade to fail for deployments that use external databases on GCP or Azure.
 
 To disable hostname validation:
 
@@ -193,11 +193,11 @@ For more information, see [Azure Blobstores](../customizing/backup-restore/enabl
 
 ## <a id="cert-expiry"></a> Check Certificate Authority Expiration Dates
 
-Depending on the requirements of your deployment, you may need to rotate your Certificate Authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
+Depending on the requirements of your deployment, you may need to rotate your certificate authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
 
 <p class="note"><strong>Note:</strong> <%= vars.platform_name %> uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your <%= vars.ops_manager %> certificates using the procedure described in <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Rotate Identity Provider SAML Certificates</a> in <em>Rotating Certificates</em>.</p>
 
-To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the <%= vars.ops_manager %> API.
+To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can run `GET /api/v0/deployed/certificates?expires_within=TIME` using the <%= vars.ops_manager %> API.
 
 In this request, the `expires_within` parameter is optional. Valid values for the parameter are `d` for days, `w` for weeks, `m` for months, and `y` for years. For example, to search for certificates expiring within one month, run:
 
@@ -208,6 +208,7 @@ $ curl "https://OPS-MANAGER-FQDN/api/v0/deployed/certificates?expires_within=1m"
 ```
 
 Where:
+
 * `OPS-MANAGER-FQDN` is the fully-qualified domain name (FQDN) of your <%= vars.ops_manager %> deployment.
 * `UAA-ACCESS-TOKEN` is your UAA access token.
 
@@ -296,7 +297,7 @@ If you are not using Healthwatch, you can do some or all of the following to col
 		* `DEPLOYMENT-NAME` is the name of the BOSH deployment with the instances you want to check.
 		<br>
 		<br>
-		`bosh instances` with the flags `--ps`, `--vitals`, or `--failing` highlights individual job failure.
+		Running `bosh instances` with the flags `--ps`, `--vitals`, or `--failing` reveals individual job failure.
 	* To check the status of your BOSH VMs, run:
 
 		```
@@ -305,7 +306,7 @@ If you are not using Healthwatch, you can do some or all of the following to col
 		Where `ALIAS` is your BOSH deployment alias.
 		<br>
 		<br>
-		This command reveals VMs with high CPU, high memory, high disk utilization, and with `state` != `running`.
+		This command reveals VMs with high CPU, high memory, high disk utilization, and with a `state` other than `running`.
 	* To check the status of your BOSH cloud config, run:
 
 		```
@@ -336,6 +337,7 @@ For BOSH CLI v2 instructions, see [Running mysql-diag](../mysql/mysql-diag.html)
 To review pending and recent changes:
 
 1. Confirm there are no outstanding changes in <%= vars.ops_manager %> or any other tile. All tiles should be green. If all tiles are not green:
+		<br>
 		1. Click **Review Pending Changes**.
 		1. Click **Apply Changes**.
 
@@ -366,7 +368,7 @@ When you export an installation, the export contains the base VM images, necessa
 
 * Some browsers do not provide feedback on the status of the export process and might appear to hang.
 
-<p class="note"><strong>Note:</strong> Some operating systems automatically unzip the exported installation. If this occurs, create a ZIP file of the unzipped export. Do not start compressing at the "installation" folder level. Instead, start compressing at the level containing the <code>config.yml</code> file:</p>
+<p class="note"><strong>Note:</strong> Some operating systems automatically unzip the exported installation. If this occurs, create a ZIP file of the unzipped export. Do not start compressing at the "installation" folder level. Instead, start compressing at the level containing the <code>config.yml</code> file, as shown in the example image below:</p>
 
 <%= image_tag("./images/compress.png") %>
 
