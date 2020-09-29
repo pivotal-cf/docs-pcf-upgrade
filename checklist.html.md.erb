@@ -130,12 +130,12 @@ To prevent misrouting of apps, upgrade to PAS v2.3.14 or later.
 Stale routes can persist in PAS v2.3 deployments that are configured to use TLS or mTLS
 in the **Router application identity verification** setting of **Application Containers**.
 
-To fix this issue, do the following: 
+To fix this issue, do the following:
 
 1. Log in to Ops Manager.
 1. Update the PAS tile to PAS v2.3.14 or later.
 1. In the PAS tile, select **Application Containers**.
-1. View the settings in **Router application identity verification**. 
+1. View the settings in **Router application identity verification**.
 1. Verify that either **Router uses TLS to verify application identity** or **Router and applications use mutual TLS to verify each other's identity** is selected.
 1. Select the **Prune Routes on TTL Expiry for TLS Backends** checkbox.
 1. Click **Review Pending Changes**.
@@ -309,7 +309,7 @@ After removing this job from your runtime configuration, ensure that the **Enabl
 
 Depending on the requirements of your deployment, you may need to rotate your Certificate Authority (CA) certificates. The non-configurable certificates in your deployment expire every two years. You must regenerate and rotate them so that critical components do not face a complete outage.
 
-<p class="note"><strong>Note:</strong> PCF uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your Ops Manager certificates using the procedure described in the <a href="../security/pcf-infrastructure/api-cert-rotation.html#rotate-saml-ca">Regenerating and Rotating Non-Configurable TLS/SSL Certificates</a> section of <em>Managing TLS Certificates</em>.</p>
+<p class="note"><strong>Note:</strong> <%= vars.product_name %> uses SHA-2 certificates and hashes by default. You can convert existing SHA-1 hashes into SHA-2 hashes by rotating your <%= vars.ops_manager %> certificates using the procedure described in <a href="https://docs.pivotal.io/pivotalcf/<%= product_info['local_product_version'].to_s.sub('.','-') %>/security/pcf-infrastructure/rotate-saml-ca.html">Rotating Identity Provider SAML Certificates</a>.</p>
 
 To retrieve information about all the RSA and CA certificates for the BOSH Director and other products in your deployment, you can use the `GET /api/v0/deployed/certificates?expires_within=TIME` request of the Ops Manager API.
 
@@ -320,7 +320,7 @@ In this request, the `expires_within` parameter is optional. Valid values for th
  -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-For information about regenerating and rotating CA certificates, see [Managing TLS Certificates](../security/pcf-infrastructure/api-cert-rotation.html).
+For information about regenerating and rotating CA certificates, see [Overview of Certificate Rotation](https://docs.pivotal.io/pivotalcf/<%= product_info['local_product_version'].to_s.sub('.','-') %>/security/pcf-infrastructure/api-cert-rotation.html).
 
 
 ## <a id="capacity"></a> Check the Capacity of Your Deployment
